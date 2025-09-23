@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2012                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<iw:iwidget id="calendar" xmlns:iw="http://www.ibm.com/xmlns/prod/iWidget"
+	supportedModes="view edit fullpage search" lang="en" mode="view"
+	iScope="(lconn.core.dynamiciwidget.create('lconn.calendar.CalendarWidget'))">
+
+   	<iw:itemSet name="attributes">
+      	<iw:item name="resourceId" value="" readOnly="false" />
+   	</iw:itemSet>
+   	
+	<iw:content mode="view">
+		<![CDATA[
+			<div id="errorOutput" class="lotusMessage" role="alert" style="display: none;"></div>
+			<div id="miniCalendar"></div>
+		]]>
+	</iw:content>
+
+	<iw:content mode="edit">
+		<![CDATA[
+			<div id="errorOutput" class="lotusMessage" role="alert" style="display: none;"></div>
+			<div id="calendarPrefs"></div>
+		]]>
+	</iw:content>
+
+	<iw:content mode="fullpage">
+		<![CDATA[
+			<style type="text/css">
+				.dijitDialogTitleBar {
+					display: none;
+				}
+			</style>
+			<div id="errorOutput" class="lotusMessage" role="alert" style="display: none;"></div>
+			<div id="calendarViews"></div>
+		]]>
+	</iw:content>
+	
+	<iw:content mode="search">
+		<![CDATA[	
+			<div id="calendar_searchResultContainer"></div>
+		]]>
+	</iw:content>
+</iw:iwidget>

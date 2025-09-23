@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012                                          -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+	<head>
+		<title>miniCalendarView Test</title>
+		<script language="JavaScript" type="text/javascript">
+			function getCookie(name) {
+				if (!document.cookie || document.cookie == '') 
+					return null;
+				var items = document.cookie.split(';');
+				for (var i = 0; i < items.length; i++) {
+					var item = items[i];
+					var index = item.indexOf('=');
+					if (item.substring(0, index) == name ||
+					item.substring(0, index) == ' ' + name) 
+						return unescape(item.substring(index + 1));
+				}
+				return null;
+			}
+			
+			function setCookie(name, value, expire) {
+				var s = name + '=' + escape(value) +
+				((expire == null) ? '' : ('; expires=' + expire.toGMTString()));
+				if (document.location.href.substring(0, 5) == 'http:') 
+					s += '; path=/';
+				document.cookie = s;
+			}
+			
+			function toggleNotes() {
+				var flag = document.forms[0].notes.checked;
+				miniCalendarView.enableStore(notesStore, flag);
+			}
+			
+			function toggleGoogle() {
+				var flag = document.forms[0].google.checked;
+				miniCalendarView.enableStore(iCalStore, flag);
+			}
+			
+			function toggleBidi() {
+				var flag = document.forms[0].bidi.checked;
+				setCookie("BiDi", flag ? 1 : 0);
+				location.reload();
+			}
+			
+			function changeLocale() {
+				setCookie("locale", document.forms[0].locale.value);
+				location.reload();
+			}
+			
+			function changeTheme(){
+				setCookie("theme", document.forms[0].theme.value);
+				location.reload();
+			}
+			document.documentElement.setAttribute("dir", (getCookie("BiDi") == 1) ? "rtl" : "ltr");
+		</script>
+		<script>
+			var sThema = getCookie("theme") || "lotusui30dojo";
+			var sHtml = '<style type="text/css">\n@import "../../themes/dwa.css";\n@import "../../themes/dijit-lite.css";\n@import "../themes/%1/miniCalendarView.css";\n@import "../../date/themes/%1/datepick.css";\n@import "../../common/themes/%1/menu.css";\n</style>';
+			document.write(sHtml.replace(/%1/g, sThema));
+		</script>
+		<style type="text/css">
+			html, body {
+			    width: 100%;
+			    height: 100%;
+			    padding: 0px;
+			    margin: 0px;
+			    overflow: hidden;
+			}
+		</style>
+		<script language="JavaScript" type="text/javascript">
+			var djConfig = {
+				parseOnLoad: true,
+				isDebug: false,
+				packages: [{name: 'dwa', location: '../dwa'}]
+			};
+			djConfig.locale = getCookie("locale") || "";
+			djConfig.theme = getCookie("theme") || "";
+		</script>
+		<script src="../../../dojo/dojo.js">
+		</script>
+		<script language="JavaScript" type="text/javascript">
+			dojo.require("dojo.parser");
+			dojo.require("dwa.cv.miniCalendarView");
+			dojo.require("dwa.data.NotesCalendarStore");
+			dojo.require("dwa.data.iCalReadStore");
+			dojo.addOnLoad(function() {
+				dojo.doc.title = dojo.doc.title + " (" + dojo.doc.compatMode + ")";
+				document.forms[0].google.checked = true;
+				document.forms[0].notes.checked = true;
+				document.forms[0].bidi.checked = (getCookie("BiDi") == 1);
+				document.forms[0].locale.value = getCookie("locale") || "";
+				document.forms[0].theme.value = getCookie("theme") || "";
+			});
+		</script>
+	</head>
+	<body class="dwa hannover">
+		<table style="height:100%;">
+			<tr style="vertical-align:top;height:100%;">
+				<td style="width:85px;height:100%;">
+					<form>
+						<input id="n" type="checkbox" name="notes" onclick="toggleNotes()" checked/>
+						<label for="n">
+							Notes
+						</label>
+						<br/>
+						<input id="g" type="checkbox" name="google" onclick="toggleGoogle()" checked/>
+						<label for="g">
+							Google
+						</label>
+						<br/>
+						<br/>
+						<input id="b" type="checkbox" name="bidi" onclick="toggleBidi()"/>
+						<label for="b">
+							BiDi
+						</label>
+						<br/>
+						<select id="l" name="locale" onchange="changeLocale()">
+							<option value=""></option>
+							<option value="ar">ar</option>
+							<option value="ca">ca</option>
+							<option value="cs">cs</option>
+							<option value="da">da</option>
+							<option value="de">de</option>
+							<option value="el">el</option>
+							<option value="en">en</option>
+							<option value="es">es</option>
+							<option value="fi">fi</option>
+							<option value="fr">fr</option>
+							<option value="he">he</option>
+							<option value="hu">hu</option>
+							<option value="it">it</option>
+							<option value="ja">ja</option>
+							<option value="ko">ko</option>
+							<option value="nl">nl</option>
+							<option value="no">no</option>
+							<option value="pl">pl</option>
+							<option value="pt">pt</option>
+							<option value="pt-br">pt-br</option>
+							<option value="ru">ru</option>
+							<option value="sk">sk</option>
+							<option value="sl">sl</option>
+							<option value="sv">sv</option>
+							<option value="th">th</option>
+							<option value="tr">tr</option>
+							<option value="zh">zh</option>
+							<option value="zh-tw">zh-tw</option>
+						</select>
+						<br/>
+						<br/>
+						<label>
+							themes
+						</label>
+						<br/>
+						<select id="theme" name="theme" onchange="changeTheme()">
+							<option value="hannover">hannover</option>
+							<option value="lotusui30dojo" selected>lotusui30dojo</option>
+						</select>
+					</form>
+				</td>
+				<td style="width:300px;height:100%;">
+					<div dojoType="dwa.data.NotesCalendarStore" jsId="notesStore" url="data/s_ReadViewEntries_Calendar.json">
+					</div>
+					<div dojoType="dwa.data.iCalReadStore" jsId="iCalStore" url="data/basic.ics" fontColorMeeting="395D94" bgColorMeeting="FF82BD" borderColorMeeting="5495D5">
+					</div>
+					<div dojoType="dwa.cv.miniCalendarView" jsId="miniCalendarView" store="notesStore,iCalStore" date="2009/04/15">
+					</div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

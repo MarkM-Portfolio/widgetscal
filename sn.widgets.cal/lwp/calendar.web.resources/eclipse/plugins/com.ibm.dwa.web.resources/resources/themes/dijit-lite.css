@@ -1,0 +1,330 @@
+/* ***************************************************************** */
+/*                                                                   */
+/* IBM Confidential                                                  */
+/*                                                                   */
+/* OCO Source Materials                                              */
+/*                                                                   */
+/* Copyright IBM Corp. 2012                                          */
+/*                                                                   */
+/* The source code for this program is not published or otherwise    */
+/* divested of its trade secrets, irrespective of what has been      */
+/* deposited with the U.S. Copyright Office.                         */
+/*                                                                   */
+/* ***************************************************************** */
+
+/*
+	The dijit-lite.css is a light weight version of the dijit.css.
+	All CSS rules in this file are copied from the dijit.css.
+*/
+
+/*
+	GENERIC PIECES
+*/
+.dijitReset {
+	margin:0;
+	border:0;
+	padding:0;
+	line-height:normal;
+	font: inherit;
+	color: inherit;
+}
+.dijit_a11y .dijitReset {
+	-moz-appearance: none;
+}
+.dijitInline {
+	display:inline-block;
+	#zoom: 1;
+	#display:inline;
+	border:0;
+	padding:0;
+	vertical-align:middle;
+	#vertical-align: auto;
+}
+table.dijitInline {
+	display:inline-table;
+	box-sizing: content-box;
+	-moz-box-sizing: content-box;
+}
+.dijitHidden, .dijitDisplayNone {
+	display: none !important;
+}
+.dijitVisible {
+	display: block !important;
+	position: relative;
+}
+.dijitOffScreen {
+	position: absolute;
+	left: 50%;
+	top: -10000px;
+}
+.dijitPopup {
+	position: absolute;
+	background-color: transparent;
+	margin: 0;
+	border: 0;
+	padding: 0;
+}
+.dijitPositionOnly {
+	padding: 0 !important;
+	border: 0 !important;
+	background-color: transparent !important;
+	background-image: none !important;
+	height: auto !important;
+	width: auto !important;
+}
+.dijitNonPositionOnly {
+	float: none !important;
+	position: static !important;
+	margin: 0 0 0 0 !important;
+	vertical-align: middle !important;
+}
+.dijitBackgroundIframe {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+.dijitContainer {
+	overflow: hidden;
+}
+/*
+	A11Y
+*/
+.dijit_a11y .dijitIcon, .dijit_a11y div.dijitArrowButtonInner, .dijit_a11y span.dijitArrowButtonInner, .dijit_a11y img.dijitArrowButtonInner {
+	display: none;
+}
+.dijit_a11y .dijitA11ySideArrow {
+	display: inline !important;
+	cursor: pointer;
+}
+.dijitLeft {
+	background-position:left top;
+	background-repeat:no-repeat;
+}
+.dijitStretch {
+	white-space:nowrap;
+	background-repeat:repeat-x;
+}
+.dijitRight {
+	#display:inline;
+	background-position:right top;
+	background-repeat:no-repeat;
+}
+/*
+	Calendar
+*/
+.dijitCalendarContainer {
+	width: auto;
+}
+.dijitCalendarContainer th, .dijitCalendarContainer td {
+	padding: 0;
+	vertical-align: middle;
+}
+.dijitCalendarYearLabel {
+	white-space: nowrap;
+}
+.dijitCalendarNextYear {
+	margin:0 0 0 0.55em;
+}
+.dijitCalendarPreviousYear {
+	margin:0 0.55em 0 0;
+}
+.dijitCalendarIncrementControl {
+	vertical-align: middle;
+}
+.dijitCalendarIncrementControl, .dijitCalendarDateTemplate, .dijitCalendarMonthLabel, .dijitCalendarPreviousYear, .dijitCalendarNextYear {
+	cursor: pointer;
+}
+.dijitCalendarDisabledDate {
+	color: gray;
+	text-decoration: line-through;
+	cursor: default;
+}
+.dijitSpacer {
+	position: relative;
+	height: 1px;
+	overflow: hidden;
+	visibility: hidden;
+}
+.dijitCalendarMonthMenu .dijitCalendarMonthLabel {
+	text-align:center;
+}
+.dijit_a11y .dijitCalendarDateLabel {
+	padding: 1px;
+	border: 0px !important;
+}
+.dijit_a11y .dijitCalendarSelectedDate .dijitCalendarDateLabel {
+	border-style: solid !important;
+	border-width: 1px !important;
+	padding: 0;
+}
+.dijit_a11y .dijitCalendarDateTemplate {
+	padding-bottom: 0.1em !important;
+	border: 0px !important;
+}
+/*
+	Menu
+*/
+.dijitMenu {
+	border:1px solid black;
+	background-color:white;
+}
+.dijitMenuTable {
+	border-collapse:collapse;
+	border-width:0;
+	background-color:white;
+}
+.dijitMenuItem {
+	text-align: left;
+	white-space: nowrap;
+	padding:.1em .2em;
+	cursor:pointer;
+}
+.dijitMenuPassive .dijitMenuItemHover, .dijitMenuItemSelected {
+	background-color:black;
+	color:white;
+}
+.dijitMenuItemIcon, .dijitMenuExpand {
+	background-repeat: no-repeat;
+}
+.dijitMenuItemDisabled * {
+	opacity:0.5;
+	cursor:default;
+}
+.dj_ie .dijit_a11y .dijitMenuItemDisabled, .dj_ie .dijit_a11y .dijitMenuItemDisabled td, .dj_ie .dijitMenuItemDisabled *, .dj_ie .dijitMenuItemDisabled td {
+	color:gray !important;
+	filter: alpha(opacity=35);
+}
+.dijitMenuItemLabel {
+	position: static;
+	vertical-align: middle;
+}
+.dijit_a11y .dijitMenuItemSelected {
+	border: 1px dotted black !important;
+}
+.dj_ff3 .dijit_a11y .dijitMenuItem td {
+	padding: 0 !important;
+	background:none !important;
+}
+.dijit_a11y .dijitMenuItemSelected .dijitMenuItemLabel {
+	border-width: 1px;
+	border-style: solid;
+}
+.dj_ie8 .dijit_a11y .dijitMenuItemLabel {
+	position:static;
+}
+.dijitMenuExpandA11y {
+	display: none;
+}
+.dijit_a11y .dijitMenuExpandA11y {
+	display: inline;
+}
+.dijitMenuSeparator td {
+	border: 0;
+	padding: 0;
+}
+.dijitMenuSeparatorTop {
+	height: 50%;
+	margin: 0;
+	margin-top:3px;
+	font-size: 1px;
+}
+.dijitMenuSeparatorBottom {
+	height: 50%;
+	margin: 0;
+	margin-bottom:3px;
+	font-size: 1px;
+}
+.dijitNoIcon {
+	display: none;
+}
+/*
+	Dialog
+*/
+.dijitDialog {
+	position: absolute;
+	z-index: 999;
+	overflow: hidden;
+}
+.dijitDialogTitleBar {
+	cursor: move;
+}
+.dijitDialogFixed .dijitDialogTitleBar {
+	cursor:default;
+}
+.dijitDialogCloseIcon {
+	cursor: pointer;
+}
+.dijitDialogUnderlayWrapper {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 998;
+	display: none;
+	background: transparent !important;
+}
+.dijitDialogUnderlay {
+	background: #eee;
+	opacity: 0.5;
+}
+.dj_ie .dijitDialogUnderlay {
+	filter: alpha(opacity=50);
+}
+.dijit_a11y .dijitDialog {
+	opacity: 1 !important;
+	background-color: white !important;
+}
+.dijitDialog .closeText {
+	display:none;
+	position:absolute;
+}
+.dijit_a11y .dijitDialog .closeText {
+	display:inline;
+}
+/*
+	Select
+*/
+.dijitSelect {
+	margin: 0.2em;
+	border-collapse: collapse;
+}
+.dj_ie .dijitSelect, .dj_ie7 .dijitSelect, .dj_iequirks .dijitSelect {
+	vertical-align: middle;
+}
+.dijitToolbar .dijitSelect {
+	margin: 0;
+}
+.dijitSelectMenu .dijitMenuItemIcon {
+	display:none;
+}
+.dj_ie6 .dijitSelectMenu .dijitMenuItemLabel, .dj_ie7 .dijitSelectMenu .dijitMenuItemLabel {
+	position: static;
+}
+.dijitSelectLabel * {
+	vertical-align: baseline;
+}
+
+.dijitSelectSelectedOption * {
+	font-weight: bold;
+}
+.dijitSelectMenu {
+	border-width: 1px;
+}
+.dijitSelectMenu .dijitMenuTable {
+	margin: 0;
+	background-color: transparent;
+}
+.dijitForceStatic {
+	position: static !important;
+}
+/*
+	Disabled cursor
+*/
+.dijitReadOnly *, .dijitDisabled *, .dijitReadOnly, .dijitDisabled {
+	cursor: default;
+}

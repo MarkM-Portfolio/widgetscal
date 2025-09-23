@@ -1,0 +1,82 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012                                          -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<html>
+<head>
+<title>Calendar Data in Dojo Grid</title>
+
+<style type="text/css">
+	@import "../../../dojox/grid/resources/Grid.css";
+	@import "../../../dojox/grid/resources/tundraGrid.css";
+	@import "../../../dojo/resources/dojo.css";
+	@import "../../../dijit/themes/tundra/tundra.css";
+	html, body{	
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+	body {
+		font-size: 0.9em;
+		font-family: Geneva, Arial, Helvetica, sans-serif;
+	}
+	#grid {
+		height: 100%;
+	}
+</style>
+
+<script type="text/javascript" src="../../../dojo/dojo.js" djConfig="parseOnLoad:true, packages: [{name: 'dwa', location: '../dwa'}]"></script>
+<script language="JavaScript" type="text/javascript">
+	dojo.require("dojo.parser");
+	dojo.require("dojox.grid.DataGrid");
+	dojo.require("dwa.data.NotesCalendarStore");
+</script>
+</head>
+<body class="tundra">
+<div dojoType="dwa.data.NotesCalendarStore"
+	url="data/s_ReadViewEntries_Calendar.json"
+	jsId="store1"></div>
+<table id="grid" jsid="grid" dojoType="dojox.grid.DataGrid"
+    store="store1"
+    query="{startDate:'2009/05/01', endDate:'2009/12/31'}"
+    selectionMode="single">
+    <thead>
+        <tr>
+            <th field="unid">unid</th>
+            <th field="type">type</th>
+            <th field="subject">subject</th>
+            <th field="chair">chair</th>
+            <th field="location">location</th>
+            <th field="startDateTime">startDateTime</th>
+            <th field="endDateTime">endDateTime</th>
+            <th field="iconParam">iconParam</th>
+            <th field="overlay">overlay</th>
+            <th field="allDay">allDay</th>
+            <th field="bgColor1">bgColor1</th>
+            <th field="bgColor2">bgColor2</th>
+            <th field="fontColor">fontColor</th>
+            <th field="borderColor">borderColor</th>
+            <th field="repeat">repeat</th>
+            <th field="status">status</th>
+            <th field="generator">generator</th>
+            <th field="hide">hide</th>
+            <th field="private">private</th>
+            <th field="status">status</th>
+            <th field="external">external</th>
+            <th field="originalEventId">originalEventId</th>
+            <th field="altChair">altChair</th>
+        </tr>
+    </thead>
+</table>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMap namespace="EventInfo_MT">
+	<insert id="insertEventInfo" parameterClass="DBEventInfo">
+		INSERT INTO CALENDAR.CA_EVENTINFO
+			(EVENTINFO_UUID, CALENDAR_UUID, EVENT_UUID, DESCRIPTION, LOCATION, NAME, ISALLDAY, IMAGE_URL, ORG_ID)
+		VALUES
+			(#eventInfo_UUID#, #calendar_UUID#, #event_UUID#, #descriptionForPersistent:VARCHAR#, #location:VARCHAR#, #name:VARCHAR#, #isAllDay:INTEGER#, #imageUrl:VARCHAR#, #ORG_ID#)
+	</insert>
+	
+	<update id="updateEventInfo" parameterClass="DBEventInfo">
+		UPDATE CALENDAR.CA_EVENTINFO
+		SET DESCRIPTION = #descriptionForPersistent:VARCHAR#, LOCATION = #location:VARCHAR#, NAME = #name:VARCHAR#, ISALLDAY = #isAllDay:INTEGER#, IMAGE_URL = #imageUrl:VARCHAR#
+		WHERE EVENTINFO_UUID = #eventInfo_UUID# AND ORG_ID = #ORG_ID#
+	</update>
+	
+	<delete id="deleteEventInfo" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENTINFO WHERE EVENTINFO_UUID = #eventInfoUUID# AND ORG_ID = #ORG_ID#
+	</delete>
+	
+	<delete id="deleteEventInfos" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENTINFO 
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="event_UUID">
+				EVENT_UUID = #event_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				CALENDAR_UUID = #calendar_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+	</delete>
+	
+	<select id="selectEventInfo" parameterClass="java.util.Map" resultClass="DBEventInfo">
+		SELECT EVENTINFO_UUID as eventInfo_UUID, CALENDAR_UUID as calendar_UUID,
+			NAME as name, DESCRIPTION as descriptionForPersistent, LOCATION as location, ISALLDAY as isAllDay, IMAGE_URL as imageUrl, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTINFO
+		WHERE EVENTINFO_UUID = #eventInfoUUID# AND ORG_ID = #ORG_ID#
+	</select>
+</sqlMap>

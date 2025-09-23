@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMapConfig
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+	
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true" enhancementEnabled="true" useStatementNamespaces="true" lazyLoadingEnabled="true" maxRequests="800" maxSessions="600" maxTransactions="250" statementCachingEnabled="false"/>
+
+	<typeAlias alias="DBUser" type="com.ibm.lconn.calendar.db.model.DBUser"/>
+	<typeAlias alias="DBMembership" type="com.ibm.lconn.calendar.db.model.DBMembership"/>
+	<typeAlias alias="DBEvent" type="com.ibm.lconn.calendar.db.model.DBEvent"/>
+	<typeAlias alias="DBCalendar" type="com.ibm.lconn.calendar.db.model.DBCalendar"/>
+	<typeAlias alias="DBRecurrence" type="com.ibm.lconn.calendar.db.model.DBRecurrence"/>
+	<typeAlias alias="DBEventInstance" type="com.ibm.lconn.calendar.db.model.DBEventInstance"/>
+	<typeAlias alias="DBEventInfo" type="com.ibm.lconn.calendar.db.model.DBEventInfo"/>
+	<typeAlias alias="DBSubstitution" type="com.ibm.lconn.calendar.db.model.DBSubstitution"/>
+	<typeAlias alias="DBDeletionHistory" type="com.ibm.lconn.calendar.db.model.DBDeletionHistory"/>
+	<typeAlias alias="DBEventTag" type="com.ibm.lconn.calendar.db.model.DBEventTag"/>
+	<typeAlias alias="DBEventTagStat" type="com.ibm.lconn.calendar.db.model.DBEventTagStat"/>
+	<typeAlias alias="DBEventComment" type="com.ibm.lconn.calendar.db.model.DBEventComment"/>
+	<typeAlias alias="DBEventFollowingRecord" type="com.ibm.lconn.calendar.db.model.DBEventFollowingRecord"/>
+	<typeAlias alias="DBMiscData" type="com.ibm.lconn.calendar.db.model.DBMiscData"/>
+	<typeAlias alias="DBUserMention" type="com.ibm.lconn.calendar.db.model.DBUserMention"/>
+	
+	<!-- SIMPLE DATASOURCE [BEGIN] 
+	<transactionManager commitRequired="true" type="JDBC">
+   	  <property name="DefaultAutoCommit" value="false"/>
+      <property name="SetAutoCommitAllowed" value="false"/>
+      <dataSource type="SIMPLE">
+           <property name="JDBC.Driver" value="{JDBC.Driver}" />
+		   <property name="JDBC.ConnectionURL" value="{JDBC.ConnectionURL}" />
+		   <property name="JDBC.Username" value="{JDBC.Username}" />
+		   <property name="JDBC.Password" value="{JDBC.Password}" />
+		   <property name="Pool.MaximumActiveConnections" value="10" />
+		   <property name="Pool.MaximumIdleConnections" value="5" />
+      </dataSource>
+    </transactionManager>
+      SIMPLE DATASOURCE [END] -->
+		
+	<!-- JNDI DATASOURCE [BEGIN] -->	
+	<transactionManager commitRequired="true" type="JDBC">
+	    <property name="DefaultAutoCommit" value="false"/>
+     	<property name="SetAutoCommitAllowed" value="false"/>
+    	<dataSource type="JNDI">
+     		<property name="DataSource" value="java:comp/env/jdbc/calendar"/>
+     	</dataSource>
+	</transactionManager>
+    <!-- JNDI DATASOURCE [END] -->
+    
+    <sqlMap resource="com/ibm/lconn/calendar/db/sql/EventMap_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/CalendarMap_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/EventInstanceMap_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/RecurrenceMap_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/EventInfoMap_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/SubstitutionMap_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/SchemaVersionMap_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/UserInfoMap_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/DeletionHistoryMap_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/SeedlistMap_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/EventTagMap_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/CommentMap_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/EventFollowingMap_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/MiscDataMap_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/MultiTenancy_MT.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/UserMentionMap_MT.xml"/>
+
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/EventMap.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/CalendarMap.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/EventInstanceMap.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/RecurrenceMap.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/EventInfoMap.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/SubstitutionMap.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/SchemaVersionMap.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/UserInfoMap.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/DeletionHistoryMap.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/SeedlistMap.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/EventTagMap.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/CommentMap.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/EventFollowingMap.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/MiscDataMap.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/MultiTenancy.xml"/>
+	<sqlMap resource="com/ibm/lconn/calendar/db/sql/UserMentionMap.xml"/>
+
+</sqlMapConfig>

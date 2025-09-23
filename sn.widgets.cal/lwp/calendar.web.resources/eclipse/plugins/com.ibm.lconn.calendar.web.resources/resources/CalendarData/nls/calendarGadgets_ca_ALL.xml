@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2016                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<messagebundle>
+  <msg name="title_number_events_to_show">Nombre d'esdeveniments a mostrar:</msg> 
+  <msg name="title_type_all">Tots els esdeveniments seguits o d'assistència</msg> 
+  <msg name="title_type_attend">Esdeveniments d'assistència</msg> 
+  <msg name="title_type_follow">Esdeveniments seguits</msg> 
+  <msg name="title_show">Mostra:</msg> 
+  <msg name="title">Esdeveniments de comunitat</msg> 
+  <msg name="decription">Mostra els esdeveniments que seguiu o als quals heu indicat que assistireu.</msg> 
+</messagebundle> 

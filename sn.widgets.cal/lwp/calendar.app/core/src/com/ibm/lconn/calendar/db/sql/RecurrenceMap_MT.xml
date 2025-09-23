@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMap namespace="Recurrence_MT">
+	<insert id="insertRecurrence" parameterClass="DBRecurrence">
+		INSERT INTO CALENDAR.CA_RECURRENCE
+			(EVENT_UUID, CALENDAR_UUID, FREQUENCYCODE, INTERVAL, UNTILRULE, STARTDATE, ENDDATE, BYDAY, MODIFIEDON, ORG_ID)
+		VALUES
+			(#event_UUID#, #calendar_UUID#, #frequencyCode#, #interval:INTEGER#, #untilRule:TIMESTAMP#, #startDate#, #endDate#, #byDay:INTEGER#, #modifiedOn#, #ORG_ID#)
+	</insert>
+	
+	<update id="updateRecurrence" parameterClass="DBRecurrence">
+		UPDATE CALENDAR.CA_RECURRENCE
+		SET UNTILRULE = #untilRule:TIMESTAMP#, STARTDATE = #startDate#, ENDDATE = #endDate#, BYDAY = #byDay:INTEGER#, MODIFIEDON = #modifiedOn#
+		WHERE EVENT_UUID = #event_UUID# AND ORG_ID = #ORG_ID#
+	</update>
+	
+	<delete id="deleteRecurrence" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_RECURRENCE WHERE EVENT_UUID = #eventUUID# AND ORG_ID = #ORG_ID#
+	</delete>
+	
+	<delete id="deleteRecurrencesByCalendar" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_RECURRENCE WHERE CALENDAR_UUID = #calendarUUID# AND ORG_ID = #ORG_ID#
+	</delete>
+
+	<select id="selectRecurrence" parameterClass="java.util.Map" resultClass="DBRecurrence">
+		SELECT EVENT_UUID as event_UUID, CALENDAR_UUID as calendar_UUID, 
+			FREQUENCYCODE as frequencyCode, INTERVAL as interval,
+			UNTILRULE as untilRule, STARTDATE as startDate, ENDDATE as endDate, 
+			BYDAY as byDay, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_RECURRENCE
+		WHERE EVENT_UUID = #eventUUID# AND ORG_ID = #ORG_ID#
+	</select>
+</sqlMap>

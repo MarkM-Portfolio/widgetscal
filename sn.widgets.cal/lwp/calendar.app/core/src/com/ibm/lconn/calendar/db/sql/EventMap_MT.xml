@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMap namespace="Event_MT">
+	<cacheModel id="selectEvent_cache" type="LRU" readOnly="false">
+       <flushInterval minutes="5"/>
+       <property name="size" value="10" />
+    </cacheModel>
+
+	<insert id="insertEvent" parameterClass="DBEvent">
+		INSERT INTO CALENDAR.CA_EVENT
+			(EVENT_UUID, CALENDAR_UUID, CREATEDBY, MODIFIEDBY, CREATEDON, MODIFIEDON, DFLTEVENTINFO, ISRECURRENCE, DBMODTIME, ORG_ID)
+		VALUES
+			(#event_UUID#, #calendar_UUID#, #createdBy#, #modifiedBy#, #createdOn#, #modifiedOn#, #eventInfo_UUID#, #isRecurrence#, #dbModifiedOn:TIMESTAMP#, #ORG_ID#)
+	</insert>
+
+	<update id="updateEvent" parameterClass="DBEvent">
+		UPDATE CALENDAR.CA_EVENT
+		SET MODIFIEDBY = #modifiedBy#, MODIFIEDON = #modifiedOn#, ISRECURRENCE = #isRecurrence#, DBMODTIME = #dbModifiedOn:TIMESTAMP#
+		WHERE EVENT_UUID = #event_UUID# AND ORG_ID = #ORG_ID#
+	</update>
+	
+	<delete id="deleteEvent" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENT WHERE EVENT_UUID = #eventUUID# AND ORG_ID = #ORG_ID#
+	</delete>
+	
+	<delete id="deleteEventsByCalendar" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENT WHERE CALENDAR_UUID = #calendarUUID# AND ORG_ID = #ORG_ID#
+	</delete>
+
+	<select id="selectEvent" parameterClass="java.util.Map" resultClass="DBEvent" cacheModel="selectEvent_cache">
+		SELECT 
+			EVENT_UUID as event_UUID, CALENDAR_UUID as calendar_UUID,
+			CREATEDBY as createdBy, CREATEDON as createdOn,
+			MODIFIEDBY as modifiedBy, MODIFIEDON as modifiedOn,
+			DFLTEVENTINFO as eventInfo_UUID, ISRECURRENCE as isRecurrence,
+			DBMODTIME as dbModifiedOn, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENT
+		WHERE EVENT_UUID = #eventUUID# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<select id="selectEventsByCalendar" parameterClass="java.util.Map" resultClass="DBEvent">
+		SELECT 
+			EVT.EVENT_UUID as event_UUID, EVT.CALENDAR_UUID as calendar_UUID,
+			EVT.CREATEDBY as createdBy, EVT.CREATEDON as createdOn,
+			EVT.MODIFIEDBY as modifiedBy, EVT.MODIFIEDON as modifiedOn,
+			EVT.DFLTEVENTINFO as eventInfo_UUID, EVT.ISRECURRENCE as isRecurrence,
+			EVT.DBMODTIME as dbModifiedOn, EVT.ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENT EVT 
+			<isNull property="calendar_UUID">INNER JOIN CALENDAR.CA_CALENDAR CAL ON EVT.CALENDAR_UUID = CAL.CALENDAR_UUID AND CAL.ORG_ID = #ORG_ID# </isNull>
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				EVT.CALENDAR_UUID = #calendar_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="user_UUID">
+				EVT.CREATEDBY = #user_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="tags">
+				EVT.EVENT_UUID IN 
+					(
+					<iterate property="tags" conjunction="INTERSECT">
+						SELECT EVENT_UUID
+						FROM CALENDAR.CA_EVENTTAG
+						WHERE NAME = #tags[]# AND ORG_ID = #ORG_ID#
+							<isNotNull property="calendar_UUID">
+								AND CALENDAR_UUID = #calendar_UUID#
+						    </isNotNull>
+					</iterate>
+					)
+			</isNotNull>
+			<isNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				(
+					(CAL.VISIBILITY = 1 <isNotNull property="loginUserOrgId"> AND CAL.ORG_ID = #loginUserOrgId# </isNotNull>)  
+					<isNotNull property="loginUserId">
+					OR (EVT.CALENDAR_UUID IN (SELECT CALENDAR_UUID FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #loginUserId# AND ORG_ID = #ORG_ID#))
+					</isNotNull>
+				)
+			</isNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	EVT.ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+		ORDER BY EVT.CREATEDON DESC
+		<isEqual property="DBTYPE" compareValue="DB2">
+		FOR FETCH ONLY
+		</isEqual>
+		<!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		FOR FETCH ONLY
+		</isEqual>
+	</select>
+	
+	<select id="selectEventsByCalendar_{0,n}_DB2" parameterClass="java.util.Map" resultClass="DBEvent">
+		SELECT 
+			EVT.EVENT_UUID as event_UUID, EVT.CALENDAR_UUID as calendar_UUID,
+			EVT.CREATEDBY as createdBy, EVT.CREATEDON as createdOn,
+			EVT.MODIFIEDBY as modifiedBy, EVT.MODIFIEDON as modifiedOn,
+			EVT.DFLTEVENTINFO as eventInfo_UUID, EVT.ISRECURRENCE as isRecurrence,
+			EVT.DBMODTIME as dbModifiedOn, EVT.ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENT EVT
+			<isNull property="calendar_UUID">INNER JOIN CALENDAR.CA_CALENDAR CAL ON EVT.CALENDAR_UUID = CAL.CALENDAR_UUID AND CAL.ORG_ID = #ORG_ID# </isNull>
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				EVT.CALENDAR_UUID = #calendar_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="user_UUID">
+				EVT.CREATEDBY = #user_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="tags">
+				EVT.EVENT_UUID IN 
+					(
+					<iterate property="tags" conjunction="INTERSECT">
+						SELECT EVENT_UUID
+						FROM CALENDAR.CA_EVENTTAG
+						WHERE NAME = #tags[]# AND ORG_ID = #ORG_ID#
+							<isNotNull property="calendar_UUID">
+								AND CALENDAR_UUID = #calendar_UUID#
+						    </isNotNull>
+					</iterate>
+					)
+			</isNotNull>
+			<isNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				(
+					(CAL.VISIBILITY = 1 <isNotNull property="loginUserOrgId"> AND CAL.ORG_ID = #loginUserOrgId# </isNotNull>) 
+					<isNotNull property="loginUserId">
+					OR (EVT.CALENDAR_UUID IN (SELECT CALENDAR_UUID FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #loginUserId# AND ORG_ID = #ORG_ID#))
+					</isNotNull>
+				)
+			</isNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	EVT.ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+		ORDER BY EVT.CREATEDON DESC
+		FETCH FIRST $__fetch_size$ ROWS ONLY
+		FOR FETCH ONLY
+	</select>
+	
+	<!-- Change by Connections for IBM i team. -->
+	<select id="selectEventsByCalendar_{0,n}_AS400" parameterClass="java.util.Map" resultClass="DBEvent">
+		SELECT 
+			EVT.EVENT_UUID as event_UUID, EVT.CALENDAR_UUID as calendar_UUID,
+			EVT.CREATEDBY as createdBy, EVT.CREATEDON as createdOn,
+			EVT.MODIFIEDBY as modifiedBy, EVT.MODIFIEDON as modifiedOn,
+			EVT.DFLTEVENTINFO as eventInfo_UUID, EVT.ISRECURRENCE as isRecurrence,
+			EVT.DBMODTIME as dbModifiedOn, EVT.ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENT EVT
+			<isNull property="calendar_UUID">INNER JOIN CALENDAR.CA_CALENDAR CAL ON EVT.CALENDAR_UUID = CAL.CALENDAR_UUID AND CAL.ORG_ID = #ORG_ID#</isNull>
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				EVT.CALENDAR_UUID = #calendar_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="user_UUID">
+				EVT.CREATEDBY = #user_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="tags">
+				EVT.EVENT_UUID IN 
+					(
+					<iterate property="tags" conjunction="INTERSECT">
+						SELECT EVENT_UUID
+						FROM CALENDAR.CA_EVENTTAG
+						WHERE NAME = #tags[]# AND ORG_ID = #ORG_ID#
+							<isNotNull property="calendar_UUID">
+								AND CALENDAR_UUID = #calendar_UUID#
+						    </isNotNull>
+					</iterate>
+					)
+			</isNotNull>
+			<isNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				(
+					(CAL.VISIBILITY = 1 <isNotNull property="loginUserOrgId"> AND CAL.ORG_ID = #loginUserOrgId# </isNotNull>) 
+					<isNotNull property="loginUserId">
+					OR (EVT.CALENDAR_UUID IN (SELECT CALENDAR_UUID FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #loginUserId# AND ORG_ID = #ORG_ID#))
+					</isNotNull>
+				)
+			</isNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	EVT.ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+		ORDER BY EVT.CREATEDON DESC
+		FETCH FIRST $__fetch_size$ ROWS ONLY
+		FOR FETCH ONLY
+	</select>
+	
+	<select id="selectEventsByCalendar_{m,n}" parameterClass="java.util.Map" resultClass="DBEvent">
+		SELECT event_UUID, calendar_UUID, createdBy, createdOn, modifiedBy, modifiedOn, eventInfo_UUID, isRecurrence, dbModifiedOn, ORG_ID
+		FROM 
+		  (
+			SELECT EVT.EVENT_UUID as event_UUID, EVT.CALENDAR_UUID as calendar_UUID, EVT.CREATEDBY as createdBy, EVT.CREATEDON as createdOn,
+				EVT.MODIFIEDBY as modifiedBy, EVT.MODIFIEDON as modifiedOn, EVT.DFLTEVENTINFO as eventInfo_UUID, EVT.ISRECURRENCE as isRecurrence, 
+				EVT.DBMODTIME as dbModifiedOn, EVT.ORG_ID as ORG_ID,
+				ROW_NUMBER() over (ORDER BY EVT.CREATEDON DESC) rn
+			FROM CALENDAR.CA_EVENT EVT
+				<isNull property="calendar_UUID">INNER JOIN CALENDAR.CA_CALENDAR CAL ON EVT.CALENDAR_UUID = CAL.CALENDAR_UUID AND CAL.ORG_ID = #ORG_ID# </isNull>
+			<dynamic prepend="WHERE">
+				<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+					EVT.CALENDAR_UUID = #calendar_UUID#
+				</isNotNull>
+				<isNotNull removeFirstPrepend="true" prepend="AND" property="user_UUID">
+					EVT.CREATEDBY = #user_UUID#
+				</isNotNull>
+				<isNotNull removeFirstPrepend="true" prepend="AND" property="tags">
+					EVT.EVENT_UUID IN 
+						(
+						<iterate property="tags" conjunction="INTERSECT">
+							SELECT EVENT_UUID
+							FROM CALENDAR.CA_EVENTTAG
+							WHERE NAME = #tags[]# AND ORG_ID = #ORG_ID# 
+								<isNotNull property="calendar_UUID">
+									AND CALENDAR_UUID = #calendar_UUID#
+							    </isNotNull>
+						</iterate>
+						)
+				</isNotNull>
+				<isNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+					(
+						(CAL.VISIBILITY = 1 <isNotNull property="loginUserOrgId"> AND CAL.ORG_ID = #loginUserOrgId# </isNotNull>) 
+						<isNotNull property="loginUserId">
+						OR (EVT.CALENDAR_UUID IN (SELECT CALENDAR_UUID FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #loginUserId# AND ORG_ID = #ORG_ID#))
+						</isNotNull>
+					)
+				</isNull>
+				<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	    EVT.ORG_ID = #ORG_ID#
+			    </isNotNull>
+			</dynamic>
+			<isEqual property="DBTYPE" compareValue="DB2">
+			ORDER BY EVT.CREATEDON DESC
+			FETCH FIRST $__end_row$ ROWS ONLY
+			</isEqual>
+			<!-- Change by Connections for IBM i team. -->
+			<isEqual property="DBTYPE" compareValue="AS400">
+			ORDER BY EVT.CREATEDON DESC
+			FETCH FIRST $__end_row$ ROWS ONLY
+			</isEqual>
+		  ) t
+		WHERE
+		    rn >= $__start_row$
+			AND
+			rn &lt; $__end_row$
+		ORDER BY rn
+		<isEqual property="DBTYPE" compareValue="DB2">
+		FETCH FIRST $__fetch_size$ ROWS ONLY
+		FOR FETCH ONLY
+		</isEqual>
+		<!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		FETCH FIRST $__fetch_size$ ROWS ONLY
+		FOR FETCH ONLY
+		</isEqual>
+	</select>
+	
+	<select id="selectEventsByCalendarCount" parameterClass="java.util.Map" resultClass="int">
+		SELECT COUNT(1)
+		FROM CALENDAR.CA_EVENT EVT
+			<isNull property="calendar_UUID">INNER JOIN CALENDAR.CA_CALENDAR CAL ON EVT.CALENDAR_UUID = CAL.CALENDAR_UUID AND CAL.ORG_ID = #ORG_ID# </isNull>
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				EVT.CALENDAR_UUID = #calendar_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="user_UUID">
+				EVT.CREATEDBY = #user_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="tags">
+				EVT.EVENT_UUID IN 
+					(
+					<iterate property="tags" conjunction="INTERSECT">
+						SELECT EVENT_UUID
+						FROM CALENDAR.CA_EVENTTAG
+						WHERE NAME = #tags[]# AND ORG_ID = #ORG_ID#
+							<isNotNull property="calendar_UUID">
+								AND CALENDAR_UUID = #calendar_UUID#
+						    </isNotNull>
+					</iterate>
+					)
+			</isNotNull>
+			<isNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				(
+					(CAL.VISIBILITY = 1 <isNotNull property="loginUserOrgId"> AND CAL.ORG_ID = #loginUserOrgId# </isNotNull>) 
+					<isNotNull property="loginUserId">
+					OR (EVT.CALENDAR_UUID IN (SELECT CALENDAR_UUID FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #loginUserId# AND ORG_ID = #ORG_ID#))
+					</isNotNull>
+				)
+			</isNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	EVT.ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+		<isEqual property="DBTYPE" compareValue="DB2">
+		FOR FETCH ONLY
+		</isEqual>
+		<!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		FOR FETCH ONLY
+		</isEqual>
+	</select>
+</sqlMap>

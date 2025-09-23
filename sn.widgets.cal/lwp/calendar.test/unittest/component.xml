@@ -1,0 +1,61 @@
+<!-- ************************************************************** -->
+<!--                                                                -->
+<!-- Licensed Materials - Property of HCL                           -->
+<!--                                                                -->
+<!-- Copyright HCL Technologies Limited 2011, 2021                  -->
+<!--                                                                -->
+<!-- US Government Users Restricted Rights                          -->
+<!--                                                                -->
+<!-- ************************************************************** -->
+
+<component name="calendar.test/unittest" description="Where we do the actual building of the application unit-test" project-type="test-war" spec-version="${app.comp.version}">
+    <output-group name="default">
+		<output type="file" visibility="public" platform="all" location="${env.LWP_COMP_BUILD}/runtests.xml" />
+        <output type="dir" visibility="public" platform="all" location="${env.LWP_COMP_BUILD}/conf" />
+        <output type="dir" visibility="public" platform="all" location="${env.LWP_COMP_BUILD}/ext" />
+		<output type="jar" visibility="public" platform="all" location="${env.LWP_COMP_BUILD}/lib/calendar.test.jar"  />
+	</output-group>
+   
+    <dependency name="lc.util/base" type="jar"/>
+	<dependency name="lc.util/jse" type="jar"/>
+	<dependency name="lc.util/web" type="jar"/>
+	<dependency name="lc.util/cache" type="jar" version="3.0" />
+	
+	<dependency name="calendar.seedlist/retriever" type="jar" version="1.0"/>
+	<dependency name="search.seedlist/framework" type="jar" version="1.2" />
+	<dependency name="search.seedlist/external-api" type="jar" version="1.1" />
+	
+	<dependency name="prereqs.sn/jstl" type="jar" version="1.1.2" />
+	<dependency name="prereqs.sn/json4j" type="jar" version="1.0.0.1" />
+	<dependency name="prereqs.sn/was610" type="jar" version="6.1"/>
+    <dependency name="prereqs.sn/abdera040patch0509" type="jar" version="0.4.0"/>
+    <dependency name="prereqs.sn/log4j2" type="jar"/>
+    <dependency name="prereqs.sn/ibatis.2.3.0.677" type="jar" version="2.3.0.677"/>
+    <dependency name="prereqs.sn/ibatis.dao.2.2.0.638" type="jar" version="2.2.0.638"/>
+    <dependency name="prereqs.sn/db2" type="jar" version="1.0"/>
+    <dependency name="directory.services" type="jar" version="2.0"/>
+    <dependency name="lc.config.svc" type="jar" version="1.1"/>
+    <dependency name="prereqs.sn/was610" type="jar" version="6.1.0"/>
+    <dependency name="prereqs.sn/jakarta.commons" type="jar" version="1.1"/>
+    <dependency name="lc.customauthclient" type="jar" version="0.1" />
+    <dependency name="lc.util/base" type="jar" version="1.0" />
+    <dependency name="notify/client" type="jar" version="2.0"/>
+    <dependency name="lc.events/api" type="jar" version="2.5" />
+    <dependency name="lc.events.30/internal" type="jar" version="3.0"/>
+    <dependency name="lc.events.30/spi" type="jar" version="3.0"/>
+    <dependency name="prereqs.sn/jtidy" type="jar" version="04aug2000r7-dev" />
+    <dependency name="prereqs.sn/acf.2.2.0-5" type="jar" version="2.2.0-5"/>
+    <dependency name="prereqs.sn/icu4j-55.1" type="jar" version="55.1"/>
+	
+    <dependency name="prereqs.sn/ical4j-1.0-rc2" type="jar"/>
+	
+    <dependency name="calendar.app/core" type="jar"/>
+	<dependency name="calendar.seedlist/retriever" type="jar"/>
+	
+    <dependency name="prereqs.sn/hystrix" type="jar" />
+    <dependency name="prereqs.sn/junit" type="jar" verson="3.8.1"/>
+    
+    <!-- OWASP HTML Sanitizer for ACFNext -->
+    <dependency name="prereqs.sn/owasp-java-html-sanitizer" type="jar" />
+    <dependency name="prereqs.sn/guava-16.0.1" type="jar" version="16.0.1" />      
+</component>

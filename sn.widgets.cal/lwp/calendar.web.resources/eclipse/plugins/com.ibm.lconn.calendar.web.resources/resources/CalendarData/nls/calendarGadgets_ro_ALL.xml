@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2016                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<messagebundle>
+  <msg name="title_number_events_to_show">Numărul de evenimente de afişat:</msg> 
+  <msg name="title_type_all">Toate evenimentele urmărite sau la care se participă</msg> 
+  <msg name="title_type_attend">Evenimente la care se participă</msg> 
+  <msg name="title_type_follow">Evenimente urmărite</msg> 
+  <msg name="title_show">Afişare:</msg> 
+  <msg name="title">Evenimente comunitate</msg> 
+  <msg name="decription">Afişează evenimente pe care le urmăriţi sau la care aţi anunţat că participaţi.</msg> 
+</messagebundle> 

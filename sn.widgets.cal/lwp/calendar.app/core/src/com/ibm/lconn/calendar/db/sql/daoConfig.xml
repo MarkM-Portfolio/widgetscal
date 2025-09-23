@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE daoConfig
+	PUBLIC "-//ibatis.apache.org//DTD DAO Configuration 2.0//EN"
+	"http://ibatis.apache.org/dtd/dao-2.dtd">
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<daoConfig>
+	<context id="sqlmap">
+		<transactionManager type="SQLMAP">
+  			<property name="SqlMapConfigResource" value="com/ibm/lconn/calendar/db/sql/SqlMapConfig.xml"/>
+		</transactionManager>
+
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.EventDAO" implementation="com.ibm.lconn.calendar.db.dao.map.EventDAOSqlMap"/>
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.CalendarDAO" implementation="com.ibm.lconn.calendar.db.dao.map.CalendarDAOSqlMap"/>
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.RecurrenceDAO" implementation="com.ibm.lconn.calendar.db.dao.map.RecurrenceDAOSqlMap"/>
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.EventInstanceDAO" implementation="com.ibm.lconn.calendar.db.dao.map.EventInstanceDAOSqlMap"/>
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.EventInfoDAO" implementation="com.ibm.lconn.calendar.db.dao.map.EventInfoDAOSqlMap"/>
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.SubstitutionDAO" implementation="com.ibm.lconn.calendar.db.dao.map.SubstitutionDAOSqlMap"/>
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.SchemaVersionDAO" implementation="com.ibm.lconn.calendar.db.dao.map.SchemaVersionDAOSqlMap"/>
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.UserInfoDAO" implementation="com.ibm.lconn.calendar.db.dao.map.UserInfoDAOSqlMap"/>
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.DeletionHistoryDAO" implementation="com.ibm.lconn.calendar.db.dao.map.DeletionHistoryDAOSqlMap"/>
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.SeedlistDAO" implementation="com.ibm.lconn.calendar.db.dao.map.SeedlistDAOSqlMap"/>
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.EventTagDAO" implementation="com.ibm.lconn.calendar.db.dao.map.EventTagDAOSqlMap"/>
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.EventTagStatDAO" implementation="com.ibm.lconn.calendar.db.dao.map.EventTagStatDAOSqlMap"/>
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.EventCommentDAO" implementation="com.ibm.lconn.calendar.db.dao.map.EventCommentDAOSqlMap" />
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.EventFollowingDAO" implementation="com.ibm.lconn.calendar.db.dao.map.EventFollowingDAOSqlMap" />
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.MiscDataDAO" implementation="com.ibm.lconn.calendar.db.dao.map.MiscDataDAOSqlMap" />
+		<dao interface="com.ibm.lconn.calendar.db.dao.model.UserMentionDAO" implementation="com.ibm.lconn.calendar.db.dao.map.UserMentionDAOSqlMap" />
+	</context>
+</daoConfig>

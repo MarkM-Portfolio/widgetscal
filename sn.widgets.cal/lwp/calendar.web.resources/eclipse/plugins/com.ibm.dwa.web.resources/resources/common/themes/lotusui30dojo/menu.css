@@ -1,0 +1,70 @@
+/* ***************************************************************** */
+/*                                                                   */
+/* IBM Confidential                                                  */
+/*                                                                   */
+/* OCO Source Materials                                              */
+/*                                                                   */
+/* Copyright IBM Corp. 2012                                          */
+/*                                                                   */
+/* The source code for this program is not published or otherwise    */
+/* divested of its trade secrets, irrespective of what has been      */
+/* deposited with the U.S. Copyright Office.                         */
+/*                                                                   */
+/* ***************************************************************** */
+
+.s-popup {
+	background-color: rgb(255,255,255);
+	border: solid gray 1px;
+	position: absolute;
+	padding: 4px;
+	overflow-x: visible;
+	overflow-y: auto;
+	font-size: medium;
+}
+
+.s-list-selected {
+	background-color: rgb(193,193,193);
+}
+
+.s-list-text-selected {
+	color: #FFFFFF;
+}
+
+td.s-bold {
+    font-weight: bold;
+}
+
+.s-menu-item {
+	padding: 2px 3px;
+}
+
+.s-outline-text {
+	cursor: pointer;
+	font-family: lucida grande,helvetica,arial,sans-serif;
+	font-size: 70%;
+	font-weight: normal;
+	vertical-align: middle;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.s-img-display {
+	display: block;
+}
+
+.s-menu-overflow-hidden {
+	overflow: hidden;
+}
+
+.s-menu-text-disabled {
+	color: gray;
+}
+
+.s-menu-text-disabled td {
+	cursor: default;
+}
+
+.dijit_a11y .s-menu-text-disabled td {
+	opacity: 0.3;
+	filter: alpha(opacity=35);
+}

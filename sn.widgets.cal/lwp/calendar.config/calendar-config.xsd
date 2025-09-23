@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011                                          -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" 
+    xmlns:xml="http://www.w3.org/XML/1998/namespace">
+    
+    <xs:attributeGroup name="Common.Attributes">
+        <xs:annotation>
+            <xs:documentation>Attributes for _every_ element in Calendar config</xs:documentation>
+        </xs:annotation>
+        <xs:anyAttribute namespace="##other" />
+    </xs:attributeGroup>
+    
+    <xs:element name="config">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="repeatingEvent" type="repeatingEvent" minOccurs="1" maxOccurs="1" />
+                <xs:element name="icalFeed" type="icalFeed" minOccurs="1" maxOccurs="1" />
+                <xs:element name="allowCommentsFromNonCommunityMember" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+                
+                <xs:any namespace="##other" processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attributeGroup ref="Common.Attributes" />
+            <xs:attribute name="id" type="xs:string" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="repeatingEvent">
+        <xs:sequence>
+            <xs:element name="maxRepeatingCount" type="xs:int" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="icalFeed">
+        <xs:sequence>
+            <xs:element name="startFrom" type="xs:int" minOccurs="1" maxOccurs="1" />
+            <xs:element name="endTo" type="xs:int" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

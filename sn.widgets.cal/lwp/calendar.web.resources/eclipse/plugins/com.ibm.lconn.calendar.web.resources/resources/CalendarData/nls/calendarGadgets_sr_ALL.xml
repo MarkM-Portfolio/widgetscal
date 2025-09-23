@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2016                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<messagebundle>
+  <msg name="title_number_events_to_show">Broj događaja koje treba prikazati:</msg> 
+  <msg name="title_type_all">Svi događaji koje pratim ili u kojima učestvujem</msg> 
+  <msg name="title_type_attend">Događaji u kojima učestvujem</msg> 
+  <msg name="title_type_follow">Događaji koje pratim</msg> 
+  <msg name="title_show">Prikaži:</msg> 
+  <msg name="title">Događaji u zajednici</msg> 
+  <msg name="decription">Prikazuje događaje koje pratite ili događaje u kojima ćete učestvovati</msg> 
+</messagebundle> 

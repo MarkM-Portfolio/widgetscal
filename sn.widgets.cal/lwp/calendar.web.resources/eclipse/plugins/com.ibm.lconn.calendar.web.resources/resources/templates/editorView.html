@@ -1,0 +1,217 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2013, 2015                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<div class="eventEditor" >
+	<form id="${id}-form" class="lotusForm" dojotype="dijit.form.Form"
+		encType="multipart/form-data" action="javascript:;" method="post">
+
+	<div class="lotusDialogContent">
+	<fieldset>
+		<legend class="lotusHidden">${_lang.Fieldset_Event}</legend>
+		<table role="presentation" class="lotusFormTable" cellpadding="0" cellspacing="0" border="0">
+			<tbody>
+				<tr class="lotusFormErrorSummary" id="${id}-errorSummary" style="display: none;" aria-live="assertive" role="alert">
+					<td colspan="2">
+						<div class="lotusFormRequired">
+							<img class="lconnSprite lconnSprite-iconError16" style="margin-right:7px" src="${blankImageUrl}" alt="_lang.ERROR"/>
+							<span class="lotusAltText">${_lang.ERROR}:</span>
+							${_lang.ERROR_HEADER}:
+						<a href="javascript:;" class="lotusDelete" style="float:right" role="button" title="${_lang.CLOSE}" dojoAttachEvent="onclick: _hideErrors">
+							<img alt="${_lang.CLOSE}" src="${blankImageUrl}"><span class="lotusAltText">X</span>
+						</a>
+						</div>
+						<ul id="${id}-errorList"></ul>
+					</td>
+				</tr>
+				<tr aria-live="assertive" role="alert">
+					<td colspan="2">
+						<div id="${id}-permissionWarningSummary" dojoAttachPoint="permissionWarningSummary" style="display: none; margin-top:10px">
+				            <div class="lotusMessage2 lotusWarning" style="top:0px; margin:0px">
+					            <img class="lotusIcon lotusIconMsgWarning" src="${blankImageUrl}" alt="${_lang.WARNING_ICON}"/>
+					            <span class="lotusAltText">${_lang.WARNING_ICON}:</span>
+					            <div dojoAttachPoint="permissionWarningMessage" class="lotusMessageBody">
+					            </div>
+						        <a href="javascript:;" class="lotusDelete" style="float:right" role="button" title="${_lang.CLOSE}" dojoAttachEvent="onclick: _hidePermissionWarnings">
+									<img alt="${_lang.CLOSE}" src="${blankImageUrl}"><span class="lotusAltText">X</span>
+								</a>
+				             </div>
+			            </div>
+					</td>
+				</tr>
+				<tr><td colspan="2" class="lotusFormTitle">
+					<h2 id="${id}-title" style="margin-left:0">${_lang.ADD_EVENT}</h2>
+				</td></tr>
+
+				<tr class="lotusFormFieldRow" id="${id}-editOptions" autosave="type=calendar.editType&editorId=${id}">
+					<td class="lotusFormLabel lotusLeftLabels"><label style="width:auto;float:none;">${_lang.EDIT_LABEL}</label><span id="${id}-editTypeHELP"></span></td>
+					<td>
+						<input type="radio"	id="${id}-exception" checked="checked" name="edit-type" />
+							<label for="${id}-exception">${_lang.EDIT_THIS_INSTANCE}</label>
+						<input type="radio"	id="${id}-series" name="edit-type" />
+							<label for="${id}-series">${_lang.EDIT_THIS_SERIES}</label>
+					</td>
+				</tr>
+
+				<tr class="lotusFormFieldRow">
+					<td class="lotusFormLabel lotusLeftLabels" width="15%">
+						<label for="${id}-subject">
+							<span class="lotusFormRequired">*</span>
+							${_lang.EVENT_TITLE}
+						</label></td>
+					<td><input type="text" dojotype="dijit.form.TextBox" 
+							name="subject" id="${id}-subject" class="lotusText" autosave="type=dijit.form.TextBox" />
+					</td>
+				</tr>
+				
+				<tr class="lotusFormFieldRow">
+					<td class="lotusFormLabel lotusLeftLabels" width="15%">
+						<label style="width:auto;float:none;" for="${id}-tagsAsString">
+							${_lang.TAGS}
+						</label>
+						<span id="${id}-tagsAsStringHELP"></span>
+					</td>
+					<td>
+						<span dojoType="lconn.core.TypeAheadDataStore" jsId="${id}_tagTypeAheadStore" queryParam="tag" 
+							url="${baseUrl}/json/typeahead/tag?calendarUuid=${calendar.resourceId}&limit=10"></span>
+						<div>
+							<div class="lotusText" dojoType="lconn.core.TypeAhead" id="${id}-tagsAsString" 
+								name="tagsAsString" value="" size="40" maxlength="255"
+								autoComplete="false" store="${id}_tagTypeAheadStore" searchDelay="400" minChars="2" 
+								searchAttr="tag" nameAttr="tag" token=" " multipleValues="true" autosave="type=calendar.typeAhead" >
+								<script type='dojo/connect' event='startup'>
+				                	this.hideEmptyResults = true;
+			                	</script>
+							</div>	
+				    	</div>
+					</td>
+				</tr>
+
+				<tr class="lotusFormFieldRow">
+					<td class="lotusFormLabel lotusLeftLabels" width="15%">
+						<label for="${id}-sdate">
+							<span class="lotusFormRequired">*</span>
+							${_lang.STARTS}
+						</label></td>
+					<td>						
+					    <input type="text" dojotype="lconn.calendar.DateTextBox" 
+							name="sdate" id="${id}-sdate" autosave="type=lconn.calendar.DateTextBox" hasDownArrow="false" />
+	   					<div name="divstime" id="${id}-divstime" style="display:inline"><input type="text" dojotype="dijit.form.TimeTextBox"
+	   							name="stime" id="${id}-stime" autosave="type=dijit.form.TimeTextBox" hasDownArrow="false" /></div>
+		               <div style="display:inline">
+		               <div class="lotusOffScreen" aria-live="off" id="label_aria_live_allday"></div>
+					   <input class="lotusCheckbox alldayCheckbox" style="vertical-align:middle" type="checkbox" name="allDay" id="${id}-allDay" class="" autosave="type=calendar.allday&wid=${id}" />
+		               <label for="${id}-allDay" class="lotusCheckbox alldayCheckboxLabel">${_lang.ALL_DAY_EVENT} </label>      
+					   </div>
+					   
+					</td>
+				</tr>
+				
+				<tr class="lotusFormFieldRow" id="${id}-time-label">
+					<td class="lotusFormLabel lotusLeftLabels" width="15%">
+						<label for="${id}-edate">
+							<span class="lotusFormRequired">*</span>
+	   							${_lang.ENDS}
+						</label></td>
+					<td>						
+	   				    <input type="text" dojotype="lconn.calendar.DateTextBox" 
+								name="edate" id="${id}-edate" autosave="type=lconn.calendar.DateTextBox" hasDownArrow="false" />
+	   				    <input type="text" dojotype="dijit.form.TimeTextBox"
+								   name="etime" id="${id}-etime" autosave="type=dijit.form.TimeTextBox" hasDownArrow="false" />
+                    </td>
+				</tr>
+				<tr class="lotusFormFieldRow" id="${id}-time">
+					<td class="lotusFormLabel" width="15%">
+					</td>
+					<td>
+						<div style="display:table">
+							<div style="display:table-row;" id="${id}-recurrenceRow">
+								<div style="display:table-cell;vertical-align: top;">
+									<span class="lotusOffScreen" id="${id}_rec-recurrenceDisable_description">${_lang.REPEATS_ENABLE_DISABLE_HINT}</span>
+									<input type="checkbox" style="margin-top: 3px;" checked="checked" id="${id}_rec-recurrenceDisable" dojoAttachEvent="onclick:hideRepeatOptions" class="lotusHidden"  aria-label="${_lang.RECURRENCE}" aria-describedby="${id}_rec-recurrenceDisable_description" />
+								</div>
+								<div style="display:table-cell">
+									<div id="${id}-recurrencePicker" autosave="type=calendar.recPicker"></div>
+								</div>
+							</div>
+						</div>
+                    </td>
+				</tr>
+				<tr class="lotusFormFieldRow" style="display:none" dojoAttachPoint="eventIconFieldAP">
+					<td class="lotusFormLabel lotusLeftLabels" width="15%">
+						<label for="${id}-imageUrl">${_lang.IMAGE_URL}</label></td>
+					<td><div class="lotusText" id="${id}-imageUrl" name="imageUrl" dojotype="dijit.form.TextBox" autosave="type=dijit.form.TextBox"></div></td>
+				</tr>
+				
+				<tr class="lotusFormFieldRow">
+					<td class="lotusFormLabel lotusLeftLabels" width="15%">
+						<label for="${id}-location">${_lang.LOCATION}</label></td>
+					<td><div class="lotusText" id="${id}-location" name="location" dojotype="dijit.form.TextBox" autosave="type=dijit.form.TextBox"></div></td>
+				</tr>
+
+				<tr class="lotusFormFieldRow">
+					<td class="lotusFormLabel lotusLeftLabels" width="15%">
+						<label>${_lang.DESCRIPTION}</label></td>
+					<td autosave="type=calendar.ckeditor&editorId=${id}"><div id="${id}-description" name="description"></div></td>
+				</tr>
+
+				<tr class="lotusFormFieldRow">
+					<td class="lotusFormLabel" width="15%">
+					</td>
+					<td> 
+					    <div>
+						<input type="checkbox" style="vertical-align:middle" class="lotusCheckbox" id="${id}-notify" dojoAttachEvent="click:toggleNotify" 
+							autosave="type=calendar.notifyInEditor&editorId=${id}" aria-controls="${id}-notificationTR" />
+						<label for="${id}-notify" class="lotusCheckbox">${_lang.NOTIFY_OTHERS}</label></td>
+						<div>
+					<td></td>
+				</tr>
+				
+				<tr class="lotusFormFieldRow">
+					<td width="15%"></td>
+					<td> 
+						<div id="select_all_member" style="display: none;">
+							<input id="select_all" type="checkbox" style="vertical-align:middle" dojoAttachEvent="onclick:performSelectAll" class="lotusCheckbox" />
+							<label for="${id}-performSelectAll" class="lotusCheckbox">${_lang.SELECT_ALL}</label>
+						</div>
+					</td>
+				</tr>
+
+				<tr id="${id}-notificationTR" class="lotusFormFieldRow" dojoAttachPoint="notificationTR" style="display:none;">
+					<td width="15%"></td>
+					<td> 
+						<div dojoAttachPoint="notificationContainer"></div>
+					</td>
+				</tr>
+				
+				<tr class="lotusFormFieldRow">
+					<td colspan="2">
+						<div class="lotusFormField lotusMeta" style="margin-bottom:10px">* ${_lang.REQUIRED}</div>
+					</td>
+				</tr>
+	
+				<tr style="border-color: #AAAAAA;border-style: solid;border-width: 1px 0 0;">
+					<td colspan="2" class="lotusFormFooter">
+						<input value="${_lang.SAVE}" class="lotusFormButton" id="${id}-submit" type="submit" />
+						<input type="button" class="lotusFormButton cancel" id="${id}-cancel" value="${_lang.CANCEL}">
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+		</fieldset>
+	</div>
+</form>
+</div>
+
+

@@ -1,0 +1,156 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2015                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<project name="calendar.test/unittest" default="development" basedir="."> 
+    <import file="${env.WPLC_IMPORT}/std_props.xml"/>
+	<import file="${env.WPLC_IMPORT}/std_dirs.xml"/>
+    <import file="${env.WPLC_IMPORT}/package_extra.xml" />	
+
+	<!--no deprecation -->
+	<property name="compile.no.deprecation" value="true"/>
+	
+	<!-- do not need to build javadoc -->
+	<property name="skip.javadoc" value="true"/>
+	<property name="skip.javadoc.public" value="true"/>
+	<property name="skip.javadoc.full" value="true"/>
+	<property name="whitespace.exclude" value="**/*.js"/>
+	<property name="jsObfuscator.skipobfuscation" value="true"/>
+
+	<property name="exclude.pattern" value="**/*/package.html"/>
+
+	<property name="output.jar" value="${dir.lib}/calendar.test.jar"/>
+	
+	<property name="postcompile.override" value="calendar-tests-post-compile"/>
+	
+	<target name="calendar-tests-post-compile">
+	  <locateComponent component="calendar.web" locateBuildDir="false" property="calendar.web.dir"/>
+	  <locateComponent component="calendar.app/core" locateBuildDir="false" property="calendar.app.core.dir"/>
+	  <locateComponent component="calendar.config" locateBuildDir="false" property="calendar.config.dir"/>
+	  <locateComponent component="prereqs.sn/junitee" locateBuildDir="false" property="junitee.jar.dir"/>
+	  <locateComponent component="lc.config.svc" locateBuildDir="true" property="lc.config.svc.dir"/>
+   	
+	  <mkdir dir="${dir.build}/conf"/>
+   	  <mkdir dir="${dir.build}/ext"/>
+   	  <mkdir dir="${dir.build}/ext/libs"/>
+   	  <mkdir dir="${dir.build}/ext/exclasses"/>	
+   	
+   	  <delete>
+		<fileset dir="${dir.build}/ext">
+		    <include name="**/*.xml"/>
+		</fileset>
+	  </delete>
+		
+	  <copy todir="${dir.build}/ext">
+   		 <fileset dir="${calendar.app.core.dir}/src" includes="com/ibm/lconn/calendar/db/sql/SqlMapConfig.xml" />
+   	  </copy>
+      <copy todir="${dir.build}/ext">
+    	 <fileset dir="${calendar.app.core.dir}/src" includes="com/ibm/lconn/calendar/db/sql/daoConfig.xml" />
+      </copy>
+   	  <replace file="${dir.build}/ext/com/ibm/lconn/calendar/db/sql/SqlMapConfig.xml" summary="yes">
+		<replacetoken><![CDATA[<!-- JNDI DATASOURCE [BEGIN] -->]]></replacetoken>
+   	    <replacevalue><![CDATA[<!-- JNDI DATASOURCE [BEGIN] ]]></replacevalue>
+	  </replace>
+   	  <replace file="${dir.build}/ext/com/ibm/lconn/calendar/db/sql/SqlMapConfig.xml" summary="yes">
+		<replacetoken><![CDATA[<!-- JNDI DATASOURCE [END] -->]]></replacetoken>
+   	    <replacevalue><![CDATA[ JNDI DATASOURCE [END] -->]]></replacevalue>
+	  </replace>
+   	  <replace file="${dir.build}/ext/com/ibm/lconn/calendar/db/sql/SqlMapConfig.xml" summary="yes">
+		<replacetoken><![CDATA[<!-- SIMPLE DATASOURCE [BEGIN] ]]></replacetoken>
+   	    <replacevalue><![CDATA[<!-- SIMPLE DATASOURCE [BEGIN] -->]]></replacevalue>
+	  </replace>
+      <replace file="${dir.build}/ext/com/ibm/lconn/calendar/db/sql/SqlMapConfig.xml" summary="yes">
+    	<replacetoken><![CDATA[ SIMPLE DATASOURCE [END]]]></replacetoken>
+    	<replacevalue><![CDATA[<!-- SIMPLE DATASOURCE [END]]]></replacevalue>
+      </replace>
+		
+	  <copy todir="${dir.build}/conf">
+        <fileset dir="${calendar.config.dir}" includes="calendar-config.xml" />
+      	<fileset dir="${calendar.config.dir}" includes="calendar-config.xsd" />
+      </copy>	
+	  
+	  <copy todir="${dir.build}/conf">
+	    <fileset dir="${lc.config.svc.dir}/config.files" includes="LotusConnections-config.xml" />
+   	    <fileset dir="${lc.config.svc.dir}/config.files" includes="LotusConnections-config.xsd" />
+	    <fileset dir="${lc.config.svc.dir}/config.files" includes="service-location.xsd" />
+      </copy>
+	  
+	  <replace file="${dir.build}/conf/LotusConnections-config.xml">
+		<replacetoken>enabled="false"</replacetoken>
+		<replacevalue>enabled="true"</replacevalue>
+	  </replace>
+	  
+	  <replace file="${dir.build}/conf/LotusConnections-config.xml">
+		<replacetoken>ssl_enabled="false"</replacetoken>
+		<replacevalue>ssl_enabled="true"</replacevalue>
+	  </replace>
+	  
+	  <replace file="${dir.build}/conf/LotusConnections-config.xml">
+		<replacetoken>href="admin_replace"</replacetoken>
+		<replacevalue>href="http://acme.org"</replacevalue>
+	  </replace>
+	  
+	  <replace file="${dir.build}/conf/LotusConnections-config.xml">
+		<replacetoken>ssl_href="admin_replace"</replacetoken>
+		<replacevalue>ssl_href="https://acme.org"</replacevalue>
+	  </replace>
+	  
+	  <copy todir="${dir.build}/conf/extern">
+   		<fileset dir="${lc.config.svc.dir}/config.files" includes="acf-config*.xml" />
+   	  </copy>
+		
+	  <copy todir="${dir.build}/ext/exclasses">
+   	     <fileset dir="${calendar.web.dir}/Web Content/WEB-INF/classes" includes="**/*.*" />
+   	  </copy>
+	  
+	  <copy todir="${dir.build}/ext/libs">
+   	     <fileset dir="${junitee.jar.dir}" includes="**/*.jar" />
+   	  </copy>
+	  
+	  <prereqclasspath componentXML="${basedir}/component.xml" recurseClasspath="true" useExtendedClasspath="false"/>
+	  <copy todir="${dir.build}/ext/libs" flatten="true">
+   	   	 <path>
+   	   	     <pathelement path="${prereq.classpath}"/>
+   	   	 </path>
+   	  </copy>
+   	  <delete file="${dir.build}/ext/libs/cglib-2.1_3.jar"/>
+   	  <delete file="${dir.build}/ext/libs/cglib-docs-2.1_3.jar"/>
+   	  <!-- <delete file="${dir.build}/ext/libs/icu4j-53_1.jar"/>
+   	  <delete file="${dir.build}/ext/libs/icu4j-charset-53_1.jar"/>
+   	  <delete file="${dir.build}/ext/libs/icu4j-localespi-53_1.jar"/> -->
+   	  <delete>
+   		 <fileset dir="${dir.build}/ext/libs">
+   		   <include name="com.ibm.ws.*.jar"/>
+   		   <include name="com.ibm.jaxws.thinclient_8.0.0.jar"/>
+   		   <include name="com.ibm.wsfp.main.jar"/>
+   		 </fileset>
+      </delete>
+	  
+	  <copy todir="${dir.build}">
+   	     <fileset dir="${basedir}" includes="runtests.xml" />
+   	  </copy>
+    </target>
+
+	<!-- more Mantis imports -->
+	<import file="${env.WPLC_IMPORT}/check.xml"/>
+	<import file="${env.WPLC_IMPORT}/compile.xml"/>
+	<import file="${env.WPLC_IMPORT}/rmic.xml"/>
+	<import file="${env.WPLC_IMPORT}/package_extra.xml"/>
+	<import file="${env.WPLC_IMPORT}/javadoc.xml"/>
+	<import file="${env.WPLC_IMPORT}/jdepend.xml"/>
+	<import file="${env.WPLC_IMPORT}/clean.xml"/>
+	<import file="${env.WPLC_IMPORT}/comp_zip.xml"/>
+	<import file="${env.WPLC_IMPORT}/std_targets.xml"/>
+	<import file="${env.WPLC_IMPORT}/process_nls.xml"/>
+	<import file="${env.WPLC_IMPORT}/performance.xml"/>
+</project>

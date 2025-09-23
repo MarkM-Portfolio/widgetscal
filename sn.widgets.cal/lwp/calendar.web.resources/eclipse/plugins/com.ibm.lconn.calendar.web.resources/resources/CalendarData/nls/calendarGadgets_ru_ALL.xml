@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2016                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<messagebundle>
+  <msg name="title_number_events_to_show">Количество мероприятий для просмотра:</msg> 
+  <msg name="title_type_all">Все отслеживаемые мероприятия и мероприятия, в которых планируется участие</msg> 
+  <msg name="title_type_attend">Мероприятия, в которых планируется участие</msg> 
+  <msg name="title_type_follow">Отслеживаемые мероприятия</msg> 
+  <msg name="title_show">Показать:</msg> 
+  <msg name="title">Мероприятия сообщества</msg> 
+  <msg name="decription">Показывает мероприятия, которые вы отслеживаете или в которых объявили о своем участии.</msg> 
+</messagebundle> 

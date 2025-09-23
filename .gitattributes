@@ -1,0 +1,25 @@
+*.bat linguist-language=CMD Batch linguist-vendored=false
+*.css linguist-language=CSS linguist-vendored=false
+*.csv linguist-language=Csv linguist-vendored=false
+*.db linguist-language=Db linguist-vendored=false
+*.ftl linguist-language=Ftl linguist-vendored=false
+*.gif linguist-language=Gif linguist-vendored=false
+*.gitignore linguist-language=Git linguist-vendored=false
+*.html linguist-language=HTML linguist-vendored=false
+*.ics linguist-language=Ics linguist-vendored=false
+*.java linguist-language=Java linguist-vendored=false
+*.jazzignore linguist-language=Jazzignore linguist-vendored=false
+*.js linguist-language=JavaScript linguist-vendored=false
+*.json linguist-language=JSON linguist-vendored=false
+*.jsp linguist-language=Jsp linguist-vendored=false
+*.mf linguist-language=Mf linguist-vendored=false
+*.png linguist-language=Png linguist-vendored=false
+*.pr linguist-language=Pr linguist-vendored=false
+*.properties linguist-language=Properties linguist-vendored=false
+*.sql linguist-language=Sql linguist-vendored=false
+*.testing linguist-language=Testing linguist-vendored=false
+*.txt linguist-language=Text File linguist-vendored=false
+*.xmi linguist-language=Xmi linguist-vendored=false
+*.xml linguist-language=Xml linguist-vendored=false
+*.xsd linguist-language=Xsd linguist-vendored=false
+*.zip linguist-language=Zip linguist-vendored=false

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMap namespace="MiscData_MT">
+	
+	<insert id="insertData" parameterClass="DBMiscData">
+		INSERT INTO CALENDAR.CA_MISCDATA
+			(NAME, VAL, MODIFIEDON)
+		VALUES
+			(#name#, #value#, #modifiedOn#)
+	</insert>
+	
+	<update id="updateData" parameterClass="DBMiscData">
+		UPDATE CALENDAR.CA_MISCDATA
+		SET VAL = #value#, MODIFIEDON = #modifiedOn#
+		WHERE NAME = #name#
+	</update>
+	
+	<delete id="deleteData" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_MISCDATA WHERE NAME = #name# <isNotNull property="val">AND VAL LIKE #val#</isNotNull>
+	</delete>
+	
+	<select id="selectData" parameterClass="string" resultClass="DBMiscData">
+		SELECT NAME as name, VAL as value, MODIFIEDON as modifiedOn
+		FROM CALENDAR.CA_MISCDATA
+		WHERE NAME = #name#
+	</select>
+	
+</sqlMap>

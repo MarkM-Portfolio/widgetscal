@@ -1,0 +1,34 @@
+How To Run The Unit Test With Mantis On Your Machine In a Console
+====================================
+
+1. Bulid the whole calendar project with bld.
+	sn.widget.cal\lwp>bld
+
+2. Change the directory to 'build\unittest'.
+	sn.widget.cal\lwp>cd build\unittest
+
+3. Copy the files ('db.properties' and 'db.template.properties') from 'properties\src' to the unittest directory.
+	sn.widgets.cal\lwp\build\calendar.test\unittest>cp properties\src\db.template.properties .
+	sn.widgets.cal\lwp\build\calendar.test\unittest>cp properties\src\db.properties .
+
+4. Edit the 'db.properties' file. Enable the raw db properties and disable the jndi.
+e.g.
+	database.schema=CALENDAR
+
+	database.driver=com.ibm.db2.jcc.DB2Driver
+	database.url=jdbc:db2://lcauto61.swg.usma.ibm.com:50000/SNCOMM
+	database.user=db2inst1
+	database.password=hnivcmpz
+
+	#database.jndi=java:comp/env/jdbc/calendar
+
+NOTE: Using a remote db (like a db on the server pool) will make the unit test very slow.
+
+5. Make a directory with name 'jdbc'.
+	sn.widgets.cal\lwp\build\calendar.test\unittest>mkdir jdbc
+
+6. Run the Junit test.
+	sn.widgets.cal\lwp\build\calendar.test\unittest>bld -f runtests.xml report
+
+p.s.
+One can choose which testcase to run by editing the property 'name' of '//target[@name="test"]/junit/sysproperty/test' in runtests.xml

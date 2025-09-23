@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2015                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMap namespace="Seedlist_MT">
+
+	<sql id="FOR_READ_ONLY">
+	    <isEqual property="DBTYPE" compareValue="DB2">
+		    FOR FETCH ONLY
+	    </isEqual>
+	    <!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		    FOR FETCH ONLY
+	    </isEqual>
+	</sql>
+
+	<sql id="TOP_{n}">
+	    <isEqual property="DBTYPE" compareValue="MSSQL">
+	        <isNotNull property="__fetch_size">TOP($__fetch_size$)</isNotNull>
+	    </isEqual>
+	</sql>
+
+	<sql id="FETCH_{n}">
+	    <isEqual property="DBTYPE" compareValue="DB2">
+	        <isNotNull property="__fetch_size">
+	        FETCH FIRST $__fetch_size$ ROWS ONLY
+	        </isNotNull>
+	    </isEqual>
+	    <!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+	        <isNotNull property="__fetch_size">
+	        FETCH FIRST $__fetch_size$ ROWS ONLY
+	        </isNotNull>
+	    </isEqual>
+	</sql>
+	
+	<select id="getUpdatedEventsSinceCount" parameterClass="java.util.Map" resultClass="int">
+		SELECT COUNT(1)
+		FROM CALENDAR.CA_EVENT
+		WHERE DBMODTIME >= #startDate# AND ISRECURRENCE = 0 AND ORG_ID = #ORG_ID#
+			<isNotNull property="finishDate">AND DBMODTIME &lt;= #finishDate#</isNotNull>
+		<include refid="Seedlist_MT.FOR_READ_ONLY"/>
+	</select>
+
+	<select id="getUpdatedEventsSince" parameterClass="java.util.Map" resultClass="DBEvent">
+		SELECT <include refid="Seedlist_MT.TOP_{n}"/> 
+			EVENT_UUID as event_UUID, CALENDAR_UUID as calendar_UUID,
+			CREATEDBY as createdBy, CREATEDON as createdOn,
+			MODIFIEDBY as modifiedBy, MODIFIEDON as modifiedOn, DBMODTIME as dbModifiedOn,
+			DFLTEVENTINFO as eventInfo_UUID, ISRECURRENCE as isRecurrence, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENT
+		WHERE DBMODTIME >= #startDate# AND ISRECURRENCE = 0 AND ORG_ID = #ORG_ID#
+			<isNotNull property="finishDate">AND DBMODTIME &lt;= #finishDate#</isNotNull>
+		ORDER BY DBMODTIME ASC
+		<include refid="Seedlist_MT.FETCH_{n}"/>
+		<include refid="Seedlist_MT.FOR_READ_ONLY"/>
+	</select>
+	
+	<select id="getUpdatedEventsSince_{0,n}_ORACLE" parameterClass="java.util.Map" resultClass="DBEvent">
+		SELECT * FROM
+			(
+				SELECT EVENT_UUID as event_UUID, CALENDAR_UUID as calendar_UUID,
+					CREATEDBY as createdBy, CREATEDON as createdOn,
+					MODIFIEDBY as modifiedBy, MODIFIEDON as modifiedOn, DBMODTIME as dbModifiedOn,
+					DFLTEVENTINFO as eventInfo_UUID, ISRECURRENCE as isRecurrence, ORG_ID as ORG_ID
+				FROM CALENDAR.CA_EVENT
+				WHERE DBMODTIME >= #startDate# AND ISRECURRENCE = 0 AND ORG_ID = #ORG_ID#
+					<isNotNull property="finishDate">AND DBMODTIME &lt;= #finishDate#</isNotNull>
+				ORDER BY DBMODTIME ASC
+			) t
+		WHERE ROWNUM &lt;= $__fetch_size$
+		ORDER BY t.modifiedOn ASC
+	</select>
+	
+	<select id="getUpdatedRecurrenceEventsSinceCount" parameterClass="java.util.Map" resultClass="int">
+		SELECT COUNT(1)
+		FROM CALENDAR.CA_RECURRENCE
+		WHERE MODIFIEDON >= #startDate# <isNotNull property="finishDate">AND MODIFIEDON &lt;= #finishDate#</isNotNull>  AND ORG_ID = #ORG_ID#
+		<include refid="Seedlist_MT.FOR_READ_ONLY"/>
+	</select>
+	
+	<select id="getUpdatedRecurrenceEventsSince" parameterClass="java.util.Map" resultClass="DBRecurrence">
+		SELECT <include refid="Seedlist_MT.TOP_{n}"/> 
+			EVENT_UUID as event_UUID, CALENDAR_UUID as calendar_UUID, 
+			FREQUENCYCODE as frequencyCode, INTERVAL as interval,
+			UNTILRULE as untilRule, STARTDATE as startDate, ENDDATE as endDate, 
+			BYDAY as byDay, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_RECURRENCE
+		WHERE MODIFIEDON >= #startDate# <isNotNull property="finishDate">AND MODIFIEDON &lt;= #finishDate#</isNotNull>  AND ORG_ID = #ORG_ID#
+		ORDER BY MODIFIEDON ASC
+		<include refid="Seedlist_MT.FETCH_{n}"/>
+		<include refid="Seedlist_MT.FOR_READ_ONLY"/>
+	</select>
+	
+	<select id="getUpdatedRecurrenceEventsSince_{0,n}_ORACLE" parameterClass="java.util.Map" resultClass="DBRecurrence">
+		SELECT * FROM
+			(
+				SELECT EVENT_UUID as event_UUID, CALENDAR_UUID as calendar_UUID, 
+					FREQUENCYCODE as frequencyCode, INTERVAL as interval,
+					UNTILRULE as untilRule, STARTDATE as startDate, ENDDATE as endDate, 
+					BYDAY as byDay, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+				FROM CALENDAR.CA_RECURRENCE
+				WHERE MODIFIEDON >= #startDate# <isNotNull property="finishDate">AND MODIFIEDON &lt;= #finishDate#</isNotNull>  AND ORG_ID = #ORG_ID#
+				ORDER BY MODIFIEDON ASC
+			) t
+		WHERE ROWNUM &lt;= $__fetch_size$
+		ORDER BY t.modifiedOn ASC
+	</select>
+	
+	<select id="getUpdatedExceptionInstancesSinceCount" parameterClass="java.util.Map" resultClass="int">
+		SELECT COUNT(1)
+		FROM CALENDAR.CA_SUBSTITUTION
+		WHERE MODIFIEDON >= #startDate# AND ISCANCELLED = 0 AND EVENTINFO_UUID IS NOT NULL  AND ORG_ID = #ORG_ID#
+			<isNotNull property="finishDate">AND MODIFIEDON &lt;= #finishDate#</isNotNull>
+		<include refid="Seedlist_MT.FOR_READ_ONLY"/>
+	</select>
+	
+	<select id="getUpdatedExceptionInstancesSince" parameterClass="java.util.Map" resultClass="DBSubstitution">
+		SELECT <include refid="Seedlist_MT.TOP_{n}"/> 
+			SUBSTITUTION_UUID as substitution_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID,
+			STARTDATE as startDate, ISCANCELLED as isCancelled, EVENTINFO_UUID as eventInfo_UUID, 
+			NEWSTARTDATE as newStartDate, NEWENDDATE as newEndDate, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_SUBSTITUTION
+		WHERE MODIFIEDON >= #startDate# AND ISCANCELLED = 0 AND EVENTINFO_UUID IS NOT NULL  AND ORG_ID = #ORG_ID#
+			<isNotNull property="finishDate">AND MODIFIEDON &lt;= #finishDate#</isNotNull>
+		ORDER BY MODIFIEDON ASC
+		<include refid="Seedlist_MT.FETCH_{n}"/>
+		<include refid="Seedlist_MT.FOR_READ_ONLY"/>
+	</select>
+	
+	<select id="getUpdatedExceptionInstancesSince_{0,n}_ORACLE" parameterClass="java.util.Map" resultClass="DBSubstitution">
+		SELECT * FROM
+			(
+				SELECT SUBSTITUTION_UUID as substitution_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID,
+					STARTDATE as startDate, ISCANCELLED as isCancelled, EVENTINFO_UUID as eventInfo_UUID, 
+					NEWSTARTDATE as newStartDate, NEWENDDATE as newEndDate, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+				FROM CALENDAR.CA_SUBSTITUTION
+				WHERE MODIFIEDON >= #startDate# AND ISCANCELLED = 0 AND EVENTINFO_UUID IS NOT NULL  AND ORG_ID = #ORG_ID#
+					<isNotNull property="finishDate">AND MODIFIEDON &lt;= #finishDate#</isNotNull>
+				ORDER BY MODIFIEDON ASC
+			) t
+		WHERE ROWNUM &lt;= $__fetch_size$
+		ORDER BY t.modifiedOn ASC
+	</select>
+	
+	<select id="getDeletionHistorySinceCount" parameterClass="java.util.Map" resultClass="int">
+		SELECT COUNT(1)
+		FROM CALENDAR.CA_DELETION_HISTORY
+		WHERE DBMODTIME >= #startDate# <isNotNull property="finishDate">AND DBMODTIME &lt;= #finishDate#</isNotNull>  AND ORG_ID = #ORG_ID#
+		<include refid="Seedlist_MT.FOR_READ_ONLY"/>
+	</select>
+	
+	<select id="getDeletionHistorySince" parameterClass="java.util.Map" resultClass="DBDeletionHistory">
+		SELECT <include refid="Seedlist_MT.TOP_{n}"/> 
+			DELHISTORY_UUID as id, CALENDAR_UUID as calendar_UUID, OBJECT_TYPE as objectType, OBJECT_UUID as objectId, DBMODTIME as dbmodtime, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_DELETION_HISTORY
+		WHERE DBMODTIME >= #startDate# <isNotNull property="finishDate">AND DBMODTIME &lt;= #finishDate#</isNotNull>  AND ORG_ID = #ORG_ID#
+		ORDER BY DBMODTIME ASC
+		<include refid="Seedlist_MT.FETCH_{n}"/>
+		<include refid="Seedlist_MT.FOR_READ_ONLY"/>
+	</select>
+	
+	<select id="getDeletionHistorySince_{0,n}_ORACLE" parameterClass="java.util.Map" resultClass="DBDeletionHistory">
+		SELECT * FROM
+			(
+				SELECT DELHISTORY_UUID as id, CALENDAR_UUID as calendar_UUID, OBJECT_TYPE as objectType, OBJECT_UUID as objectId, DBMODTIME as dbmodtime, ORG_ID as ORG_ID
+				FROM CALENDAR.CA_DELETION_HISTORY
+				WHERE DBMODTIME >= #startDate# <isNotNull property="finishDate">AND DBMODTIME &lt;= #finishDate#</isNotNull>  AND ORG_ID = #ORG_ID#
+				ORDER BY DBMODTIME ASC
+			) t
+		WHERE ROWNUM &lt;= $__fetch_size$
+		ORDER BY t.dbmodtime ASC
+	</select>
+	
+	<select id="getACLUpdatedCalendarsSinceCount" parameterClass="java.util.Map" resultClass="int">
+		SELECT COUNT(1)
+		FROM CALENDAR.CA_CALENDAR
+		WHERE ACLMODTIME >= #startDate#  AND ORG_ID = #ORG_ID#
+			<isNotNull property="finishDate">AND ACLMODTIME &lt;= #finishDate#</isNotNull>
+			<isNotNull property="createdBefore">AND CREATEDON &lt;= #createdBefore#</isNotNull>
+		<include refid="Seedlist_MT.FOR_READ_ONLY"/>
+	</select>
+	
+	<select id="getACLUpdatedCalendarsSince" parameterClass="java.util.Map" resultClass="DBCalendar">
+		SELECT <include refid="Seedlist_MT.TOP_{n}"/> 
+			CALENDAR_UUID as calendar_UUID, COMMUNITY_UUID as community_UUID, COMMUNITY_NAME as communityName, 
+			MEMBERS_ROLE as members_Role, VISIBILITY as visibility, LAST_MODIFIED as lastModified, 
+			CREATEDON as createdOn, ACLMODTIME as aclModtime, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_CALENDAR
+		WHERE ACLMODTIME >= #startDate#  AND ORG_ID = #ORG_ID#
+			<isNotNull property="finishDate">AND ACLMODTIME &lt;= #finishDate#</isNotNull>
+			<isNotNull property="createdBefore">AND CREATEDON &lt;= #createdBefore#</isNotNull>
+		ORDER BY ACLMODTIME ASC
+		<include refid="Seedlist_MT.FETCH_{n}"/>
+		<include refid="Seedlist_MT.FOR_READ_ONLY"/>
+	</select>
+	
+	<select id="getACLUpdatedCalendarsSince_{0,n}_ORACLE" parameterClass="java.util.Map" resultClass="DBCalendar">
+		SELECT * FROM
+			(
+				SELECT CALENDAR_UUID as calendar_UUID, COMMUNITY_UUID as community_UUID, COMMUNITY_NAME as communityName, 
+					MEMBERS_ROLE as members_Role, VISIBILITY as visibility, LAST_MODIFIED as lastModified, 
+					CREATEDON as createdOn, ACLMODTIME as aclModtime, ORG_ID as ORG_ID
+				FROM CALENDAR.CA_CALENDAR
+				WHERE ACLMODTIME >= #startDate#  AND ORG_ID = #ORG_ID#
+					<isNotNull property="finishDate">AND ACLMODTIME &lt;= #finishDate#</isNotNull>
+					<isNotNull property="createdBefore">AND CREATEDON &lt;= #createdBefore#</isNotNull>
+				ORDER BY ACLMODTIME ASC
+			) t
+		WHERE ROWNUM &lt;= $__fetch_size$
+		ORDER BY t.aclModtime ASC
+	</select>
+	
+	<select id="getCommentUpdatedEventInstancesSinceCount" parameterClass="java.util.Map" resultClass="int">
+		SELECT count(1) 
+		FROM CALENDAR.CA_EVENTINSTANCE 
+		WHERE DBMODTIME IS NOT NULL AND DBMODTIME >= #startDate#  AND ORG_ID = #ORG_ID#
+			<isNotNull property="finishDate">AND DBMODTIME &lt;= #finishDate#</isNotNull>
+		<include refid="Seedlist_MT.FOR_READ_ONLY"/>
+	</select>
+	
+	<select id="getCommentUpdatedEventInstancesSince" parameterClass="java.util.Map" resultClass="DBEventInstance">
+		SELECT <include refid="Seedlist_MT.TOP_{n}"/> 
+			EVENTINST_UUID as eventInst_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID,
+			STARTDATE as startDate, ENDDATE as endDate, EVENTINFO_UUID as eventInfo_UUID,
+			MODIFIEDBY as modifiedBy, MODIFIEDON as modifiedOn, DBMODTIME as dbModifiedOn, ORG_ID as ORG_ID 
+		FROM CALENDAR.CA_EVENTINSTANCE 
+		WHERE DBMODTIME IS NOT NULL AND DBMODTIME >= #startDate#  AND ORG_ID = #ORG_ID#
+			<isNotNull property="finishDate">AND DBMODTIME &lt;= #finishDate#</isNotNull>
+		ORDER BY DBMODTIME ASC
+		<include refid="Seedlist_MT.FETCH_{n}"/>
+		<include refid="Seedlist_MT.FOR_READ_ONLY"/>
+	</select>
+	
+	<select id="getCommentUpdatedEventInstancesSince_{0,n}_ORACLE" parameterClass="java.util.Map" resultClass="DBEventInstance">
+		SELECT * FROM
+			(
+			SELECT 
+				EVENTINST_UUID as eventInst_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID,
+				STARTDATE as startDate, ENDDATE as endDate, EVENTINFO_UUID as eventInfo_UUID,
+				MODIFIEDBY as modifiedBy, MODIFIEDON as modifiedOn, DBMODTIME as dbModifiedOn, ORG_ID as ORG_ID 
+			FROM CALENDAR.CA_EVENTINSTANCE 
+			WHERE DBMODTIME IS NOT NULL AND DBMODTIME >= #startDate#  AND ORG_ID = #ORG_ID#
+				<isNotNull property="finishDate">AND DBMODTIME &lt;= #finishDate#</isNotNull>
+				ORDER BY DBMODTIME ASC
+			) t
+		WHERE ROWNUM &lt;= $__fetch_size$
+		ORDER BY t.dbModifiedOn ASC
+	</select>
+
+</sqlMap>

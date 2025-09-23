@@ -1,0 +1,116 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2016                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<div>
+<div id="${id}-recurrenceEnable">
+	<span class="lotusOffScreen" id="${id}-recurrenceEnable_link_description">${_lang.REPEATS_ENABLE_DISABLE_HINT}</span>
+	<a href="javascript:;" id="${id}-recurrenceEnable_link" role="button" dojoAttachEvent="onclick:showRepeatOptions" aria-controls="${id}-options" aria-describedby="${id}-recurrenceEnable_link_description" >${_lang.RECURRENCE}</a>
+</div>
+<div id="${id}-options" class="recOptions lotusHidden" style="padding:0px;margin:0px">
+	<table role="presentation" id="${id}-recVaried" class="lotusTable" >
+		<tr>
+			<td style="padding-top:0px;">
+				<label for="${id}-rectype">${_lang.REPEATS}</label>
+			</td>
+			<td style="margin:0px;padding:0px;padding-left:3px">
+				<select name="rtype" id="${id}-rectype" aria-controls="${id}-options">
+				<option value="daily" selected="selected">${_lang.REPEAT_DAILY_SHORT}</option>
+				<option value="weekly">${_lang.REPEAT_WEEKLY_SHORT}</option>
+				<option value="monthly">${_lang.REPEAT_MONTHLY_SHORT}</option>
+				</select>
+			</td>
+		</tr>
+		<tr id="${id}-recDaily" class="recEntry"><!-- generated picker --></tr>
+		<tr id="${id}-recWeekly" class="recEntry"><!-- generated picker --></tr>
+		<tr id="${id}-recByDateMonthly" class="recEntry">
+			<td class="recEntryFormLabel">
+				<input type="radio" id="${id}-checkByDateMonthly" name="monthlyRepeatType"  class="lotusCheckbox" dojoAttachEvent="onclick:byDateClicked"> <label class="lotusCheckbox" for="${id}-checkByDateMonthly">${_lang.REPEAT_MONTHLY_ON_THIS_DATE}</label>
+			 </td>
+			 <td>
+			 	<select name="byDateType" id="${id}-recByDateType" dojoAttachEvent="onchange:showMessageForByDate" aria-label="${_lang.SELECT_DATE_OF_MONTH}">
+					<option value="1" selected="selected">${_lang.DATE_OF_MONTH_1}</option>
+					<option value="2">${_lang.DATE_OF_MONTH_2}</option>
+					<option value="3">${_lang.DATE_OF_MONTH_3}</option>
+					<option value="4">${_lang.DATE_OF_MONTH_4}</option>
+					<option value="5">${_lang.DATE_OF_MONTH_5}</option>
+					<option value="6">${_lang.DATE_OF_MONTH_6}</option>
+					<option value="7">${_lang.DATE_OF_MONTH_7}</option>
+					<option value="8">${_lang.DATE_OF_MONTH_8}</option>
+					<option value="9">${_lang.DATE_OF_MONTH_9}</option>
+					<option value="10">${_lang.DATE_OF_MONTH_10}</option>
+					<option value="11">${_lang.DATE_OF_MONTH_11}</option>
+					<option value="12">${_lang.DATE_OF_MONTH_12}</option>
+					<option value="13">${_lang.DATE_OF_MONTH_13}</option>
+					<option value="14">${_lang.DATE_OF_MONTH_14}</option>
+					<option value="15">${_lang.DATE_OF_MONTH_15}</option>
+					<option value="16">${_lang.DATE_OF_MONTH_16}</option>
+					<option value="17">${_lang.DATE_OF_MONTH_17}</option>
+					<option value="18">${_lang.DATE_OF_MONTH_18}</option>
+					<option value="19">${_lang.DATE_OF_MONTH_19}</option>
+					<option value="20">${_lang.DATE_OF_MONTH_20}</option>
+					<option value="21">${_lang.DATE_OF_MONTH_21}</option>
+					<option value="22">${_lang.DATE_OF_MONTH_22}</option>
+					<option value="23">${_lang.DATE_OF_MONTH_23}</option>
+					<option value="24">${_lang.DATE_OF_MONTH_24}</option>
+					<option value="25">${_lang.DATE_OF_MONTH_25}</option>
+					<option value="26">${_lang.DATE_OF_MONTH_26}</option>
+					<option value="27">${_lang.DATE_OF_MONTH_27}</option>
+					<option value="28">${_lang.DATE_OF_MONTH_28}</option>
+					<option value="29">${_lang.DATE_OF_MONTH_29}</option>
+					<option value="30">${_lang.DATE_OF_MONTH_30}</option>
+					<option value="31">${_lang.DATE_OF_MONTH_31}</option>
+				</select>
+				<div dojoAttachPoint="byDateMessage"></div>
+			 </td>
+		</tr>
+		<tr id="${id}-recByDayMonthly" class="recEntry">
+			<td class="recEntryFormLabel">
+				<input type="radio" id="${id}-checkByDayMonthly" name="monthlyRepeatType" class="lotusCheckbox" dojoAttachEvent="onclick:byDayClicked"> <label class="lotusCheckbox" for="${id}-checkByDayMonthly">${_lang.REPEAT_MONTHLY_ON_THIS_DAY}</label>
+			 </td>
+			 <td>
+			 	<select name="recNthWeek" id="${id}-recNthWeek" aria-label="${_lang.SELECT_WEEK_OF_MONTH}">
+					<option value="1" selected="selected">${_lang.First_WEEK_OF_MONTH}</option>
+					<option value="2">${_lang.Second_WEEK_OF_MONTH}</option>
+					<option value="3">${_lang.Third_WEEK_OF_MONTH}</option>
+					<option value="4">${_lang.Fourth_WEEK_OF_MONTH}</option>
+					<option value="-1">${_lang.LAST_WEEK_OF_MONTH}</option>
+				</select>
+				<select name="recNthDay" id="${id}-recNthDay" aria-label="${_lang.SELECT_DAY_OF_WEEK}">
+					
+				</select>
+			 </td>
+		</tr>
+		
+		<tr id="${id}-untilRow" class="rowEntry">
+			<td class="recEntryFormLabel">
+				<label for="${id}-until" class="repeatLabelDate">${_lang.UNTIL}</label>
+			</td>
+			<td style="padding-left:3px;">
+				<input type="text" dojotype="lconn.calendar.DateTextBox" name="until" id="${id}-until" hasDownArrow="false" />
+			</td>
+		</tr>
+                  
+		<tr class="rowEntry" id="${id}-rangePickerRow">
+			<td class="recEntryFormLabel">
+				<label for="${id}-interval" class="repeatLabelInterval">${_lang.EVERY}</label>
+			</td>
+			<td style="padding-left:3px;">
+				<select id="${id}-interval" name="interval" aria-label="${_lang.REPEATING_FREQUENCY}">
+					
+				</select>
+			</td>
+		</tr> 
+	</table> 
+</div> <!-- end recurrence options -->
+</div>

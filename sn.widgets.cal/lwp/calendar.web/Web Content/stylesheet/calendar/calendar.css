@@ -1,0 +1,269 @@
+/* ***************************************************************** */
+/*                                                                   */
+/* IBM Confidential                                                  */
+/*                                                                   */
+/* OCO Source Materials                                              */
+/*                                                                   */
+/* Copyright IBM Corp. 2011, 2015                                    */
+/*                                                                   */
+/* The source code for this program is not published or otherwise    */
+/* divested of its trade secrets, irrespective of what has been      */
+/* deposited with the U.S. Copyright Office.                         */
+/*                                                                   */
+/* ***************************************************************** */
+
+.eventEditor .recOptions {
+	margin: 0.5em 0px;
+	margin-right: 8px;
+	background: #F5F5F5;
+}
+
+.eventEditor .recOptions label {
+	font-weight: normal;	
+}
+
+.repeatLabelPicker label{
+   padding: 0 30px 0 0; 
+   position: relative;
+   bottom: 29px;
+}
+
+.repeatLabelDate label{
+   padding: 0 20px 0 0; 
+}
+
+.repeatLabelInterval label{
+   padding: 0 20px 0 0; 
+}
+
+
+.eventEditor .recText {
+	margin: 0.5em 0px 0px 0px;
+}
+
+.eventEditor .monthlyEntry, .eventEditor .customEntry {
+	margin-top: 2px;
+}
+
+.eventEditor .rowEntry{
+   margin-top: 5px;
+}
+
+.eventEditor .recEntry {
+	margin-top: 2px;
+}
+
+.eventEditor .description {
+	height: 200px;
+}
+
+#rangePicker {
+	margin: 0.5em 0px 1em 0px;
+}
+
+#eventFooter {
+	border-top: 1px solid #CCC;
+	padding-top: 10px;	
+}
+
+#calendarViewPicker {
+	margin: 0px;
+	padding: 0px;
+}
+
+#calendarViewPicker li {
+	display: inline;
+	list-style: none;
+	margin: 0px 0.5em;
+}
+
+#calendarButtonRow {
+	display: none;
+}
+
+#calendar {
+	margin-top: 6px;
+}
+
+
+#viewDialog h2 {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+
+#viewDialog .lotusDialogContent {
+	clear: left;
+	padding-top: 4px;
+}
+
+.qkrDateSectionInner {
+	min-height: 50px;
+	margin: 0px 8px;
+	margin-top: 8px;
+	float: left;
+	width: 30px;
+}
+
+.qkrDateSection h3 {
+	font-size: 1.0em;
+	margin-bottom: 5px;
+}
+
+.qkrDateSection h3 .qkrDay {
+	font-weight: bold;
+	background:transparent url(/calendar/images/calendar/calendarDateBg.gif) no-repeat scroll 0%;
+	height:20px;
+	padding-top:8px;
+	margin-bottom:2px;
+	text-align:center;
+	color:#253e10;
+}
+
+.qkrDateSection h3 .qkrMonth {
+	text-align:center;
+	color:#253e10;
+	font-size:0.9em;
+	font-weight:normal;
+}
+
+.eventEditor .lotusForm {
+    background-color: #FFF;
+}
+
+.eventEditor .lotusForm .lotusFormTable, .eventEditor .lotusForm .lotusFormTable td {
+    background-color: #FFF;
+}
+
+.eventEditor .lotusForm .lotusFormTable .lotusFormErrorField, .lotusForm  .lotusFormTable .lotusFormErrorSummary td {
+    background-color: #FFFABC;
+}
+
+.eventEditor .lotusForm td.lotusFormLabel {
+    padding-top:6px;
+}
+
+.eventEditor td.lotusLeftLabels label {
+	margin-left:10px;
+}
+
+.eventEditor .lotusForm tr.lotusFormFieldRow .recEntry .recWeekdayPicker td {
+    padding-bottom: 0px;
+	padding-top:0px;
+	text-align: center;
+}
+
+.eventEditor .lotusForm tr.lotusFormFieldRow .recEntry td.recEntryFormLabel, .eventEditor .lotusForm tr.lotusFormFieldRow .rowEntry td.recEntryFormLabel {
+    padding-right: 20px;
+    width:8%;
+    white-space: nowrap;
+}
+
+.notification_container label {
+	font-weight: bold;
+	color: #222222;
+}
+
+.notification_container .person_picker {
+	margin: 3px 0px 10px 0px;
+}
+
+.notification_container .notifyList .lotusSearch INPUT {
+	width: 100%;
+	margin-bottom: 3px;
+	border: 1px solid #AAAAAA;
+	padding: 2px;
+}
+
+.notification_container .peopleList {
+	float: left;
+	background-color: white;
+	border: 1px solid #D8D8D8;
+	width: 100%;
+	height: 100px;
+	overflow-y: auto;
+	padding: 2px;
+}
+
+.notification_container .notifyPerson {
+	width: 140px;
+	height: 20px;
+}
+
+.notification_container .notifyList .lotusTiny {
+	clear: both;
+	background-color: white;
+	border: 1px solid #D8D8D8;
+	border-top: 0px;
+	padding: 2px;
+	width: 100%
+}
+
+.notification_container .notifyPerson LABEL {
+    height: 20px; 
+    line-height: 18px; 
+    overflow: hidden; 
+    white-space: nowrap; 
+    width: 115px;
+}
+
+.notification_container TEXTAREA {
+	width: 100%;
+}
+
+.notification_container .notifyReceivers {
+	margin-top: 5px;
+}
+
+
+.tundra .dijitArrowButtonInner {
+	background:url("../../images/calendar/spriteArrows.png") no-repeat scroll 0px center;
+	margin: 0px 4px 0px 4px;
+	width: 7px;
+}
+
+.tundra .dijitUpArrowButton .dijitArrowButtonInner {
+	background-position: -21px center;
+}
+
+.lotusui30 .lotusForm tr.lotusFormFieldRow table.cke_editor td {
+    padding-bottom: 0px;
+}
+
+#calendar_view .lotusTable .lotusDetail TD {
+	border-top-width: 0px;
+	padding-top: 0px;
+}
+
+#calendar_view .lotusTable TD.lotusFirstCell {
+	width: 64px;
+}
+
+#calendar_view .lotusTable .lotusFirstCell IMG {
+	width: 32px;
+	height: 32px;
+	margin-top: 4px;
+}
+
+#calendar_event_viewer .detailCaption {
+	font-weight: bold;
+	color: #222222;
+	margin-top: 8px;
+}
+
+#calendar_event_viewer .eventHeaderWithThumbnail {
+    margin-left: 55px;
+}
+
+/* a11y */
+.lotusui30.lotusImagesOff span.lotusBtnDisabled a, .lotusImagesOff .lotusui30 span.lotusBtnDisabled a {
+	opacity: 0.5 !important;
+}
+
+.lotusui_ie .alldayCheckbox {margin-left:0px !important; position:relative; top:-2px;}
+.lotusui_ie .alldayCheckboxLabel {margin-left:0px !important; position:relative; top:-2px;}
+
+.notification_container .peopleList .lconnNotify input {margin-right:5px}
+
+.lotusui30_layout .lotusContent .lotusTable.recWeekdayPicker tr td:first-child {
+    padding-left: 0px;
+}

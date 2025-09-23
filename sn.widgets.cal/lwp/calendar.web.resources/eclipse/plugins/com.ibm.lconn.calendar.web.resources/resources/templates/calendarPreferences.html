@@ -1,0 +1,65 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<div>
+
+<div style="display:none" dojoAttachPoint="confirmMessageNode" role="alert" class="lotusMessage lotusConfirm">
+	<img src="${blankImageUrl}" alt="${_lang.ALT_CONFIRM_ICON}" class="lconnSprite lconnSprite-iconConfirmation16" role="presentation" />
+	<div>${_lang.CALENDAR_PREF_SAVE_CONFIRM}</div>
+	<a href="javascript:;" class="lotusDelete" title="${_lang.HIDE_THIS_MESSAGE}" role="button" aria-hidden="true" dojoattachevent="onclick:hideMessage" >
+		<img title="${_lang.HIDE_THIS_MESSAGE}" alt="${_lang.HIDE_THIS_MESSAGE}" src="${blankImageUrl}" role="presentation" />
+		<span class="lotusAltText">X</span>
+	</a>
+</div>
+
+<form id="${id}-form" class="lotusForm" dojoType="dijit.form.Form"
+		encType="application/x-www-form-urlencoded" action="javascript:;" method="post">
+		<input type="hidden" name="calendarId" value="${calendarId}"/>
+		<table class="lotusFormTable" cellspacing="0" cellpadding="0" role="presentation">
+			<tbody>
+				<tr>
+					<td class="lotusFormTitle" colspan="2">
+						<h2 class="flushLeft">${_lang.PREF_FORM_TITLE}</h2>
+					</td>
+				</tr>
+				<tr>
+					<td class="lotusFormLabel lotusNowrap" width="20%">
+						<label>${_lang.MAP_ROLE}</label>
+					</td>
+					<td>
+						<fieldset>
+						<legend class="lotusHidden">${_lang.MAP_ROLE}</legend>
+						<div>	
+							<input class="lotusCheckbox" type="radio" id="${id}-author" name="members_Role" value="1"/>
+							<label class="lotusCheckbox" for="${id}-author">${_lang.AUTHOR_ACCESS}</label>
+						</div>	
+						<div>
+							<input class="lotusCheckbox" type="radio" id="${id}-reader" name="members_Role" value="0"/>
+							<label class="lotusCheckbox" for="${id}-reader">${_lang.READ_ACCESS}</label>
+						</div>
+						</fieldset>
+					</td>
+				</tr>
+				<tr>
+					<td class="lotusFormFooter commFormFooter" colspan="2">	
+						<input value="${_lang.SAVE}" class="lotusFormButton" id="${id}-submit" type="submit" dojoattachevent="onclick:save"/>
+						<input value="${_lang.SAVECLOSE}" class="lotusFormButton" id="${id}-saveclose" type="submit" dojoattachevent="onclick:saveAndClose"/>
+						<input value="${_lang.CANCEL}" class="lotusFormButton" id="${id}-cancel" type="submit" dojoattachevent="onclick:close"/>
+					</td>
+				</tr>
+			</tbody>
+		</table>				
+</form>
+
+</div>

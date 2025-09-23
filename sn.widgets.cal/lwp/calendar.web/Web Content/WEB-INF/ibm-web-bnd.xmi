@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2012                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+<com.ibm.ejs.models.base.bindings.webappbnd:WebAppBinding xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:com.ibm.ejs.models.base.bindings.webappbnd="webappbnd.xmi" xmi:id="WebAppBinding_1304489607155" virtualHostName="default_host">
+  <webapp href="WEB-INF/web.xml#WebApp_1263999425566"/>
+  <resRefBindings xmi:id="ResourceRefBinding_1304489607155" jndiName="jdbc/sncomm" loginConfigurationName="DefaultPrincipalMapping">
+    <bindingResourceRef href="WEB-INF/web.xml#JdbcRef_1263999425567"/>
+    <properties xmi:id="Property_1304489607155" name="com.ibm.mapping.authDataAlias" value="communitiesJAASAuth" description="description"/>
+  </resRefBindings>
+  <resRefBindings xmi:id="ResourceRefBinding_1304489607156" jndiName="mail/notification">
+    <bindingResourceRef href="WEB-INF/web.xml#JMailRef_1263999425568"/>
+  </resRefBindings>
+  <!-- 
+  <ejbRefBindings xmi:id="EjbRefBinding_1304489607157" jndiName="ejb/connections/communities/events/publisher">
+    <bindingEjbRef href="WEB-INF/web.xml#EJBLocalRef_1263999425569"/>
+  </ejbRefBindings>
+   -->
+</com.ibm.ejs.models.base.bindings.webappbnd:WebAppBinding>

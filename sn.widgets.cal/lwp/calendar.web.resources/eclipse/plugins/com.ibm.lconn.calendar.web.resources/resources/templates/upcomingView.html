@@ -1,0 +1,57 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2013                                          -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<div>
+	<div dojoAttachPoint="view_header" class="lotusActionBar lotusBtnContainer" style="padding-bottom:4px">
+		<span dojoAttachPoint="actionBar" class="lotusBtn lotusLeft" role="toolbar" aria-label="${_lang.EVENTS_VIEW_TOOLBAR_LABEL}">
+			<a role="button" dojoAttachPoint="btnAddEvent" href="javascript:;">${_lang.CREATE_BUTTON}</a>
+		</span>
+		<div>
+			<table class="lotusViewControl lotusRight" role="presentation" cellpadding="0">
+				<tbody>
+					<tr>
+						<td id="viewPickerToolbarLabel">${_lang.DISPLAY}:&nbsp;</td>
+						<td>
+							<div id="viewPickerToolbar" dojoAttachPoint="viewPicker" role="toolbar" aria-labelledby="viewPickerToolbarLabel">
+								<a class="lotusSprite lotusView lotusSummaryOn lotusSelected" aria-disabled="true" href="javascript:;" dojoAttachPoint="viewSummary" dojoAttachEvent="onclick:_viewSummary" role="button" aria-label="${_lang.SUMMARY}" title="${_lang.SUMMARY}">
+									<span class="lotusAltText">${_lang.SUMMARY}</span>
+								</a>
+								<a class="lotusSprite lotusView lotusDetailsOff" aria-disabled="false" href="javascript:;" dojoAttachPoint="viewDetails" dojoAttachEvent="onclick:_viewDetails" role="button" aria-label="${_lang.DETAILS}" title="${_lang.DETAILS}">
+									<span class="lotusAltText">${_lang.DETAILS}</span>
+								</a>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>					
+	</div>
+	<div dojoAttachPoint="view_body">
+		<div class="lotusPaing" dojoAttachPoint="topPagingAP"></div>
+		<span dojoAttachPoint="showPastEvents" dojoAttachEvent="onclick:_showPastEvents" class="lotusAction" style="display:none">
+			<a role="button" dojoAttachPoint="showPastEventsLink" href="javascript:;" title="${_lang.SHOW_PASTEVENTS}">${_lang.SHOW_PASTEVENTS}</a>
+		</span>
+		<span dojoAttachPoint="showUpcomingEvents" dojoAttachEvent="onclick:_showUpcomingEvents" class="lotusAction" style="display:none">
+			<a role="button" dojoAttachPoint="showUpcomingEventsLink" href="javascript:;" title="${_lang.SHOW_UPCOMINGEVENTS}">${_lang.SHOW_UPCOMINGEVENTS}</a>
+		</span>
+		<div dojoAttachPoint="loadingAP" style="display:none;">
+			<span class="lotusLoading" />${_lang.LOADING}</span></div>
+		<table dojoAttachPoint="table" class="lotusTable" role="presentation" style="clear:both;"></table>
+		<div class="lotusPaing" dojoAttachPoint="bottomPagingAP"></div>
+		<div dojoAttachPoint="emptyCalendarMessageAP" style="display:none" class="lconnEmpty"></div>
+	</div>
+	<div dojoAttachPoint="view_footer" class="lotusFeeds">
+		<a id="listView_addToPersonalCal" role="button" class="lotusFeed lotusAction" dojoAttachPoint="feedLink" href="javascript:;">${_lang.ICAL_FEED}</a>
+	</div>
+</div>

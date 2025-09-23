@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<application id="Application_1273999425570" version="1.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/application_1_4.xsd">
+	<display-name>
+	CalendarEAR</display-name>
+	<module id="WebModule_1265406045619">
+		<web>
+			<web-uri>calendar.war</web-uri>
+			<context-root>/communities/calendar/</context-root>
+		</web>
+	</module>
+	<security-role id="SecurityRole_1260808710150">
+		<role-name>person</role-name>
+	</security-role>
+	<security-role id="SecurityRole_1260808710170">
+		<role-name>everyone</role-name>
+	</security-role>
+</application>

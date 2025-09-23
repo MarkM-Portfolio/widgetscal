@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMap namespace="Calendar_MT">
+	<cacheModel id="selectCalendar_cache" type="LRU" readOnly="false">
+       <flushInterval minutes="5"/>
+       <property name="size" value="30" />
+    </cacheModel>
+
+	<insert id="insertCalendar" parameterClass="DBCalendar">
+		INSERT INTO CALENDAR.CA_CALENDAR
+			(CALENDAR_UUID, COMMUNITY_UUID, COMMUNITY_NAME, WIDGETID, MEMBERS_ROLE, VISIBILITY, LAST_MODIFIED, CREATEDON, ACLMODTIME, ORG_ID)
+		VALUES
+			(#calendar_UUID#, #community_UUID#, #communityName#, #widgetId:VARCHAR#, #members_Role#, #visibility#, #lastModified#, #createdOn#, #aclModtime#, #ORG_ID#)
+	</insert>
+
+	<update id="updateCalendar" parameterClass="DBCalendar">
+		UPDATE CALENDAR.CA_CALENDAR
+		SET COMMUNITY_UUID = #community_UUID#, COMMUNITY_NAME = #communityName#, WIDGETID = #widgetId:VARCHAR#,
+			MEMBERS_ROLE = #members_Role#, VISIBILITY = #visibility#, 
+			LAST_MODIFIED = #lastModified#, ACLMODTIME = #aclModtime#
+		WHERE CALENDAR_UUID = #calendar_UUID# AND ORG_ID = #ORG_ID#
+	</update>
+	
+	<update id="updateCalendarFields" parameterClass="java.util.Map">
+		UPDATE CALENDAR.CA_CALENDAR
+		SET LAST_MODIFIED = #CURRENT_TIMESTAMP#
+			<isNotNull property="communityName">, COMMUNITY_NAME = #communityName#</isNotNull>
+		    <isNotNull property="visibility">, VISIBILITY = #visibility#, ACLMODTIME = #CURRENT_TIMESTAMP#</isNotNull>
+		WHERE CALENDAR_UUID = #calendarUUID# AND ORG_ID = #ORG_ID#
+	</update>
+	
+	<delete id="deleteCalendar" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_CALENDAR
+		WHERE CALENDAR_UUID = #calendarUUID# AND ORG_ID = #ORG_ID#
+	</delete>
+	
+	<select id="selectCalendar" parameterClass="java.util.Map" resultClass="DBCalendar" cacheModel="selectCalendar_cache">
+		SELECT CALENDAR_UUID as calendar_UUID, COMMUNITY_UUID as community_UUID, 
+			COMMUNITY_NAME as communityName, WIDGETID as widgetId,
+			MEMBERS_ROLE as members_Role, VISIBILITY as visibility, 
+			LAST_MODIFIED as lastModified, CREATEDON as createdOn, ACLMODTIME as aclModtime, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_CALENDAR
+		WHERE CALENDAR_UUID = #calendarUUID# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<select id="checkCalendarExistence" parameterClass="java.util.Map" resultClass="string">
+		SELECT CALENDAR_UUID
+		FROM CALENDAR.CA_CALENDAR
+		WHERE CALENDAR_UUID IN (<iterate property="calendarIds" conjunction=",">#calendarIds[]#</iterate>) AND ORG_ID = #ORG_ID#
+		<isEqual property="DBTYPE" compareValue="DB2">
+		FOR FETCH ONLY
+		</isEqual>
+		<!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		FOR FETCH ONLY
+		</isEqual>
+	</select>
+</sqlMap>

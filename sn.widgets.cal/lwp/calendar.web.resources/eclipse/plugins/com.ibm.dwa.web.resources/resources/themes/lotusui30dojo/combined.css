@@ -1,0 +1,774 @@
+/* ***************************************************************** */
+/*                                                                   */
+/* IBM Confidential                                                  */
+/*                                                                   */
+/* OCO Source Materials                                              */
+/*                                                                   */
+/* Copyright IBM Corp. 2012, 2014                                    */
+/*                                                                   */
+/* The source code for this program is not published or otherwise    */
+/* divested of its trade secrets, irrespective of what has been      */
+/* deposited with the U.S. Copyright Office.                         */
+/*                                                                   */
+/* ***************************************************************** */
+
+/* 
+	The dwa.css defines commonly used CSS rules in iNotes dojo widgets.
+*/
+
+/* VML styles for IE8 strict mode */
+.v\:line, v\:rect, v\:fill, v\:roundrect, v\:stroke, v\:shape, v\:group {
+	behavior: url(#default#VML);
+	display: inline-block;
+}
+
+.s-hidden {
+	visibility: hidden;
+}
+
+.s-hidden-important {
+	visibility: hidden !important;
+}
+
+.s-stack {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.s-basicpanel {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.s-toppanel {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	overflow: hidden;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.s-leftpanel {
+	position: absolute;
+	left: 0px;
+	height: 100%;
+	overflow: hidden;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.s-rightpanel {
+	position: absolute;
+	right: -0px;
+	height: 100%;
+	overflow: hidden;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.s-bottompanel {
+	position: absolute;
+	left: 0px;
+	bottom: -0px;
+	width: 100%;
+	overflow: hidden;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.dijitRtl .s-stack {
+	left: auto;
+	right: 0px;
+}
+
+.dijitRtl .s-leftpanel {
+	left: auto;
+	right: 0px;
+}
+
+.dijitRtl .s-rightpanel {
+	right: auto;
+	left: -0px;
+}
+
+.dijitRtl .s-bottompanel {
+	left: auto;
+	right: 0px;
+}
+
+.s-noselecttext {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+}
+
+.s-label-light {
+    font-family: lucida grande,helvetica,arial,sans-serif;
+	font-size: 70%;
+	font-weight: normal;
+	color: rgb(90,90,115);
+}
+
+.s-infoarea {
+	background-color: rgb(247,247,247);
+	padding: 2px 4px;
+}
+
+.s-handcursor {
+	cursor: pointer;
+}
+
+.s-balloon-container {
+	position: absolute;
+	overflow: hidden;
+}
+
+.s-dialog-body-overlay {
+	background-color: white;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+	position: absolute; 
+	cursor:not-allowed;
+	z-index: 600;
+}
+
+.s-modeless-body-overlay {
+	background-color: white;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	cursor: not-allowed;
+}
+
+.s-popup {
+	background-color: rgb(255,255,255);
+	border: solid gray 1px;
+	position: absolute;
+	padding: 4px;
+	overflow-x: visible;
+	overflow-y: auto;
+	font-size: medium;
+}
+
+.s-list-selected {
+	background-color: rgb(193,193,193);
+}
+
+.s-list-text-selected {
+	color: #FFFFFF;
+}
+
+td.s-bold {
+    font-weight: bold;
+}
+
+.s-menu-item {
+	padding: 2px 3px;
+}
+
+.s-outline-text {
+	cursor: pointer;
+	font-family: lucida grande,helvetica,arial,sans-serif;
+	font-size: 70%;
+	font-weight: normal;
+	vertical-align: middle;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.s-img-display {
+	display: block;
+}
+
+.s-menu-overflow-hidden {
+	overflow: hidden;
+}
+
+.s-menu-text-disabled {
+	color: gray;
+}
+
+.s-menu-text-disabled td {
+	cursor: default;
+}
+
+.dijit_a11y .s-menu-text-disabled td {
+	opacity: 0.3;
+	filter: alpha(opacity=35);
+}
+
+/* general styles */
+.s-panel-content-border {
+	border: 1px solid #7F9DB9;
+	width: 600px;
+	height: 500px;
+	font-size: medium;
+	position: relative;
+}
+.dj_ie6.dj_iequirks .s-panel-content-border {
+	font-size: small;
+}
+.s-cv, .s-cv-grid, .s-cv-grid-dotted, .s-cv-entry, .s-cv-entry-innerframe, .s-cv-timeslot, .s-cv-timeslot-other, .s-cv-timeslot-dark, .s-cv-timeslot-today, .s-cv-timeslot-today-dark, .s-cv-nav, .s-cv-footer{
+	position:absolute;
+	vertical-align: middle;
+	cursor: default;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.s-cv-text, .s-cv-text-large{
+	font-family: tahoma, helvetica, arial, sans-serif;
+	font-size: 75%;
+	font-weight: normal;
+	color: #333333
+	vertical-align: middle;
+	line-height: 110%;
+}
+.dj_gecko .s-cv-text, .dj_gecko .s-cv-text-large{
+	-moz-user-select: none;
+	-webkit-user-select: none;
+}
+.s-cv-text-large{
+	font-size: 140%;
+}
+.s-cv-textarea{
+	cursor: text;
+}
+.s-cv-grid, .s-cv-grid-dotted{
+	border-style:solid;
+	border-color:#CCCCCC;
+	overflow: hidden;
+}
+.s-cv-grid, .s-cv-grid-dotted{
+	border-width: 0px 1px 1px 0px;
+}
+.dijitRtl .s-cv-grid, .dijitRtl .s-cv-grid-dotted{
+	border-width: 0px 0px 1px 1px;
+}
+.s-cv-grid-dotted{
+	border-width: 0px 0px 1px 0px;
+	border-style: dotted;
+}
+.s-cv-grid-dark{
+	background-color: rgb(233,236,241);
+}
+.s-cv-grid-today{
+	background-color: rgb(229,241,254);
+}
+.dijit_a11y .s-cv-grid-today{
+	border-width: 5px;
+}
+.s-cv-entry, .s-cv-entry-innerframe{
+	border: none;
+	overflow: hidden;
+	text-align: left;
+	cursor: pointer;
+}
+.dijitRtl .s-cv-entry, .dijitRtl .s-cv-entry-innerframe{
+	text-align: right;
+}
+.s-cv-entry-innerframe{
+	padding: 3px;
+	position:relative;
+}
+.s-cv-entry-roundcourner{
+	border:0px;
+}
+.s-cv-entry-squarecourner{
+	border:1px solid #71b9c6;
+	background-color:#e6f4f7;
+}
+.s-cv-timeslot{
+	border-top: 1px solid #E4E4E4;
+	overflow: hidden;
+}
+.s-cv-timeslot-other{
+	background-color: #FFFFFF;
+}
+.s-cv-timeslot-dark{
+	background-color: #EEEEEE;
+}
+.s-cv-timeslot-column{
+	color: #666666;
+}
+.s-cv-timeslot-column-dark{
+	background-color: #E8E8E8;
+	color: #666666;
+}
+.s-cv-timeslot-today{
+	background-color: rgb(255,255,255);
+}
+.s-cv-timeslot-today-dark{
+	background-color: #F4F4F4;
+}
+.s-cv-timeslot-header{
+	height:1.5em;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.s-cv-nav, .s-cv-nav-button, .s-cv-footer, .s-cv-footer-highlighted{
+	background-color: #FAFAFA;
+	text-align: center;
+}
+.s-cv-nav{
+	text-align: left;
+}
+.dijitRtl .s-cv-nav{
+	text-align: right;
+}
+.s-cv-nav-button{
+	border: 1px solid #FAFAFA;
+	cursor: pointer;
+}
+.s-cv-footer{
+	border: 1px solid rgb(233,236,241);
+	border-bottom: 1px solid #FAFAFA;
+}
+.s-cv-nav-button-highlighted, .s-cv-footer-highlighted, td.s-cv-nav-button-highlighted, td.s-cv-footer-highlighted{
+	border: 1px solid rgb(57, 87, 122);
+}
+.s-cv-nav-innerframe, .s-cv-nav-innerframe-narrow{
+	position:relative;
+	height:100%;
+}
+.s-cv-nav-current{
+	font-weight:bold;
+}
+.s-cv-grid-header{
+	height:1em;
+}
+.s-cv-header-bg-gradient{
+	border-top-color:#FAFAFA;
+	border-bottom-color:#FAFAFA;
+}
+.s-cv-header-today-gradient{
+	border-top-color:rgb(235,235,235);
+	border-bottom-color:rgb(255,255,255);
+}
+.s-cv-timeslot-time{
+	font-weight:bold;
+	text-align:center;
+}
+.s-cv-entry-selected-gradient{
+	color:rgb(255,255,255);
+	border-color:rgb(56,112,176);
+	border-top-color:rgb(127,175,237);
+	border-bottom-color:rgb(98,148,214);
+}
+.s-cv-timeslot-cell-60{
+	height:48px;
+}
+.s-cv-timeslot-cell-30{
+	height:24px;
+}
+.s-cv-timeslot-cell-15{
+	height:20px;
+}
+.s-cv-timeslot-indicator{
+	width:32px;
+}
+.s-cv-timeslot-entry-selected{
+	top:0px;
+	left:0px;
+	width:100%;
+	border:1px solid #71B9C6;
+	background-color:#E6F4F7;
+}
+.dijitRtl .s-cv-timeslot-entry-selected{
+	right:0px;
+}
+.s-cv-timeslot-entry{
+	padding: 1px;
+	border:1px solid #A5A5A5;
+	background-color:#FFFFFF;
+}
+.s-cv-grid-entry-selected{
+	top:0px;
+	left:0px;
+	width:100%;
+}
+.dijitRtl .s-cv-grid-entry-selected{
+	right:0px;
+}
+.s-cv-timeslot-entry-colorbar, .s-cv-timeslot-entry-selected-colorbar, .s-cv-grid-entry-colorbar, .s-cv-grid-entry-selected-colorbar{
+	text-align:left;
+	top:0px;
+	left:0px;
+	width:20px;
+	height:100%;
+}
+.dijitRtl .s-cv-timeslot-entry-colorbar, .dijitRtl .s-cv-timeslot-entry-selected-colorbar, .dijitRtl .s-cv-grid-entry-colorbar, .dijitRtl .s-cv-grid-entry-selected-colorbar{
+	text-align:right;
+	right:0px;
+}
+.s-cv-timeslot-entry-colorbar{
+	width:20px;
+	border-right:1px solid #A5A5A5;
+}
+.dijitRtl .s-cv-timeslot-entry-colorbar{
+	border-left:1px solid #A5A5A5;
+}
+.s-cv-timeslot-entry-selected-colorbar{
+	width:20px;
+	border-right:1px solid #71B9C6;
+}
+.dijitRtl .s-cv-timeslot-entry-selected-colorbar{
+	border-left:1px solid #71B9C6;
+}
+.s-cv-timeslot-entry-conflict{
+	background-color:#f05e16;
+	right: 1px;
+	width: 7px;
+	filter: alpha(opacity=50);
+}
+.s-cv-timeslot-entry-roundcorner{
+	display:none;
+}
+.dj_gecko .s-cv-timeslot-entry-conflict{
+	opacity:0.5;
+}
+.s-cv-datepick {
+	width:9em;
+	height:9em;
+	padding:0px;
+	overflow:hidden;
+	border: 1px solid gray;
+}
+.s-cv-navigator{
+	border-right: none;
+	border-left: none;
+}
+.s-cv-selected-area:focus{
+	outline: 1px dotted;
+}
+.s-cv-basicicons{
+	background-image: url("../../common/images/basicicons_ll.png");
+}
+.s-cv-colicons{
+	background-image: url("../../common/images/colicon1.gif");
+}
+.s-cv-summary-icon-expand{
+	text-align:right;
+}
+.dijitRtl .s-cv-summary-icon-expand{
+	text-align:left;
+}
+.s-cv-nav-today-button, .s-cv-nav-today-icon{
+	display:none;
+}
+.s-cv-summary .s-cv-entry-icon{
+	top:2px;
+	left:24px;
+}
+.s-cv-summary .s-cv-entry-allday, .s-cv-summary .s-cv-entry-time{
+	padding-left:12px;
+}
+.s-cv-entry-indicator{
+	display:none;
+}
+.s-cv-summary-noentry{
+	top:0;
+	left:0;
+	width:100%;
+	font-style:italic;
+	text-align:left;
+}
+.s-cv-summary-loading{
+	display:none;
+}
+.s-monthBar{
+	text-align: center;
+}
+
+	/* High-Contrast Mode */
+.s-cv-entry-innerframe-height{
+	height: 95%;
+}
+.dijit_a11y .s-cv-entry-innerframe-height{
+	height: 100%;
+}
+.s-arrowText{
+	display: none;
+}
+.dijit_a11y .s-arrowText{
+	display: inline;
+	position:absolute;
+}
+.dijit_a11y .s-dateHeader{
+	border-style: solid;
+	border-width: thin;
+}
+.dijit_a11y .s-cv-entry-innerframe{
+	border-style: solid;
+	border-width: thin;
+}
+.dijit_a11y .s-cv-nav-button {
+	border: 0px;
+	padding: 1px;
+}
+.dijit_a11y .s-cv-entry div {
+	background-color: #FFFFFF;
+}
+.dijit_a11y .s-background-none-iebug-in-hc div {
+	background-color: transparent !important;
+}
+.dijit_a11y .s-background-none-iebug-in-hc .s-cv-entry div {
+	background-color: #FFFFFF !important;
+}
+
+.s-label-light {
+    font-family: lucida grande,helvetica,arial,sans-serif;
+	font-size: 75%;
+	font-weight: normal;
+	color: rgb(90,90,115);
+}
+
+.s-sidecalendar-entry, .s-sidecalendar-navigator, .s-sidecalendar-entry-background{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.s-sidecalendar-entry, .s-sidecalendar-navigator{
+	padding: 5px 0px;
+}
+.s-sidecalendar-entry{
+	background-color: #FFFFFF !important;
+	margin: 2px 1px -1px;
+	position: relative;
+	max-height: 9em;
+	overflow: hidden;
+	border-width: 1px;
+	border-style: solid;
+}
+.s-sidecalendar-navigator{
+	margin: 1px;
+	position: absolute;
+	border: 1px solid #CCCCCC;
+	padding: 0px;
+	background-color: rgb(233,236,241);
+	width: 99%;
+	height: 1.5em;
+}
+.s-sidecalendar-body{
+	padding-top: 1.5em;
+}
+.s-sidecalendar-entry-highlighted {
+	background-color: #E6F4F7 !important;
+	color: white !important;
+}
+.s-sidecalendar-entry-background{
+	position:absolute;
+	top:0px;
+	D_ALIGN_REVERSE_NQ:10px;
+	width:12px;
+	height:100%;
+	border-style: solid;
+	border-width: 0 1px 0 0;
+}
+.dijitRtl .s-sidecalendar-entry-background{
+	border-width: 0 0 0 1px;
+}
+.s-sidecalendar-entry-time, .s-sidecalendar-entry-subject, .s-sidecalendar-entry-info{
+	word-wrap: break-word;
+}
+.s-sidecalendar-entry-time, .s-sidecalendar-entry-subject, .s-sidecalendar-entry-info{
+	padding: 0 0 0 16px;
+}
+.dijitRtl .s-sidecalendar-entry-time, .dijitRtl .s-sidecalendar-entry-subject, .dijitRtl .s-sidecalendar-entry-info{
+	padding: 0 16px 0 0;
+}
+.s-sidecalendar-entry-subject{
+	font-weight: bold;
+}
+.s-sidecalendar-entry-info{
+	font-size: 90%;
+}
+.s-sidecalendar-dateindicator, .s-sidecalendar-dateindicator-highlighted {
+	font-family: lucida grande,helvetica,arial,sans-serif;
+	font-size: 75%;
+	font-weight: bold;
+	color: #343434;
+ 	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+	overflow: hidden;
+	padding: 1px 4px;
+	border: none;
+	cursor: pointer;
+}
+.s-sidecalendar-dateindicator-highlighted{
+	color: black;
+	padding: 0px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: white rgb(176, 112, 48) rgb(176, 112, 48) white;
+	background-color: rgb(248, 184, 80);
+}
+.s-sidecalendar-dateindicator-whole{
+	width:100%;
+	height:100%;
+}
+.s-sidecalendar-dateindicator-button{
+	width:25%;
+}
+.s-sidecalendar-dateindicator-date{
+	width:50%;
+}
+.s-sidecalendar-icons-prev{
+	background-image: url("../../common/images/basicicons_ll.png");
+	background-position: -120px -20px;
+}
+.dijitRtl .s-sidecalendar-icons-prev{
+	background-position: -140px -20px;
+}
+.s-sidecalendar-icons-next{
+	background-image: url("../../common/images/basicicons_ll.png");
+	background-position: -140px -20px;
+}
+.dijitRtl .s-sidecalendar-icons-next{
+	background-position: -120px -20px;
+}
+
+.xs-handcursor {
+	cursor: D_HANDCURSOR_NQ;
+}
+
+.s-panel-border {
+	border: solid #d8e9fc 1px;
+}
+
+/* general styles */
+.s-cell-center, td.s-cell-center{
+	Xtext-align: center;
+	Xvertical-align: middle;
+}
+.s-label-light {
+	font-family: lucida grande,helvetica,arial,sans-serif;
+	font-size: 75%;
+	font-weight: normal;
+	color: rgb(90,90,115);
+	line-height: 110%;
+}
+.s-popup {
+	background-color: rgb(255,255,255);
+	border: solid gray 1px;
+	position: absolute;
+	padding: 4px;
+	overflow-x: visible;
+	overflow-y: auto;
+}
+.s-handcursor {
+	cursor: pointer;
+}
+
+.s-datepick {
+	font-size: medium;
+	line-height: normal;
+}
+.s-datepick td {
+ vertical-align: middle;
+}
+.s-panel-border {
+	border: solid rgb(127,157,185) 1px;
+}
+.s-datepick-body {
+	padding:1.5em 2px 2px 0px;
+	background-color: #F4F5F6;
+}
+.s-datepick-header {
+	height:1.5em;
+	border-top-color: rgb(244,245,246);
+	border-bottom-color: rgb(244,245,246);
+}
+.s-datepick-border {
+}
+.s-datepick-cell {
+    font-family: lucida grande,helvetica,arial,sans-serif;
+	font-size: 75%;
+	color:black;
+	text-align:right;
+}
+.dj_gecko .s-datepick-cell {
+	line-height: 110%;
+}
+.s-datepick-cell-normal {
+	padding:1px;
+}
+.s-datepick-cell-select {
+	border: solid rgb(192,192,192) 1px;
+	background-color: rgb(232,232,232);
+	font-weight: bold;
+	padding:0px;
+}
+.s-datepick-cell-today {
+	font-weight: bold;
+}
+.s-datepick-cell-focus {
+	border: solid rgb(192,192,192) 1px;
+}
+.s-datepick-nav-button{
+	color: rgb(0,0,0);
+	outline-width:0px;
+	border:solid 1px rgb(244,245,246);
+	vertical-align: middle;
+	text-align:center;
+	padding:0px 2px;
+	font-weight:bold;
+	white-space:nowrap;
+}
+.s-datepick-nav-button:hover, .s-datepick-nav-button:focus, .s-datepick-nav-button-highlighted, .s-datepick-nav-button-focused{
+	border:solid 1px black;
+}
+.s-datepick-nav-prev, .s-datepick-nav-next {
+	-moz-user-focus: ignore;
+	vertical-align: middle;
+	background-image:  url("../../common/images/basicicons_ll.png");
+}
+.s-datepick-nav-prev {
+	background-position: -120px -20px;
+}
+.s-datepick-nav-next {
+	background-position: -140px -20px;
+}
+
+/* High-Contrast Mode */
+.s-datepick-arrowText{
+	display: none;
+}
+.dijit_a11y .s-datepick-arrowText{
+	display: inline;
+	position:absolute;
+	font-size: 8px;
+}
+.dijit_a11y .s-datepick-nav-button{
+	background-color: #FFFFFF;
+}
+.dijit_a11y .s-label-light{
+	background-color: #FFFFFF;
+}
+.dijit_a11y .s-datepick-cell-focus, .dijit_a11y .s-datepick-cell-hover {
+	font-weight: bold;
+}
+.dijit_a11y .s-datepick-nav-button {
+	border: 0px;
+	margin: 1px;
+}
+.dijit_a11y .s-datepick-nav-button-focused {
+	border: 1px solid;
+	margin: 0px;
+}
+.dijit_a11y .s-cv-text-today-hc {
+	text-decoration: underline
+}
+.dijit_a11y .a11y-background-white{
+	background-color: #FFFFFF;
+}

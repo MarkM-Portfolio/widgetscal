@@ -1,0 +1,137 @@
+/* ***************************************************************** */
+/*                                                                   */
+/* IBM Confidential                                                  */
+/*                                                                   */
+/* OCO Source Materials                                              */
+/*                                                                   */
+/* Copyright IBM Corp. 2012                                          */
+/*                                                                   */
+/* The source code for this program is not published or otherwise    */
+/* divested of its trade secrets, irrespective of what has been      */
+/* deposited with the U.S. Copyright Office.                         */
+/*                                                                   */
+/* ***************************************************************** */
+
+/* general styles */
+.s-cell-center, td.s-cell-center{
+	Xtext-align: center;
+	Xvertical-align: middle;
+}
+.s-label-light {
+	font-family: lucida grande,helvetica,arial,sans-serif;
+	font-size: 75%;
+	font-weight: normal;
+	color: rgb(90,90,115);
+	line-height: 110%;
+}
+.s-popup {
+	background-color: rgb(228,228,241);
+	border: solid gray 1px;
+	position: absolute;
+	padding: 4px;
+	overflow-x: visible;
+	overflow-y: auto;
+}
+.s-handcursor {
+	cursor: pointer;
+}
+
+.s-datepick {
+	font-size: medium;
+	line-height: normal;
+}
+.s-datepick td {
+ vertical-align: middle;
+}
+.s-panel-border {
+	border: solid rgb(127,157,185) 1px;
+}
+.s-datepick-body {
+	padding:1.5em 2px 2px 0;
+	background-color:white;
+}
+.s-datepick-header {
+	height:1.5em;
+	background-color:rgb(243,245,248);
+	border-top-color: rgb(243,245,248);
+	border-bottom-color: rgb(255,255,255);
+}
+.s-datepick-border {
+	border-width:0px 0px 1px 0px;
+	border-style:solid;
+	border-color:D_PANEL_BORDER_COLOR;
+}
+.s-datepick-cell {
+    font-family: lucida grande,helvetica,arial,sans-serif;
+	font-size: 75%;
+	color:black;
+	text-align:right;
+}
+.dj_gecko .s-datepick-cell {
+	line-height: 110%;
+}
+.s-datepick-cell-normal {
+	padding:1px;
+}
+.s-datepick-cell-select {
+	border: solid rgb(254,131,50) 1px;
+	background-color: rgb(250,208,106);
+	font-weight: bold;
+	padding:0px;
+}
+.s-datepick-cell-today {
+	font-weight: bold;
+}
+.s-datepick-cell-focus {
+	border: solid rgb(65,160,254) 1px;
+}
+.s-datepick-nav-button{
+	outline-width:0px;
+	border:solid 1px rgb(249,250,251);
+	vertical-align: middle;
+	text-align:center;
+	padding:0px 2px;
+	font-weight:bold;
+	white-space:nowrap;
+}
+.s-datepick-nav-button:hover, .s-datepick-nav-button:focus, .s-datepick-nav-button-highlighted, .s-datepick-nav-button-focused{
+	border:solid 1px black;
+}
+.s-datepick-nav-prev, .s-datepick-nav-next {
+	-moz-user-focus: ignore;
+	vertical-align: middle;
+	background-image:  url("../../../common/images/basicicons.gif");
+}
+.s-datepick-nav-prev {
+	background-position: -120px -20px;
+}
+.s-datepick-nav-next {
+	background-position: -140px -20px;
+}
+
+/* High-Contrast Mode */
+.s-datepick-arrowText{
+	display: none;
+}
+.dijit_a11y .s-datepick-arrowText{
+	display: inline;
+	position:absolute;
+	font-size: 8px;
+}
+.dijit_a11y .s-datepick-nav-button{
+	background-color: #FFFFFF;
+}
+.dijit_a11y .s-label-light{
+	background-color: #FFFFFF;
+}
+.dijit_a11y .s-datepick-cell-focus, .dijit_a11y .s-datepick-cell-hover {
+	font-weight: bold;
+}
+.dijit_a11y .s-datepick-nav-button {
+	border: 0px;
+	margin: 1px;
+}
+.dijit_a11y .s-datepick-nav-button-focused {
+	border: 1px solid;
+	margin: 0px;
+}

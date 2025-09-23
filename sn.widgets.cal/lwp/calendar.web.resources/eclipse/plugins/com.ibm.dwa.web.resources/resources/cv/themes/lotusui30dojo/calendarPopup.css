@@ -1,0 +1,239 @@
+/* ***************************************************************** */
+/*                                                                   */
+/* IBM Confidential                                                  */
+/*                                                                   */
+/* OCO Source Materials                                              */
+/*                                                                   */
+/* Copyright IBM Corp. 2012                                          */
+/*                                                                   */
+/* The source code for this program is not published or otherwise    */
+/* divested of its trade secrets, irrespective of what has been      */
+/* deposited with the U.S. Copyright Office.                         */
+/*                                                                   */
+/* ***************************************************************** */
+
+/* only for calendar popup */
+.pimCalendarPopupContainer .s-cv-text, .pimCalendarPopupContainer .s-cv-text-large{
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 130%;
+}
+.dj_gecko .pimCalendarPopupContainer .s-cv-text, .dj_gecko .pimCalendarPopupContainer .s-cv-text-large, .dj_webkit .pimCalendarPopupContainer .s-cv-text, .dj_webkit .pimCalendarPopupContainer .s-cv-text-large{
+	line-height: 150%;
+}
+.pimCalendarPopupContainer .s-cv-nav, .pimCalendarPopupContainer .s-cv-nav-button, .pimCalendarPopupContainer .s-cv-footer, .pimCalendarPopupContainer .s-cv-footer-highlighted{
+	background-color: #FFFFFF;
+}
+.pimCalendarPopupContainer .s-cv-nav{
+	border-width:0;
+	height:3em;
+}
+.pimCalendarPopupContainer .s-cv-nav-button{
+	border: 1px solid #FFFFFF;
+	height: 32px;
+	padding-top: 10px;
+}
+.pimCalendarPopupContainer .s-cv-footer{
+	display:none;
+}
+.pimCalendarPopupContainer .s-cv-nav-innerframe, .pimCalendarPopupContainer .s-cv-nav-innerframe-narrow{
+	width:100%;
+}
+.pimCalendarPopupContainer .s-cv-nav-current{
+	font-size:95%;
+	min-width:250px;
+	padding-top: 5px;
+}
+.pimCalendarPopupContainer .s-cv-nav-today-button{
+	display:inline;
+	color:rgb(169,82,5);
+	font-size:75%;
+	font-weight:normal;
+	padding: 0 1em;
+}
+.pimCalendarPopupContainer .s-cv-nav-today-icon{
+	display:inline;
+}
+.pimCalendarPopupContainer .s-cv-nav-today-icon img{
+	margin-top:4px;
+	vertical-align:middle;
+}
+.pimCalendarPopupContainer .s-cv-timeslot-entry-colorbar, .pimCalendarPopupContainer .s-cv-timeslot-entry-selected-colorbar, .pimCalendarPopupContainer .s-cv-grid-entry-colorbar, .pimCalendarPopupContainer .s-cv-grid-entry-selected-colorbar{
+	width:100%;
+}
+.pimCalendarPopupContainer .s-cv-summary-noentry{
+	top:0;
+	left:0;
+	width:100%;
+	padding-left:1em;
+	font-style:normal;
+	text-align:left;
+	color:#666666;
+}
+.pimCalendarPopupContainer .s-cv-summary-loading{
+	display:block;
+	top:0;
+	left:1em;
+	width:100%;
+	padding-left:2em;
+	text-align:left;
+	color:#666666;
+	background-image: url("loading.gif");
+	background-repeat: no-repeat;
+}
+.pimCalendarPopupContainer .s-cv-summary-entry-colorbar{
+	display:none;
+}
+.pimCalendarPopupContainer .s-cv-summary{
+	border-width: 0px !important;
+}
+.pimCalendarPopupContainer .s-cv-summary .s-cv-entry-icon, .pimCalendarPopupContainer .s-cv-summary .s-cv-entry-icon-allday{
+	top:1.8em;
+	left:1em;
+	width:12px;
+	height:12px;
+}
+.pimCalendarPopupContainer .s-cv-summary .s-cv-entry-icon-allday{
+	top:0.4em;
+}
+.pimCalendarPopupContainer .s-cv-summary .s-cv-entry{
+	overflow:hidden;
+	width:100% !important;
+	left:0 !important;
+}
+.pimCalendarPopupContainer .s-cv-summary .s-cv-entry:hover{
+	background-color: #E6F4F7;
+}
+.pimCalendarPopupContainer .s-cv-summary .s-cv-entry-selected:hover, .pimCalendarPopupContainer .s-cv-summary .s-cv-entry-selected .s-cv-entry:hover{
+	background-color: transparent;
+}
+.pimCalendarPopupContainer .s-cv-summary .s-cv-entry-allday, .pimCalendarPopupContainer .s-cv-summary .s-cv-entry-time, .pimCalendarPopupContainer .s-cv-summary .s-cv-entry-subject{
+	padding-left:1.2em;
+}
+.pimCalendarPopupContainer .s-cv-summary .s-cv-entry-subject{
+	font-weight:bold;
+}
+.pimCalendarPopupContainer .s-cv-summary .s-cv-entry-location, .pimCalendarPopupContainer .s-cv-summary .s-cv-entry-chair{
+	padding-left:1.2em;
+	color:#666666;
+}
+.pimCalendarPopupContainer .s-cv-summary .s-cv-entry-subject, .pimCalendarPopupContainer .s-cv-summary .s-cv-entry-location, .pimCalendarPopupContainer .s-cv-summary .s-cv-entry-chair{
+	white-space:nowrap;
+	overflow:hidden;
+	position:relative;
+}
+.pimCalendarPopupContainer .s-cv-entry-indicator{
+	display:block;
+	background-color:#9C9C9C;
+}
+.pimCalendarPopupContainer .s-cv-summary .s-cv-entry-indicator{
+	display:block;
+	color:#FFFFFF;
+	background-color:#FFFFFF;
+	top:0.5em;
+	right:0.5em;
+	height:1.5em;
+	width:10em;
+	text-align:center;
+}
+.pimCalendarPopupContainer .s-cv-entry-location-url{
+	color:#0000FF;
+}
+.pimCalendarPopupContainer .s-cv-entry-selected{
+	background-color:#E6F4F7;
+}
+.pimCalendarPopupContainer .s-cv-summary .s-cv-entry-past{
+	color:#666666;
+	background-color:#F4F4F4;
+}
+.pimCalendarPopupContainer .s-cv-summary .s-cv-entry-future{
+	background-color:#FFFFFF;
+}
+.pimCalendarPopupContainer .s-cv-entry-unprocessed{
+	color:#666666;
+}
+.pimCalendarPopupContainer .s-cv-timeslot-entry-conflict{
+	position:absolute;
+	filter: alpha(opacity=100);
+}
+.pimCalendarPopupContainer .s-cv-summary .s-cv-timeslot-entry-conflict{
+	width: 8px !important;
+}
+.pimCalendarPopupContainer .s-cv-timeslot-entry-conflict, .pimCalendarPopupContainer .s-cv-summary .s-cv-timeslot-entry-conflict:hover{
+	background-color:rgb(248,132,73);
+}
+.dj_gecko .pimCalendarPopupContainer .s-cv-timeslot-entry-conflict{
+	opacity:1.0;
+}
+.pimCalendarPopupContainer .s-cv-entry-separator{
+	border-bottom: 1px solid #EEEEEE;
+}
+.pimCalendarPopupContainer .s-cv-timebar{
+	position:absolute;
+	left:0;
+	width:100% !important;
+	height:10px;
+	z-index:1;
+	overflow:visible;
+}
+.pimCalendarPopupContainer .s-cv-timebar-line{
+	position:absolute;
+	top:-1px;
+	left:0;
+	width:100%;
+	height:2px;
+	background-color:#A4A4A4;
+}
+.pimCalendarPopupContainer .s-cv-timebar-oval1, .pimCalendarPopupContainer .s-cv-timebar-oval2{
+	position:absolute;
+	top:-5px;
+	width:5px;
+	height:10px;
+	background-image: url("basicicons_ll.png");
+}
+.pimCalendarPopupContainer .s-cv-timebar-oval1{
+	left:0;
+	background-position: -255px -20px;
+}
+.pimCalendarPopupContainer .s-cv-timebar-oval2{
+	right:0;
+	background-position: -250px -20px;
+}
+.pimCalendarPopupContainer .s-cv-basicicons{
+	background-image: url("basicicons_ll.png");
+}
+.pimCalendarPopupContainer .s-cv-entry-hover{
+	display:none;
+}
+.pimCalendarPopupContainer .s-cv-fade{
+	display:inline-block;
+	position:absolute;
+	top:0;
+	right:0;
+	width:25px;
+	height:100%; 
+	background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,0.75) 75%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(75%,rgba(255,255,255,0.75)), color-stop(100%,rgba(255,255,255,1))); /* Chrome, Safari4+ */
+	background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0.75) 75%,rgba(255,255,255,1) 100%); /* Chrome10+, Safari5.1+ */
+	background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0.75) 75%,rgba(255,255,255,1) 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0.75) 75%,rgba(255,255,255,1) 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-IE9 */
+	background: linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0.75) 75%,rgba(255,255,255,1) 100%); /* W3C */
+}
+.pimCalendarPopupContainer .s-cv-entry-past .s-cv-fade{
+	background: -moz-linear-gradient(left, rgba(244,244,244,0) 0%, rgba(244,244,244,0.75) 75%, rgba(244,244,244,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(244,244,244,0)), color-stop(75%,rgba(244,244,244,0.75)), color-stop(100%,rgba(244,244,244,1))); /* Chrome, Safari4+ */
+	background: -webkit-linear-gradient(left, rgba(244,244,244,0) 0%,rgba(244,244,244,0.75) 75%,rgba(244,244,244,1) 100%); /* Chrome10+, Safari5.1+ */
+	background: -o-linear-gradient(left, rgba(244,244,244,0) 0%,rgba(244,244,244,0.75) 75%,rgba(244,244,244,1) 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(left, rgba(244,244,244,0) 0%,rgba(244,244,244,0.75) 75%,rgba(244,244,244,1) 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00F4F4F4', endColorstr='#F4F4F4',GradientType=1 ); /* IE6-IE9 */
+	background: linear-gradient(left, rgba(244,244,244,0) 0%,rgba(244,244,244,0.75) 75%,rgba(244,244,244,1) 100%); /* W3C */
+}
+.pimCalendarPopupContainer .s-cv-summary .s-cv-entry:hover .s-cv-fade, .pimCalendarPopupContainer .s-cv-summary .s-cv-entry-selected .s-cv-fade{
+	background: -moz-linear-gradient(left, rgba(230,244,247,0) 0%, rgba(230,244,247,0.75) 75%, rgba(230,244,247,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(230,244,247,0)), color-stop(75%,rgba(230,244,247,0.75)), color-stop(100%,rgba(230,244,247,1))); /* Chrome, Safari4+ */
+	background: -webkit-linear-gradient(left, rgba(230,244,247,0) 0%,rgba(230,244,247,0.75) 75%,rgba(230,244,247,1) 100%); /* Chrome10+, Safari5.1+ */
+	background: -o-linear-gradient(left, rgba(230,244,247,0) 0%,rgba(230,244,247,0.75) 75%,rgba(230,244,247,1) 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(left, rgba(230,244,247,0) 0%,rgba(230,244,247,0.75) 75%,rgba(230,244,247,1) 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00E6F4F7', endColorstr='#E6F4F7',GradientType=1 ); /* IE6-IE9 */
+	background: linear-gradient(left, rgba(230,244,247,0) 0%,rgba(230,244,247,0.75) 75%,rgba(230,244,247,1) 100%); /* W3C */
+}

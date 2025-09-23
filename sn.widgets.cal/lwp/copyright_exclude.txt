@@ -1,0 +1,11 @@
+; disabled="true" in component.xml
+
+
+
+[ROOT]/sn.widgets.cal/lwp/logs/**
+
+[ROOT]/sn.widgets.cal/lwp/prereqs.calendar/**
+[ROOT]/sn.widgets.cal/lwp/msgids/**
+[ROOT]/sn.widgets.cal/lwp/build/**
+
+

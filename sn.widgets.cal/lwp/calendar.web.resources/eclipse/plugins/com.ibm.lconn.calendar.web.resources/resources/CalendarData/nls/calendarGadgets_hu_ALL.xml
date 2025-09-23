@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2016                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<messagebundle>
+  <msg name="title_number_events_to_show">Megjelenítendő események száma:</msg> 
+  <msg name="title_type_all">Minden követett részvételre kijelölt esemény</msg> 
+  <msg name="title_type_attend">Részvételre kijelölt események</msg> 
+  <msg name="title_type_follow">Követett események</msg> 
+  <msg name="title_show">Megjelenítés:</msg> 
+  <msg name="title">Közösségi események</msg> 
+  <msg name="decription">Megjeleníti azokat az eseményeket, amelyeket követ vagy amelyeken jelezte a részvételét.</msg> 
+</messagebundle> 

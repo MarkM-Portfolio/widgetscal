@@ -1,0 +1,24 @@
+/* ***************************************************************** */
+/*                                                                   */
+/* IBM Confidential                                                  */
+/*                                                                   */
+/* OCO Source Materials                                              */
+/*                                                                   */
+/* Copyright IBM Corp. 2011, 2013                                    */
+/*                                                                   */
+/* The source code for this program is not published or otherwise    */
+/* divested of its trade secrets, irrespective of what has been      */
+/* deposited with the U.S. Copyright Office.                         */
+/*                                                                   */
+/* ***************************************************************** */
+
+package com.ibm.lconn.calendar.db.dao.model;
+
+import com.ibm.lconn.calendar.db.model.DBMiscData;
+
+public interface MiscDataDAO {
+	public void insertData(DBMiscData data);
+	public Integer updateData(DBMiscData data);
+	public Integer deleteData(String name, String value);
+	public DBMiscData getData(String name);
+}

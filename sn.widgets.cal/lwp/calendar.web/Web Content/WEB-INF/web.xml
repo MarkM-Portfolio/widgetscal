@@ -1,0 +1,1249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2016                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<web-app id="WebApp_1263999425566" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>Calendar</display-name>
+	
+	<context-param>
+		<param-name>
+		javax.servlet.jsp.jstl.fmt.localizationContext
+		</param-name>
+		<param-value>
+		com.ibm.lconn.calendar.strings.ui
+		</param-value>
+	</context-param>
+	
+	<filter>
+	 <filter-name>ExtensibleFilter</filter-name>
+	 <filter-class>com.ibm.lconn.core.web.extension.ExtensibleFilter</filter-class>
+	</filter>
+
+	<filter>
+		<display-name>HttpRequestFilter</display-name>
+		<filter-name>HttpRequestFilter</filter-name>
+		<filter-class>com.ibm.lconn.core.web.request.HttpRequestFilter</filter-class>
+	</filter>
+	
+	<filter>
+	    <filter-name>CSRFFilter</filter-name>
+	    <filter-class>com.ibm.lconn.core.web.atom.CSRFFilter</filter-class>
+	</filter>
+	
+	<filter>
+		<filter-name>OAuthLocalThreadFilter</filter-name>
+		<filter-class>com.ibm.lconn.calendar.filters.OAuthLocalThreadFilter</filter-class>
+	</filter>
+	
+	<filter>
+      <display-name>CustomizationFilter</display-name>
+      <filter-name>CustomizationFilter</filter-name>
+      <filter-class>com.ibm.lconn.core.web.customization.CustomizationFilter</filter-class>
+	</filter>
+
+	<filter>
+		<filter-name>DatabaseTransactionFilter</filter-name>
+		<filter-class>com.ibm.lconn.calendar.filters.DatabaseTransactionFilter</filter-class>
+	</filter>
+
+	<filter>
+		<filter-name>InitFilter</filter-name>
+		<filter-class>com.ibm.lconn.calendar.filters.InitFilter</filter-class>
+	</filter>
+	
+	<filter>
+      <filter-name>CharEncodingFilter</filter-name>
+      <filter-class>com.ibm.lconn.calendar.filters.CharEncodingFilter</filter-class>
+    </filter>
+	
+	<filter>
+		<filter-name>LCBasicAuthenticationFilter</filter-name>
+		<filter-class>com.ibm.lconn.core.web.auth.LCBasicAuthFilter</filter-class>
+	</filter>
+	
+	<filter>
+		<filter-name>LCAtomFBASecurityFilter</filter-name>
+		<filter-class>com.ibm.lconn.core.web.auth.LCRestSecurityFilter</filter-class>
+		<init-param>
+			<param-name>enforce.read.role</param-name>
+			<param-value>reader</param-value>
+		</init-param>
+		<init-param>
+			<param-name>enforce.write.role</param-name>
+			<param-value>person</param-value>
+		</init-param>
+		<init-param>
+			<param-name>authentication.chooser.forward</param-name>
+			<param-value>/WEB-INF/jsps/401.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>unauthorized.user.forward</param-name>
+			<param-value>/WEB-INF/jsps/403.jsp</param-value>
+		</init-param>
+	</filter>
+	
+	<filter>
+		<filter-name>LCAtomSecurityFilter</filter-name>
+		<filter-class>com.ibm.lconn.core.web.auth.LCRestSecurityFilter</filter-class>
+		<init-param>
+			<param-name>enforce.read.role</param-name>
+			<param-value>reader</param-value>
+		</init-param>
+		<init-param>
+			<param-name>enforce.write.role</param-name>
+			<param-value>person</param-value>
+		</init-param>
+		<init-param>
+			<param-name>authentication.chooser.forward</param-name>
+			<param-value>/WEB-INF/jsps/basicAuth.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>unauthorized.user.forward</param-name>
+			<param-value>/WEB-INF/jsps/403.jsp</param-value>
+		</init-param>
+	</filter>
+	
+	<filter>
+		<filter-name>LCAtomSecurityFilterForceAuth</filter-name>
+		<filter-class>com.ibm.lconn.core.web.auth.LCRestSecurityFilter</filter-class>
+		<init-param>
+			<param-name>enforce.read.role</param-name>
+			<param-value>person</param-value>
+		</init-param>
+		<init-param>
+			<param-name>enforce.write.role</param-name>
+			<param-value>person</param-value>
+		</init-param>
+		<init-param>
+			<param-name>authentication.chooser.forward</param-name>
+			<param-value>/WEB-INF/jsps/basicAuth.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>unauthorized.user.forward</param-name>
+			<param-value>/WEB-INF/jsps/403.jsp</param-value>
+		</init-param>
+	</filter>
+	
+	<filter>
+		<filter-name>LCAtomSecurityFilterForWidget</filter-name>
+		<filter-class>com.ibm.lconn.core.web.auth.LCRestSecurityFilter</filter-class>
+		<init-param>
+			<param-name>enforce.read.role</param-name>
+			<param-value>widget-admin</param-value>
+		</init-param>
+		<init-param>
+			<param-name>enforce.write.role</param-name>
+			<param-value>widget-admin</param-value>
+		</init-param>
+		<init-param>
+			<param-name>authentication.chooser.forward</param-name>
+			<param-value>/WEB-INF/jsps/basicAuth.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>unauthorized.user.forward</param-name>
+			<param-value>/WEB-INF/jsps/403.jsp</param-value>
+		</init-param>
+	</filter>
+	
+	<filter>
+		<filter-name>LCAtomSecurityFilterForSeedlist</filter-name>
+		<filter-class>com.ibm.lconn.core.web.auth.LCRestSecurityFilter</filter-class>
+		<init-param>
+			<param-name>enforce.read.role</param-name>
+			<param-value>search-admin</param-value>
+		</init-param>
+		<init-param>
+			<param-name>enforce.write.role</param-name>
+			<param-value>search-admin</param-value>
+		</init-param>
+		<init-param>
+			<param-name>authentication.chooser.forward</param-name>
+			<param-value>/WEB-INF/jsps/basicAuth.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>unauthorized.user.forward</param-name>
+			<param-value>/WEB-INF/jsps/403.jsp</param-value>
+		</init-param>
+	</filter>
+	
+	<filter>
+		<filter-name>PublicSeedlistAuthorizationFilter</filter-name>
+		<filter-class>com.ibm.ilel.seedlist.servlet.filter.PublicSeedlistFilter</filter-class>
+	</filter>
+	
+	<filter>
+		<filter-name>BilingualI18NFilter</filter-name>
+		<filter-class>com.ibm.lconn.core.web.util.lang.I18NFilter</filter-class>
+	</filter>
+	
+	<filter>
+		<description></description>
+		<display-name>LanguageFilter</display-name>
+		<filter-name>LanguageFilter</filter-name>
+		<filter-class>com.ibm.lconn.core.web.util.lang.LanguageFilter</filter-class>
+		<init-param>
+	    	<param-name>qualifyingPaths</param-name>
+	      	<param-value>atom/calendar/event,atom_form/calendar/event,atom/calendar/event/comment,atom_form/calendar/event/comment</param-value>
+		</init-param>
+	</filter>
+	
+	<filter>
+		<filter-name>CacheHeadersNoCache</filter-name>
+		<filter-class>com.ibm.lconn.core.web.cache.NoCacheFilter</filter-class>
+	</filter>
+	
+	<filter>
+		<filter-name>CacheHeadersMaxAge</filter-name>
+		<filter-class>com.ibm.lconn.core.web.cache.PublicCacheFilter</filter-class>
+	</filter>
+	
+	<filter>
+		<filter-name>TenantLookupFilter</filter-name>
+		<filter-class>com.ibm.lconn.core.web.mt.TenantLookupFilter</filter-class>
+		<init-param>
+			<param-name>application</param-name>
+			<param-value>communities</param-value> <!-- HERE IS THE IMPORTANT PART -->
+		</init-param>
+	</filter>
+	
+	<filter>
+		<filter-name>CalendarTenantContextFilter</filter-name>
+		<filter-class>com.ibm.lconn.calendar.filters.CalendarTenantContextFilter</filter-class>
+	</filter>
+	
+	<filter>
+		<description>Filter that applies things like browser compatibility based on Gatekeeper settings</description>
+		<display-name>DarkLaunchFilter</display-name>
+		<filter-name>DarkLaunchFilter</filter-name>
+		<filter-class>com.ibm.lconn.core.web.request.DarkLaunchFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	 <filter-name>ExtensibleFilter</filter-name>
+	 <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+	    <filter-name>CharEncodingFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+	    <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>HttpRequestFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- CSRF Filter to be put on all api requests -->
+	<filter-mapping>
+		<filter-name>CSRFFilter</filter-name>
+		<url-pattern>/atom/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>CSRFFilter</filter-name>
+		<url-pattern>/atom_form/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>CSRFFilter</filter-name>
+		<url-pattern>/json/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>CSRFFilter</filter-name>
+		<url-pattern>/ical/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>CSRFFilter</filter-name>
+		<url-pattern>/members/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>CSRFFilter</filter-name>
+		<url-pattern>/oauth/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>CSRFFilter</filter-name>
+		<url-pattern>/handleEvent/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>CSRFFilter</filter-name>
+		<url-pattern>/seedlist/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>OAuthLocalThreadFilter</filter-name>
+		<url-pattern>/oauth/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+	    <filter-name>BilingualI18NFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>LanguageFilter</filter-name>
+		<url-pattern>/atom/search/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>LanguageFilter</filter-name>
+		<url-pattern>/atom_form/search/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>LanguageFilter</filter-name>
+		<url-pattern>/oauth/atom/search/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>LanguageFilter</filter-name>
+		<url-pattern>/atom/calendar/event/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>LanguageFilter</filter-name>
+		<url-pattern>/atom_form/calendar/event/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>LanguageFilter</filter-name>
+		<url-pattern>/oauth/atom/calendar/event/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>LanguageFilter</filter-name>
+		<url-pattern>/atom/calendar/event/comment/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>LanguageFilter</filter-name>
+		<url-pattern>/atom_form/calendar/event/comment/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>LanguageFilter</filter-name>
+		<url-pattern>/atom/calendar/event/attendees/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>LanguageFilter</filter-name>
+		<url-pattern>/oauth/atom/calendar/event/attendees/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>LanguageFilter</filter-name>
+		<url-pattern>/atom_form/calendar/event/attendees/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>LanguageFilter</filter-name>
+		<url-pattern>/oauth/atom_form/calendar/event/attendees/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>LanguageFilter</filter-name>
+		<url-pattern>/oauth/atom/calendar/event/comment/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>CustomizationFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>DatabaseTransactionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>InitFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+	  <filter-name>LCBasicAuthenticationFilter</filter-name>
+	  <url-pattern>/atom/search/*</url-pattern>
+	  <dispatcher>REQUEST</dispatcher>
+	  <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+	  <filter-name>LCBasicAuthenticationFilter</filter-name>
+	  <url-pattern>/atom/calendar/*</url-pattern>
+	  <dispatcher>REQUEST</dispatcher>
+	  <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>	
+	
+	<filter-mapping>
+	  <filter-name>LCBasicAuthenticationFilter</filter-name>
+	  <url-pattern>/atom/tagcloud/*</url-pattern>
+	  <dispatcher>REQUEST</dispatcher>
+	  <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+	  <filter-name>LCBasicAuthenticationFilter</filter-name>
+	  <url-pattern>/atom/follow/*</url-pattern>
+	  <dispatcher>REQUEST</dispatcher>
+	  <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>	
+	
+	<filter-mapping>
+	  <filter-name>LCBasicAuthenticationFilter</filter-name>
+	  <url-pattern>/handleEvent</url-pattern>
+	  <dispatcher>REQUEST</dispatcher>
+	  <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+	  <filter-name>LCBasicAuthenticationFilter</filter-name>
+	  <url-pattern>/ical/*</url-pattern>
+	  <dispatcher>REQUEST</dispatcher>
+	  <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>	
+	
+	<filter-mapping>
+	  <filter-name>LCBasicAuthenticationFilter</filter-name>
+	  <url-pattern>/seedlist/server/*</url-pattern>
+	  <dispatcher>REQUEST</dispatcher>
+	  <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+	  <filter-name>LCBasicAuthenticationFilter</filter-name>
+	  <url-pattern>/seedlist/myserver/*</url-pattern>
+	  <dispatcher>REQUEST</dispatcher>
+	  <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+	  <filter-name>LCBasicAuthenticationFilter</filter-name>
+	  <url-pattern>/seedlist/authverify/*</url-pattern>
+	  <dispatcher>REQUEST</dispatcher>
+	  <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>TenantLookupFilter</filter-name>
+		<url-pattern>/atom/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>TenantLookupFilter</filter-name>
+		<url-pattern>/atom_form/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>TenantLookupFilter</filter-name>
+		<url-pattern>/json/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>TenantLookupFilter</filter-name>
+		<url-pattern>/members/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>TenantLookupFilter</filter-name>
+		<url-pattern>/ical/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>TenantLookupFilter</filter-name>
+		<url-pattern>/handleEvent</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>TenantLookupFilter</filter-name>
+		<url-pattern>/seedlist/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+	    <filter-name>CalendarTenantContextFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>DarkLaunchFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+  		<filter-name>LCAtomFBASecurityFilter</filter-name>
+  		<url-pattern>/atom_form/calendar/*</url-pattern>
+  		<dispatcher>REQUEST</dispatcher>
+  		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+  		<filter-name>LCAtomFBASecurityFilter</filter-name>
+  		<url-pattern>/atom_form/tagcloud/*</url-pattern>
+  		<dispatcher>REQUEST</dispatcher>
+  		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+  		<filter-name>LCAtomFBASecurityFilter</filter-name>
+  		<url-pattern>/atom_form/follow/*</url-pattern>
+  		<dispatcher>REQUEST</dispatcher>
+  		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+  		<filter-name>LCAtomFBASecurityFilter</filter-name>
+  		<url-pattern>/json/calendar/notify/*</url-pattern>
+  		<dispatcher>REQUEST</dispatcher>
+  		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+  		<filter-name>LCAtomFBASecurityFilter</filter-name>
+  		<url-pattern>/json/user/status/*</url-pattern>
+  		<dispatcher>REQUEST</dispatcher>
+  		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+  		<filter-name>LCAtomFBASecurityFilter</filter-name>
+  		<url-pattern>/members/*</url-pattern>
+  		<dispatcher>REQUEST</dispatcher>
+  		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+  		<filter-name>LCAtomSecurityFilter</filter-name>
+  		<url-pattern>/atom/search/*</url-pattern>
+  		<dispatcher>REQUEST</dispatcher>
+  		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+  		<filter-name>LCAtomSecurityFilter</filter-name>
+  		<url-pattern>/atom/calendar/*</url-pattern>
+  		<dispatcher>REQUEST</dispatcher>
+  		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+  		<filter-name>LCAtomSecurityFilter</filter-name>
+  		<url-pattern>/atom/tagcloud/*</url-pattern>
+  		<dispatcher>REQUEST</dispatcher>
+  		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+  		<filter-name>LCAtomSecurityFilter</filter-name>
+  		<url-pattern>/atom/follow/*</url-pattern>
+  		<dispatcher>REQUEST</dispatcher>
+  		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+  		<filter-name>LCAtomSecurityFilter</filter-name>
+  		<url-pattern>/ical/*</url-pattern>
+  		<dispatcher>REQUEST</dispatcher>
+  		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+  		<filter-name>LCAtomSecurityFilterForWidget</filter-name>
+  		<url-pattern>/handleEvent</url-pattern>
+  		<dispatcher>REQUEST</dispatcher>
+  		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+	  <filter-name>LCAtomSecurityFilterForceAuth</filter-name>
+	  <url-pattern>/seedlist/server/*</url-pattern>
+	  <dispatcher>REQUEST</dispatcher>
+	  <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+	  <filter-name>LCAtomSecurityFilterForSeedlist</filter-name>
+	  <url-pattern>/seedlist/myserver/*</url-pattern>
+	  <dispatcher>REQUEST</dispatcher>
+	  <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+	  <filter-name>LCAtomSecurityFilterForceAuth</filter-name>
+	  <url-pattern>/seedlist/authverify/*</url-pattern>
+	  <dispatcher>REQUEST</dispatcher>
+	  <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>PublicSeedlistAuthorizationFilter</filter-name>
+		<url-pattern>/seedlist/server/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+	  <filter-name>CacheHeadersNoCache</filter-name>
+	  <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>CacheHeadersMaxAge</filter-name>
+		<url-pattern>/Calendar.xml</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>CacheHeadersMaxAge</filter-name>
+		<url-pattern>/javascript/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>CacheHeadersMaxAge</filter-name>
+		<url-pattern>/images/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>CacheHeadersMaxAge</filter-name>
+		<url-pattern>/stylesheet/*</url-pattern>
+	</filter-mapping>
+	
+	<listener>
+		<listener-class>com.ibm.lconn.core.web.auth.LCRestSecurityHelper</listener-class> 
+	</listener>
+	
+	<!-- 
+	<listener>
+	    <listener-class>com.ibm.lconn.events.internal.enable.EventInitContextListener</listener-class>
+	</listener>
+	 --> 
+	 
+	 <!-- 
+	<listener>
+		<listener-class>com.ibm.lconn.core.web.customization.CustomizationInitializer</listener-class>
+	</listener>  
+	 -->
+	
+	<listener>
+		<listener-class>com.ibm.lconn.calendar.servlet.CalendarServletContextListener</listener-class>
+	</listener>
+
+	<servlet>
+		<display-name>CalendarServlet</display-name>
+		<servlet-name>CalendarServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.CalendarServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<display-name>CalendarPreferencesServlet</display-name>
+		<servlet-name>CalendarPreferencesServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.CalendarPreferencesServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<display-name>CalendarEventHandlerServlet</display-name>
+		<servlet-name>CalendarEventHandlerServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.CalendarEventHandlerServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<display-name>ServiceServlet</display-name>
+		<servlet-name>ServiceServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.ServiceServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<display-name>ICalServlet</display-name>
+		<servlet-name>ICalServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.ICalServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<description>Notifies calendar events via email</description>
+		<display-name>NotifyServlet</display-name>
+		<servlet-name>NotifyServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.NotifyServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>ConnectionsStaticContentForwardServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.core.web.cache.ConnectionsStaticContentForwardServlet</servlet-class>
+		<init-param><param-name>allowedPrefixes</param-name><param-value>/javascript/</param-value></init-param>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>SearchMembersServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.SearchMembersServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>CommentServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.CommentServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>AttendeeServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.AttendeeServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<display-name>TagTypeaheadServlet</display-name>
+		<servlet-name>TagTypeaheadServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.TagTypeAheadServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<display-name>EventsTagCloudServlet</display-name>
+		<servlet-name>EventsTagCloudServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.EventsTagCloudServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<display-name>RedirectToLoginServlet</display-name>
+		<servlet-name>RedirectToLoginServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.RedirectToLoginServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<display-name>FollowServlet</display-name>
+		<servlet-name>FollowServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.FollowServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<display-name>UserStatusServlet</display-name>
+		<servlet-name>UserStatusServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.UserStatusServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<display-name>PermissionCheckServlet</display-name>
+		<servlet-name>PermissionCheckServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.PermissionCheckServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<display-name>CalendarSearchServlet</display-name>
+		<servlet-name>CalendarSearchServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.servlet.CalendarSearchServlet</servlet-class>
+	</servlet>
+	
+	<!-- Seedlist -->
+	
+	<servlet>
+		<display-name>Secured Seedlist Servlet</display-name>
+		<servlet-name>SecuredSeedlistServlet</servlet-name>
+		<servlet-class>com.ibm.ilel.seedlist.servlet.SecuredSeedlistServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<display-name>Public Seedlist Servlet</display-name>
+		<servlet-name>PublicSeedlistServlet</servlet-name>
+		<servlet-class>com.ibm.ilel.seedlist.servlet.PublicSeedlistServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<description></description>
+		<display-name>Secured GetACLTokensServlet</display-name>
+		<servlet-name>GetACLTokensServletSecured</servlet-name>
+		<servlet-class>
+			com.ibm.lotus.search.providers.api.external.GetACLTokensForUser
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<description></description>
+		<display-name>Secured ValidateUserServlet</display-name>
+		<servlet-name>UserValidateServletSecured</servlet-name>
+		<servlet-class>
+			com.ibm.lotus.search.providers.api.external.ValidateUserServlet
+		</servlet-class>
+	</servlet>
+	
+	<!-- Unit test -->
+	<servlet>
+		<servlet-name>UnittestServlet</servlet-name>
+		<servlet-class>com.ibm.lconn.calendar.test.servlets.UnittestServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+	    <servlet-name>JUnitEETestServlet</servlet-name>
+	    <description>JUnitEE test runner</description>
+	    <servlet-class>org.junitee.servlet.JUnitEEServlet</servlet-class>
+	    <init-param>
+	      <param-name>searchResources</param-name>
+	      <param-value>calendar.test.jar</param-value>
+	    </init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ICalServlet</servlet-name>
+		<url-pattern>/ical/calendar</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ICalServlet</servlet-name>
+		<url-pattern>/oauth/ical/calendar</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ServiceServlet</servlet-name>
+		<url-pattern>/atom/calendar/service</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ServiceServlet</servlet-name>
+		<url-pattern>/atom_form/calendar/service</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ServiceServlet</servlet-name>
+		<url-pattern>/oauth/atom/calendar/service</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>CalendarServlet</servlet-name>
+		<url-pattern>/atom/calendar/event</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>CalendarServlet</servlet-name>
+		<url-pattern>/atom_form/calendar/event</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>CalendarServlet</servlet-name>
+		<url-pattern>/oauth/atom/calendar/event</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>CalendarPreferencesServlet</servlet-name>
+		<url-pattern>/atom/calendar</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>CalendarPreferencesServlet</servlet-name>
+		<url-pattern>/atom_form/calendar</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>CalendarPreferencesServlet</servlet-name>
+		<url-pattern>/oauth/atom/calendar</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>CalendarEventHandlerServlet</servlet-name>
+		<url-pattern>/handleEvent</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>NotifyServlet</servlet-name>
+		<url-pattern>/json/calendar/notify</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>NotifyServlet</servlet-name>
+		<url-pattern>/oauth/json/calendar/notify</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>SearchMembersServlet</servlet-name>
+		<url-pattern>/members</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>SearchMembersServlet</servlet-name>
+		<url-pattern>/oauth/members</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>CommentServlet</servlet-name>
+		<url-pattern>/atom/calendar/event/comment</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>CommentServlet</servlet-name>
+		<url-pattern>/atom_form/calendar/event/comment</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>AttendeeServlet</servlet-name>
+		<url-pattern>/atom/calendar/event/attendees</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>AttendeeServlet</servlet-name>
+		<url-pattern>/atom_form/calendar/event/attendees</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>AttendeeServlet</servlet-name>
+		<url-pattern>/oauth/atom/calendar/event/attendees</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>AttendeeServlet</servlet-name>
+		<url-pattern>/oauth/atom_form/calendar/event/attendees</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>CommentServlet</servlet-name>
+		<url-pattern>/oauth/atom/calendar/event/comment</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>TagTypeaheadServlet</servlet-name>
+		<url-pattern>/json/typeahead/tag/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>TagTypeaheadServlet</servlet-name>
+		<url-pattern>/oauth/json/typeahead/tag/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>EventsTagCloudServlet</servlet-name>
+		<url-pattern>/atom/tagcloud/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>EventsTagCloudServlet</servlet-name>
+		<url-pattern>/atom_form/tagcloud/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>EventsTagCloudServlet</servlet-name>
+		<url-pattern>/oauth/atom/tagcloud/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>FollowServlet</servlet-name>
+		<url-pattern>/atom/follow/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>FollowServlet</servlet-name>
+		<url-pattern>/atom_form/follow/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>FollowServlet</servlet-name>
+		<url-pattern>/oauth/atom/follow/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>UserStatusServlet</servlet-name>
+		<url-pattern>/json/user/status/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>UserStatusServlet</servlet-name>
+		<url-pattern>/oauth/json/user/status/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>PermissionCheckServlet</servlet-name>
+		<url-pattern>/json/permission/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>PermissionCheckServlet</servlet-name>
+		<url-pattern>/oauth/json/permission/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ConnectionsStaticContentForwardServlet</servlet-name>
+		<url-pattern>/static/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>RedirectToLoginServlet</servlet-name>
+		<url-pattern>/redirectToLogin</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>CalendarSearchServlet</servlet-name>
+		<url-pattern>/atom/search</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>CalendarSearchServlet</servlet-name>
+		<url-pattern>/atom_form/search</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>CalendarSearchServlet</servlet-name>
+		<url-pattern>/oauth/atom/search</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Seedlist -->
+	
+	<context-param>
+		<description>Default Retriever type : Connections Calendar Retriever</description>
+		<param-name>Source</param-name>
+		<param-value>com.ibm.ilel.seedlist.retriever.connections.calendar.CalendarRetrieverFactory</param-value>
+	</context-param>
+	
+	<context-param>
+		<description>Default format type</description>
+		<param-name>Format</param-name>
+		<param-value>ATOM</param-value>
+	</context-param>
+	
+	<context-param>
+		<description>Default requested action</description>
+		<param-name>Action</param-name>
+		<param-value>GetDocuments</param-value>
+	</context-param>
+	
+	<context-param>
+		<description>
+			Default index to start entries collecting
+		</description>
+		<param-name>Start</param-name>
+		<param-value>0</param-value>
+	</context-param>
+	
+	<context-param>
+		<description>
+			Default number of displayed entries per page
+		</description>
+		<param-name>Range</param-name>
+		<param-value>100</param-value>
+	</context-param>
+	
+	<context-param>
+		<description>Default Seedlist Id</description>
+		<param-name>SeedlistId</param-name>
+		<param-value>communities.calendar</param-value>
+	</context-param>
+	
+	<context-param>
+	    <param-name>service.name</param-name>
+	    <param-value>communities.calendar</param-value>
+	</context-param>
+	
+	<servlet-mapping>
+		<servlet-name>SecuredSeedlistServlet</servlet-name>
+		<url-pattern>/seedlist/myserver/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>PublicSeedlistServlet</servlet-name>
+		<url-pattern>/seedlist/server/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>GetACLTokensServletSecured</servlet-name>
+		<url-pattern>/seedlist/authverify/getACLTokens</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>UserValidateServletSecured</servlet-name>
+		<url-pattern>/seedlist/authverify/validateUser</url-pattern>
+	</servlet-mapping>
+		
+	<!-- Unit test -->
+	
+	<servlet-mapping>
+		<servlet-name>UnittestServlet</servlet-name>
+		<url-pattern>/__internal/unittest/run</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>JUnitEETestServlet</servlet-name>
+		<url-pattern>/__internal/junitee/*</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<security-constraint>
+		<display-name>OAuth Security</display-name>
+		<web-resource-collection>
+			<web-resource-name>OAuth Security</web-resource-name>
+			<url-pattern>/oauth/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>PUT</http-method>
+			<http-method>POST</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>person</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+   </security-constraint>
+	
+	<!-- For Seedlist -->
+	<security-constraint>
+		<display-name>seedlist ssl</display-name>
+		<web-resource-collection>
+			<web-resource-name>seedlist ssl</web-resource-name>
+			<url-pattern>/seedlist/myserver/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>PUT</http-method>
+			<http-method>POST</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>everyone</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+   </security-constraint>
+    
+   <security-constraint>
+		<display-name>seedlist authverify ssl</display-name>
+		<web-resource-collection>
+			<web-resource-name>seedlist authverify ssl</web-resource-name>
+			<url-pattern>/seedlist/authverify/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>PUT</http-method>
+			<http-method>POST</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>everyone</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+   </security-constraint>
+   
+   <security-constraint>
+		<display-name>public seedlist</display-name>
+		<web-resource-collection>
+			<web-resource-name>public seedlist</web-resource-name>
+			<url-pattern>/seedlist/server/*</url-pattern>			
+			<http-method>GET</http-method>
+			<http-method>PUT</http-method>
+			<http-method>POST</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>everyone</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>	
+	
+	<security-constraint>
+		<display-name>life cycle event</display-name>
+		<web-resource-collection>
+		<web-resource-name>life cycle services</web-resource-name>
+			<description/>
+			<url-pattern>/handleEvent/*</url-pattern>
+			<http-method>
+			GET</http-method>
+			<http-method>
+			PUT</http-method>
+			<http-method>
+			POST</http-method>
+			<http-method>
+			DELETE</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description/>
+			<role-name>widget-admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+   <security-role>
+      <description>Logical role for read-only access to the application.  Mapped to 'everyone' by default.</description>
+      <role-name>reader</role-name>
+   </security-role>
+
+	<security-role>
+		<description>Logical role for write access to the application.  Mapped to 'All authenticated' by default.</description>
+		<role-name>person</role-name>
+	</security-role>
+
+	<security-role>
+		<description>Logical role for read access to the application.  Mapped to 'everyone' by default.</description>
+		<role-name>everyone</role-name>
+	</security-role>
+
+	<security-role>
+		<description>Logical role for widget access to the application.  Mapped to 'All authenticated' by default.</description>
+		<role-name>widget-admin</role-name>
+	</security-role>
+	
+	<security-role>
+		<description>Logical role for seedlist access to the application.  Mapped to 'All authenticated' by default.</description>
+		<role-name>search-admin</role-name>
+	</security-role>
+	
+	<security-role>
+		<description>Community administor.</description>
+		<role-name>admin</role-name>
+	</security-role>
+
+	<resource-ref id="JdbcRef_1263999425567">
+		<res-ref-name>jdbc/calendar</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+
+	<resource-ref id="JMailRef_1263999425568">
+		<res-ref-name>mail/notification</res-ref-name>
+		<res-type>javax.mail.Session</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+	
+	<!-- 
+	<ejb-local-ref id="EJBLocalRef_1263999425569">
+        <description></description>
+        <ejb-ref-name>ejb/EventPublisher</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local-home>com.ibm.lconn.events.internal.publish.impl.JMSPublisherLocalHome</local-home>
+        <local>com.ibm.lconn.events.internal.publish.impl.JMSPublisherLocal</local>
+    </ejb-local-ref>
+     -->
+
+</web-app>

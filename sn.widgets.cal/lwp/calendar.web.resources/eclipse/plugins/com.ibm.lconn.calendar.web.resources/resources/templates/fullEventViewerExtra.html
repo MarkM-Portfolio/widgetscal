@@ -1,0 +1,138 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2015                                          -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<div>
+	<div class="lotusBreadcrumbs" role="navigation" aria-label="${_lang.EVENT_VIEWS_NAVIGATION}">
+		<a dojoAttachPoint="closeEventAP" dojoAttachEvent="onclick:close" href="javascript:;" title="${_lang.BACKTOCAL2}" aria-label="${_lang.BACKTOCAL}" role="button">${_lang.BACKTOCAL}</a>
+	</div>	
+	<div class="lotusLeft" dojoAttachPoint="thumbnailAP" style="display:none">
+	</div>
+	<div class="lotusHeader eventHeader" dojoAttachPoint="eventHeaderAP">
+		<h1 class="bidiAware" dojoAttachPoint="titleAP"></h1>
+		<div class="lotusMeta"><ul class="lotusInlinelist">
+			<li class="lotusFirst" dojoAttachPoint="createdByAP"></li>
+			<li dojoAttachPoint="whenAP"></li>
+			<li dojoAttachPoint="timeAP"></li>
+			<li class="lotusTags" dojoAttachPoint="tagsAP" style="display:none;"></li>
+			<li dojoAttachPoint="location" style="display:none;"></li>
+		</ul></div>
+	</div>	
+	<div dojoAttachPoint="actionBar"  class="lotusActionBar lotusBtnContainer" style="padding-top:20px;padding-bottom:20px" role="toolbar" aria-label="${_lang.EVENT_DETAIL_VIEW_TOOLBAR_LABEL}">
+		<span id="rsvp" dojoAttachPoint="rsvpEvent" dojoAttachEvent="onclick:processRsvp" class="lotusBtn lotusLeft" >
+			<a role="button" dojoAttachPoint="rsvpEventLink" href="javascript:;" title="${_lang.RSVP}">${_lang.RSVP}</a>
+		</span>
+		<span id="follow" dojoAttachPoint="followEvent" dojoAttachEvent="onclick:processFollow" class="lotusBtn lotusLeft">
+			<a role="button" dojoAttachPoint="followEventLink" href="javascript:;" title="${_lang.FOLLOW}">${_lang.FOLLOW}</a>
+		</span>
+		<span dojoAttachPoint="editEvent" dojoAttachEvent="onclick:edit" class="lotusBtn lotusLeft lotusBtnDisabled" style="display:none">
+			<a role="button" dojoAttachPoint="editEventLink" href="javascript:;" title="${_lang.EDIT}">${_lang.EDIT}</a>
+		</span>
+		<span id="exportICS" dojoAttachPoint="exportICSEvent" dojoAttachEvent="onclick:exportICS" class="lotusBtn lotusLeft" style="display:none">
+			<a role="button" dojoAttachPoint="exportICSEventLink" href="javascript:;" title="${_lang.ICAL_FEED_EXPORT_ICS}">${_lang.ICAL_FEED_EXPORT_ICS}</a>
+		</span>
+		<span dojoAttachPoint="btnMoreActions" class="lotusBtn lotusLeft" style="display:none">
+			<a href="javascript:;" dojoAttachPoint="moreActionsLink" role="button" aria-haspopup="true">
+				${_lang.MORE_ACTIONS}
+				<img aria-label="show menu" alt="" src="${blankImageUrl}" class="lotusArrow lotusDropDownSprite" role="presentation">
+				<span class="lotusAltText">+</span>
+			</a>
+		</span>
+	</div>		
+	<div class="detailCaption">${_lang.DESCRIPTION}</div>
+	<div dojoAttachPoint="description" style="overflow-x: auto; overflow-y: visible;"></div>
+	<!-- 
+	<div class="lotusTabContainer">
+		<ul class="lotusTabs" role="tablist">
+			<li dojoAttachPoint="commentTabItem" class="lotusSelected" role="tab">
+				<div>
+					<a href="javascript:;" dojoAttachPoint="commentTabLink" dojoAttachEvent="onclick:showCommentTab">${_lang.TAB_COMMENT}</a>
+				</div>	
+			</li>
+			<li dojoAttachPoint="aboutTabItem" role="tab">
+				<div>
+					<a href="javascript:;" dojoAttachEvent="onclick:showAboutTab">${_lang.TAB_ABOUT}</a>
+				</div>	
+			</li>
+		</ul>
+	</div>
+	 -->
+	<div role="region" id="eventattendees_${wid}_region" aria-expanded="true" aria-labelledby="eventattendees_${wid}_label" class="lotusSection" style="padding-top:3em">
+		<label class="lotusOffScreen" aria-live="polite" id="eventattendees_${wid}_hint" status="expanded">${_lang.EXPANDED_SECTION}</label>
+	    <h2>
+	        <a role="button" class="lotusSprite lotusArrow lotusTwistyOpen" id='eventattendees_${wid}' href="javascript:;" onclick="lconn.calendar.CalendarUtil.toggleSection(this, '${_lang.CLOSE_SECTION}', '${_lang.OPEN_SECTION}', '${_lang.COLLAPSED_SECTION}', '${_lang.EXPANDED_SECTION}'); return false;" title="${_lang.CLOSE_SECTION}">
+	        	<span class="lotusAltText">&#x25bc;</span>
+	        </a>
+	        <span id="eventattendees_${wid}_label" class="lotusLeft" dojoAttachPoint="attendeeTabTitle">${_lang.TAB_ATTENDEE}</span>
+	    </h2>
+	    <div id="section_eventattendees_${wid}" class="lotusSectionBody">
+			<div dojoAttachPoint="attendeeAP">
+				<div class="lotusPaing" dojoAttachPoint="attendeeTopPagingAP" style="display:none"></div>
+				<div dojoAttachPoint="noAttendeeHintAP" style="display:none;">${_lang.NO_ATTENDEE}</div>
+				<div id="${wid}_attendeeList">
+					<ul class="lotusCommentList" dojoAttachPoint="attendeeListAP"></ul>
+				</div>
+			   <div class="lotusPaing" dojoAttachPoint="attendeeBottomPagingAP" style="display:none"></div>
+			</div>
+		</div>
+	</div>
+
+	<div role="region" id="eventcomments_${wid}_region" aria-expanded="true" aria-labelledby="eventcomments_${wid}_label" class="lotusSection" style="padding-top:3em">
+	    <label class="lotusOffScreen" aria-live="polite" id="eventcomments_${wid}_hint" status="expanded">${_lang.EXPANDED_SECTION}</label>
+	    <h2>
+	        <a role="button" class="lotusSprite lotusArrow lotusTwistyOpen" id='eventcomments_${wid}' href="javascript:;" onclick="lconn.calendar.CalendarUtil.toggleSection(this, '${_lang.CLOSE_SECTION}', '${_lang.OPEN_SECTION}', '${_lang.COLLAPSED_SECTION}', '${_lang.EXPANDED_SECTION}'); return false;" title="${_lang.CLOSE_SECTION}">
+	        	<span class="lotusAltText">&#x25bc;</span>
+	        </a>
+	        <span id="eventcomments_${wid}_label" class="lotusLeft" dojoAttachPoint="commentTabTitle">${_lang.TAB_COMMENT}</span>
+	    </h2>
+	    <div id="section_eventcomments_${wid}" class="lotusSectionBody">
+			<div dojoAttachPoint="commentAP">
+				<div class="lotusPaing" dojoAttachPoint="topPagingAP" style="display:none"></div>
+				<div dojoAttachPoint="noCommentHintAP" style="display:none;">${_lang.NO_COMMENT}</div>
+				<div id="${wid}_commentList">
+					<ul class="lotusCommentList" dojoAttachPoint="commentListAP"></ul>
+				</div>
+				<div class="lotusChunk" dojoAttachPoint="addCommentLinkAP">
+					<a id="${wid}_addCommentLink" dojoAttachEvent="onclick:createComment" href="javascript:;" role="button">${_lang.ADD_COMMENT}</a>
+				</div>
+				<form style="display:none" class="lotusForm2" role="application" dojoAttachPoint="addCommentFormAP" aria-live="assertive" aria-labelledby="${wid}_commentContainer" >
+					<table class="lotusFormTable" role="presentation" style="width:100%"><tbody>
+						<tr dojoAttachPoint="commentErrorAP" role="alert" style="display:none;">
+							<td class="lotusFormError">${_lang.ENTER_COMMENT_ERROR}</td>
+						</tr>
+						<tr class="lotusFormFieldRow">
+							<td id="${wid}_commentContainer"><label for="${wid}_addCommentBody">${_lang.ENTER_COMMENT}</label></td>
+						</tr>
+						<tr class="lotusFormFieldRow" dojoAttachPoint="permissionWarningSummary" style="display: none;">
+							<td>
+								<div style="width:96%">
+				                    <div class="lotusMessage2 lotusWarning" style="top:0px; margin:0px">
+					                   <img class="lotusIcon lotusIconMsgWarning" src="${blankImageUrl}" alt="${_lang.WARNING_ICON}"/>
+					                   <span class="lotusAltText">${_lang.WARNING_ICON}:</span>
+					                   <div dojoAttachPoint="permissionWarningMessage" class="lotusMessageBody">
+					                   </div>
+				                    </div>
+			                    </div>
+							</td>
+						</tr>
+						<tr>
+							<td><input type="button" value="${_lang.SAVE}" dojoAttachEvent="onclick:performCreate" class="lotusFormButton">
+							<input dojoAttachEvent="onclick:cancelCreate" type="button" role="button" class="lotusFormButton cancel" value="${_lang.CANCEL}"></td>
+						</tr>
+				   </tbody></table>
+			   </form>
+			   <div class="lotusPaing" dojoAttachPoint="bottomPagingAP" style="display:none"></div>
+			</div>
+		</div>
+	</div>
+</div>

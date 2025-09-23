@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012                                          -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<head>
+<title>CalendarView Test</title>
+
+<script>
+function getCookie(name){
+    if (!document.cookie || document.cookie == '')
+        return null;
+    var items = document.cookie.split(';');
+    for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        var index = item.indexOf('=');
+        if (item.substring(0, index) == name ||
+            item.substring(0, index) == ' ' + name)
+            return unescape(item.substring(index + 1));
+    }
+    return null;
+}
+function setCookie(name, value, expire){
+    var s = name + '=' + escape(value)
+        + ((expire==null)?'':('; expires='+expire.toGMTString()));
+    if (document.location.href.substring(0, 5) == 'http:')
+        s += '; path=/';
+    document.cookie = s;
+}
+document.documentElement.setAttribute("dir", (getCookie("BiDi") == 1)?"rtl":"ltr");
+</script>
+
+<style type="text/css">
+	@import "../../themes/dwa.css";
+	@import "../../themes/dijit-lite.css";
+	@import "../themes/hannover/calendarView.css";
+	@import "../../date/themes/hannover/datepick.css";
+	@import "../../common/themes/hannover/menu.css";
+</style>
+<style>
+html, body{
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+}
+#e-calendarview {
+  position:absolute;
+  width:80%;
+  height:90%;
+  top:17px;
+  left:130px;
+}
+.dijitRtl #e-calendarview {
+  top:17px;
+  left:30px;
+}
+</style>
+
+<script language="JavaScript" type="text/javascript">
+var djConfig = {
+	parseOnLoad: true,
+	packages: [{name: 'dwa', location: '../dwa'}]
+};
+djConfig.locale = getCookie("locale") || "";
+</script>
+
+<script type="text/javascript" src="../../../dojo/dojo.js"></script>
+<script language="JavaScript" type="text/javascript">
+function switchView(idx){
+	var type;
+	var btns = document.forms[0].btn;
+	for(var i = 0, len = btns.length; i < len; i++){
+		if(btns[i].checked){
+			type = btns[i].value;
+			break;
+		}
+	}
+	var summarize = document.forms[0].chk.checked;
+
+	var oWidget = dijit.byId("e-calendarview");
+	oWidget.drawCalendar(type, summarize);
+	oWidget.onActivated();
+}
+function toggleNotes(){
+	var flag = document.forms[0].notes.checked;
+	calendarView.enableStore(notesStore, flag);
+}
+function toggleGoogle(){
+	var flag = document.forms[0].google.checked;
+	calendarView.enableStore(iCalStore, flag);
+}
+function toggleBidi(){
+	var flag = document.forms[0].bidi.checked;
+	setCookie("BiDi", flag?1:0);
+	location.reload();
+}
+function changeLocale(){
+	setCookie("locale", document.forms[0].locale.value);
+	location.reload();
+}
+
+function newEntryAction(oCalendar){
+	alert("newEntryAction! "+oCalendar);
+}
+
+function openEntryAction(items){
+	alert("openEntryAction! "+items[0].subject);
+}
+
+function deleteEntryAction(items){
+	alert("deleteEntryAction! "+items[0].subject);
+}
+
+function rescheduleEntryAction(item, oCalendar){
+	alert("rescheduleEntryAction! "+item.subject+" -> "+oCalendar);
+}
+
+function changeViewAction(type){
+	alert("changeViewAction! -> " + type);
+	var btns = document.forms[0].btn;
+	var idx = 0;
+	for(var i = 0, len = btns.length; i < len; i++){
+		if(btns[i].value == type){
+			btns[i].checked = true;
+			idx = i;
+		}else
+			btns[i].checked = false;
+	}
+	switchView(idx);
+}
+
+</script>
+
+<script language="JavaScript" type="text/javascript">
+	dojo.require("dojo.parser");
+	dojo.require("dwa.cv.calendarView");
+	dojo.require("dwa.data.NotesCalendarStore");
+	dojo.require("dwa.data.iCalReadStore");
+
+	dojo.addOnLoad(function(){
+		dojo.doc.title = dojo.doc.title + " (" + dojo.doc.compatMode + ")";
+		document.forms[0].bidi.checked = (getCookie("BiDi") == 1);
+		document.forms[0].locale.value = getCookie("locale")||"";
+		document.forms[0].google.checked = true;
+		document.forms[0].notes.checked = true;
+		document.forms[0].btn[5].checked = true;
+		document.forms[0].chk.checked = false;
+
+		var url1 = "http://hale.yamato.ibm.com/mail/guest.nsf";
+		var url1 = "data/s_ReadViewEntries_Calendar.json";
+		notesStore = new dwa.data.NotesCalendarStore({
+				url: url1
+			});
+
+		var url2 = "data/basic.ics";
+		iCalStore = new dwa.data.iCalReadStore({
+				url: url2,
+				fontColorMeeting: "395D94",
+				bgColorMeeting: "FF82BD",
+				borderColorMeeting: "5495D5"
+			});
+
+		calendarView = new dwa.cv.calendarView({
+				id: "e-calendarview",
+				type: "M", summarize: false, date: "2009/4/15",
+				store: [notesStore,iCalStore]
+			}, "container");
+
+		calendarView.connect(dojo.global, "onresize", "resize");
+		dojo.connect(calendarView, "newEntryAction", newEntryAction);
+		dojo.connect(calendarView, "openEntryAction", openEntryAction);
+		dojo.connect(calendarView, "deleteEntryAction", deleteEntryAction);
+		dojo.connect(calendarView, "rescheduleEntryAction", rescheduleEntryAction);
+		dojo.connect(calendarView, "changeViewAction", changeViewAction);
+		calendarView.startup();
+	});
+
+</script>
+</head>
+<body class="dwa hannover">
+<form>
+<table cellspacing="0" cellpadding="0"><tbody>
+<tr><td><input id="d" type="radio" name="btn" onclick="switchView()" value="D"><label for="d">One Day</label></td></tr>
+<tr><td><input id="td" type="radio" name="btn" onclick="switchView()" value="T"><label for="td">Two Days</label></td></tr>
+<tr><td><input id="f" type="radio" name="btn" onclick="switchView()" value="F"><label for="f">One Work Week</label></td></tr>
+<tr><td><input id="w" type="radio" name="btn" onclick="switchView()" value="W"><label for="w">One Week</label></td></tr>
+<tr><td><input id="tw" type="radio" name="btn" onclick="switchView()" value="2"><label for="tw">Two Weeks</label></td></tr>
+<tr><td><input id="m" type="radio" name="btn" onclick="switchView()" value="M" checked><label for="m">One Month</label></td></tr>
+<tr><td><input id="y" type="radio" name="btn" onclick="switchView()" value="Y"><label for="y">One Year</label></td></tr>
+<tr><td><input id="s" type="checkbox" name="chk" onclick="switchView()"><label for="s">Summarize</label></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><input id="n" type="checkbox" name="notes" onclick="toggleNotes()" checked><label for="n">Notes</label></td></tr>
+<tr><td><input id="g" type="checkbox" name="google" onclick="toggleGoogle()" checked><label for="g">Google</label></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><input id="b" type="checkbox" name="bidi" onclick="toggleBidi()"><label for="b">BiDi</label></td></tr>
+<tr><td>&nbsp;<select id="l" name="locale" onchange="changeLocale()">
+<option value=""></option>
+<option value="ar">ar</option>
+<option value="ca">ca</option>
+<option value="cs">cs</option>
+<option value="da">da</option>
+<option value="de">de</option>
+<option value="el">el</option>
+<option value="en">en</option>
+<option value="es">es</option>
+<option value="fi">fi</option>
+<option value="fr">fr</option>
+<option value="he">he</option>
+<option value="hu">hu</option>
+<option value="it">it</option>
+<option value="ja">ja</option>
+<option value="ko">ko</option>
+<option value="nl">nl</option>
+<option value="no">no</option>
+<option value="pl">pl</option>
+<option value="pt">pt</option>
+<option value="pt-br">pt-br</option>
+<option value="ru">ru</option>
+<option value="sk">sk</option>
+<option value="sl">sl</option>
+<option value="sv">sv</option>
+<option value="th">th</option>
+<option value="tr">tr</option>
+<option value="zh">zh</option>
+<option value="zh-tw">zh-tw</option>
+</select></td></tr>
+</tbody></table>
+</form>
+<div id="container"></div>
+</body>
+</html>

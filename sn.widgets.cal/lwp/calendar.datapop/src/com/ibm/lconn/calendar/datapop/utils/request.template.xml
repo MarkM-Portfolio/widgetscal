@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2012                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<requests>
+	<request id="community.login" method="post" type="login">
+		<url>{communitiesServiceUrl}/j_security_check</url>
+		<headers>
+			<header name="Content-Type" value="application/x-www-form-urlencoded" />
+		</headers>
+		<parameters>
+			<parameter name="j_username" />
+			<parameter name="j_password" />
+		</parameters>
+		<outputs type="text" statusCode="302" />
+	</request>
+
+	<request id="community.events.widget.add" method="post" login="community.login">
+		<url>{communitiesServiceUrl}/addWidget.do?resourceId={communityUuid}&amp;widgetDefId=Calendar&amp;uiLocation=col3&amp;unhide=false</url>
+		<headers>
+			<header name="X-Requested-With" value="XMLHttpRequest" />
+			<header name="Pragma" value="WWW-Authenticate=XHR" />
+			<header name="Content-Type" value="application/x-www-form-urlencoded" />
+		</headers>
+		<outputs type="text" statusCode="200" />
+	</request>
+	
+	<request id="community.events.rolemapping.update" method="post" login="community.login" version="3.0.x">
+		<url>{calendarServiceUrl}/role</url>
+		<headers>
+			<header name="X-Requested-With" value="XMLHttpRequest" />
+			<header name="Content-Type" value="application/x-www-form-urlencoded" />
+		</headers>
+		<parameters>
+			<parameter name="calendarId" />
+			<parameter name="members_Role" />
+		</parameters>
+		<outputs type="text" statusCode="200" />
+	</request>
+	
+	<request id="community.events.preferences.update" method="put" type="api">
+		<url>{calendarServiceUrl}/atom/calendar?calendarUuid={calendarUuid}</url>
+		<body contentType="application/atom+xml">
+			<![CDATA[
+			<?xml version="1.0" encoding="UTF-8"?> 
+			<entry xmlns:snx="http://www.ibm.com/xmlns/prod/sn" xmlns:atom="http://www.w3.org/2005/Atom" xmlns="http://www.w3.org/2005/Atom"> 
+				<id>urn:lsid:ibm.com:calendar:{calendarUuid}</id>
+				<category scheme="http://www.ibm.com/xmlns/prod/sn/type" term="calendar"></category> 
+				<snx:maprole membership="member">{members_Role}</snx:maprole>
+			</entry>
+			]]>
+		</body>
+		<outputs type="text" statusCode="200" />
+	</request>
+	
+	<request id="community.events.event.entry.create" method="post" type="api">
+		<url>{calendarServiceUrl}/atom/calendar/event?calendarUuid={calendarUuid}</url>
+		<body contentType="application/atom+xml">
+			<![CDATA[
+			<?xml version="1.0" encoding="UTF-8"?> 
+			<entry xmlns:snx="http://www.ibm.com/xmlns/prod/sn" xmlns:atom="http://www.w3.org/2005/Atom" xmlns="http://www.w3.org/2005/Atom"> 
+				<title type="text">{title}</title> 
+				#(foreach tags)<category term="{tags[]}"></category>#(end)
+				<content type="html">{content}</content> 
+				<snx:location>{location}</snx:location> 
+				<snx:allday>{allday}</snx:allday> 
+				<category scheme="http://www.ibm.com/xmlns/prod/sn/type" term="event"></category> 
+				<snx:recurrence custom="yes">  
+					<snx:period>  
+						<snx:startDate>{startDate}</snx:startDate>  
+						<snx:endDate>{endDate}</snx:endDate>  
+					</snx:period> 
+				</snx:recurrence> 
+			</entry>
+			]]>
+		</body>
+		<outputs type="xml" statusCode="201">
+			<output key="eventUuid" xpath="//atom:entry/snx:eventUuid/text()" />
+		</outputs>
+	</request>
+	
+	<request id="community.events.series.entry.create" method="post" type="api">
+		<url>{calendarServiceUrl}/atom/calendar/event?calendarUuid={calendarUuid}</url>
+		<body contentType="application/atom+xml">
+			<![CDATA[
+			<?xml version="1.0" encoding="UTF-8"?> 
+			<entry xmlns:snx="http://www.ibm.com/xmlns/prod/sn" xmlns:atom="http://www.w3.org/2005/Atom" xmlns="http://www.w3.org/2005/Atom"> 
+				<title type="text">{title}</title> 
+				#(foreach tags)<category term="{tags[]}"></category>#(end)
+				<content type="html">{content}</content>
+				<snx:location>{location}</snx:location>
+				<snx:allday>{allday}</snx:allday>
+				<category scheme="http://www.ibm.com/xmlns/prod/sn/type" term="event"></category> 
+				<snx:recurrence custom="no" frequency="{frequency}" #(if interval)interval="{interval}"#(end)>  
+					<snx:until>{repeatUntil}</snx:until>  
+					<snx:byDay>#(foreach byDay ','){byDay[]}#(end)</snx:byDay>  
+					<snx:startDate>{startDate}</snx:startDate>  
+					<snx:endDate>{endDate}</snx:endDate> 
+				</snx:recurrence> 
+			</entry>
+			]]>
+		</body>
+		<outputs type="xml" statusCode="201">
+			<output key="eventUuid" xpath="//atom:entry/snx:eventUuid/text()" />
+		</outputs>
+	</request>
+	
+	<request id="community.events.series.entry.instance.update" method="put" type="api">
+		<url>{calendarServiceUrl}/atom/calendar/event?eventInstUuid={eventInstUuid}</url>
+		<body contentType="application/atom+xml">
+			<![CDATA[
+			<?xml version="1.0" encoding="UTF-8"?> 
+			<entry xmlns:snx="http://www.ibm.com/xmlns/prod/sn" xmlns:atom="http://www.w3.org/2005/Atom" xmlns="http://www.w3.org/2005/Atom"> 
+				<id>urn:lsid:ibm.com:calendar:event:{eventInstUuid}</id> 
+				<content type="html">{content}</content> 
+				#(if location)<snx:location>{location}</snx:location>#(end)
+				<category scheme="http://www.ibm.com/xmlns/prod/sn/type" term="event-instance"></category> 
+			</entry>
+			]]>
+		</body>
+		<outputs type="xml" statusCode="200" />
+	</request>
+	
+	<request id="community.events.series.entry.instance.delete" method="delete" type="api">
+		<url>{calendarServiceUrl}/atom/calendar/event?eventInstUuid={eventInstUuid}</url>
+		<headers>
+			<header name="Content-Type" value="application/atom+xml" />
+		</headers>
+		<outputs type="text" statusCode="200,204" />
+	</request>
+	
+	<request id="community.events.event.instances.list" method="get" type="api">
+		<url>{calendarServiceUrl}/atom/calendar/event?eventUuid={eventUuid}&amp;mode=list&amp;___MINIMAL___=true</url>
+		<headers>
+			<header name="Content-Type" value="application/atom+xml" />
+		</headers>
+		<outputs type="xml" statusCode="200">
+			<output key="eventInstUuid" xpath="//atom:entry/snx:eventInstUuid/text()" multi="true" />
+		</outputs>
+	</request>
+	
+	<request id="community.events.list" method="get" type="api">
+		<url>{calendarServiceUrl}/atom/calendar/event?calendarUuid={calendarUuid}&amp;type=event&amp;page=1&amp;ps={fetchCount}&amp;___MINIMAL___=true</url>
+		<headers>
+			<header name="Content-Type" value="application/atom+xml" />
+		</headers>
+		<outputs type="xml" statusCode="200">
+			<output key="eventUuid" xpath="//atom:entry/snx:eventUuid/text()" multi="true" />
+		</outputs>
+	</request>
+	
+	<request id="community.events.event.comment.create" method="post" type="api">
+		<url>{calendarServiceUrl}/atom/calendar/event/comment?eventInstUuid={eventInstUuid}</url>
+		<body contentType="application/atom+xml">
+			<![CDATA[
+			<?xml version="1.0" encoding="UTF-8"?> 
+			<entry xmlns:snx="http://www.ibm.com/xmlns/prod/sn" xmlns:atom="http://www.w3.org/2005/Atom" xmlns="http://www.w3.org/2005/Atom"> 
+				<category scheme="http://www.ibm.com/xmlns/prod/sn/type" term="comment"></category> 
+				<content type="text">{content}</content> 
+			</entry>
+			]]>
+		</body>
+		<outputs type="xml" statusCode="200,201">
+			<output key="commentUuid" xpath="//atom:entry/atom:id/text()" />
+		</outputs>
+	</request>
+	
+	<request id="community.events.event.follow.create" method="post" type="api">
+		<url>{calendarServiceUrl}/atom/follow?eventUuid={eventUuid}&amp;type=follow</url>
+		<headers>
+			<header name="Content-Type" value="application/atom+xml" />
+		</headers>
+		<outputs type="xml" statusCode="201" />
+	</request>
+	
+	<request id="community.events.event.attend.create" method="post" type="api">
+		<url>{calendarServiceUrl}/atom/follow?eventUuid={eventUuid}&amp;type=attend</url>
+		<headers>
+			<header name="Content-Type" value="application/atom+xml" />
+		</headers>
+		<outputs type="xml" statusCode="201" />
+	</request>
+	
+	<request id="community.events.series.instance.follow.create" method="post" type="api">
+		<url>{calendarServiceUrl}/atom/follow?eventInstUuid={eventInstUuid}&amp;type=follow</url>
+		<headers>
+			<header name="Content-Type" value="application/atom+xml" />
+		</headers>
+		<outputs type="xml" statusCode="201" />
+	</request>
+	
+	<request id="community.events.series.instance.attend.create" method="post" type="api">
+		<url>{calendarServiceUrl}/atom/follow?eventInstUuid={eventInstUuid}&amp;type=attend</url>
+		<headers>
+			<header name="Content-Type" value="application/atom+xml" />
+		</headers>
+		<outputs type="xml" statusCode="201" />
+	</request>
+</requests>

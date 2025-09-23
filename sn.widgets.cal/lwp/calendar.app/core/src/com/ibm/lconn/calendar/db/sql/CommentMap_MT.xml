@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMap namespace="EventComment_MT">
+	<insert id="insertEventComment" parameterClass="DBEventComment">
+		INSERT INTO CALENDAR.CA_EVENTCOMMENT
+			(COMMENT_UUID, CALENDAR_UUID, EVENT_UUID, CREATEDBY, CREATEON, CONTENT, CONTENTTYPE, ORG_ID)
+		VALUES
+			(#comment_UUID#, #calendar_UUID#, #eventInst_UUID#, #createdBy#, #createOn#, #contentForPersistent#, #contentType#, #ORG_ID#)
+	</insert>
+	
+	<delete id="deleteEventComment" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENTCOMMENT WHERE COMMENT_UUID = #commentUUID# AND ORG_ID = #ORG_ID#
+	</delete>
+	
+	<delete id="deleteEventInstanceComments" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENTCOMMENT WHERE EVENT_UUID = #instanceUUID# AND ORG_ID = #ORG_ID#
+	</delete>
+	
+	<delete id="deleteEventComments" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENTCOMMENT 
+		WHERE EVENT_UUID IN (SELECT DISTINCT EVENTINST_UUID FROM CALENDAR.CA_EVENTINSTANCE WHERE EVENT_UUID = #eventUUID# AND ORG_ID = #ORG_ID#) 
+			AND ORG_ID = #ORG_ID#
+	</delete>
+	
+	<delete id="deleteCalendarComments" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENTCOMMENT WHERE CALENDAR_UUID = #calendarUUID# AND ORG_ID = #ORG_ID#
+	</delete>
+	
+	<select id="selectEventComment" parameterClass="java.util.Map" resultClass="DBEventComment">
+		SELECT COMMENT_UUID as comment_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as eventInst_UUID,
+			CREATEDBY as createdBy, CREATEON as createOn, CONTENT as contentForPersistent, CONTENTTYPE as contentType, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTCOMMENT
+		WHERE COMMENT_UUID = #commentUUID# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<select id="selectEventInstanceComments" parameterClass="java.util.Map" resultClass="DBEventComment">
+		SELECT COMMENT_UUID as comment_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as eventInst_UUID,
+			CREATEDBY as createdBy, CREATEON as createOn, CONTENT as contentForPersistent, CONTENTTYPE as contentType, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTCOMMENT
+		WHERE EVENT_UUID = #eventInst_UUID# AND ORG_ID = #ORG_ID#
+		ORDER BY CREATEON
+	</select>
+	
+	<select id="selectEventInstanceComments_{0,n}_DB2" parameterClass="java.util.Map" resultClass="DBEventComment">
+		SELECT COMMENT_UUID as comment_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as eventInst_UUID,
+			CREATEDBY as createdBy, CREATEON as createOn, CONTENT as contentForPersistent, CONTENTTYPE as contentType, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTCOMMENT
+		WHERE EVENT_UUID = #eventInst_UUID# AND ORG_ID = #ORG_ID#
+		ORDER BY CREATEON
+		FETCH FIRST $__fetch_size$ ROWS ONLY
+		FOR FETCH ONLY
+	</select>
+	
+	<!-- Change by Connections for IBM i team. -->
+	<select id="selectEventInstanceComments_{0,n}_AS400" parameterClass="java.util.Map" resultClass="DBEventComment">
+		SELECT COMMENT_UUID as comment_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as eventInst_UUID,
+			CREATEDBY as createdBy, CREATEON as createOn, CONTENT as contentForPersistent, CONTENTTYPE as contentType, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTCOMMENT
+		WHERE EVENT_UUID = #eventInst_UUID# AND ORG_ID = #ORG_ID#
+		ORDER BY CREATEON
+		FETCH FIRST $__fetch_size$ ROWS ONLY
+		FOR FETCH ONLY
+	</select>
+	
+	<select id="selectEventInstanceComments_{m,n}" parameterClass="java.util.Map" resultClass="DBEventComment">
+		SELECT comment_UUID, calendar_UUID, eventInst_UUID, createdBy, createOn, contentForPersistent, contentType, ORG_ID
+		FROM (
+			SELECT COMMENT_UUID as comment_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as eventInst_UUID,
+				CREATEDBY as createdBy, CREATEON as createOn, CONTENT as contentForPersistent, CONTENTTYPE as contentType, ORG_ID as ORG_ID,
+				ROW_NUMBER() over (ORDER BY CREATEON) rn
+			FROM CALENDAR.CA_EVENTCOMMENT
+			WHERE EVENT_UUID = #eventInst_UUID# AND ORG_ID = #ORG_ID#
+			<isEqual property="DBTYPE" compareValue="DB2">
+			ORDER BY CREATEON
+			FETCH FIRST $__end_row$ ROWS ONLY
+			</isEqual>
+			<!-- Change by Connections for IBM i team. -->
+			<isEqual property="DBTYPE" compareValue="AS400">
+			ORDER BY CREATEON
+			FETCH FIRST $__end_row$ ROWS ONLY
+			</isEqual>
+			) t
+			WHERE rn >= $__start_row$ AND rn &lt; $__end_row$
+			ORDER BY rn
+			<isEqual property="DBTYPE" compareValue="DB2">
+			FETCH FIRST $__fetch_size$ ROWS ONLY
+			FOR FETCH ONLY
+			</isEqual>
+			<!-- Change by Connections for IBM i team. -->
+			<isEqual property="DBTYPE" compareValue="AS400">
+			FETCH FIRST $__fetch_size$ ROWS ONLY
+			FOR FETCH ONLY
+			</isEqual>
+	</select>
+	
+	<select id="selectEventInstanceCommentsCount" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT COUNT(1) FROM CALENDAR.CA_EVENTCOMMENT
+		WHERE EVENT_UUID = #instanceUUID# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<select id="selectMaxDateOfEventInstanceComments" parameterClass="java.util.Map" resultClass="java.sql.Timestamp">
+		SELECT MAX(CREATEON) FROM CALENDAR.CA_EVENTCOMMENT
+		WHERE EVENT_UUID = #instanceUUID# AND ORG_ID = #ORG_ID#
+	</select>
+</sqlMap>

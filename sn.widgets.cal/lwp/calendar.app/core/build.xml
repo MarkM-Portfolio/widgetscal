@@ -1,0 +1,92 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+<project name="calendar.app/core" default="development" basedir=".">
+	<import file="${env.WPLC_IMPORT}/std_props.xml"/>
+	<import file="${env.WPLC_IMPORT}/std_dirs.xml"/>
+    <import file="${env.WPLC_IMPORT}/package_extra.xml" />	
+
+	<!--no deprecation -->
+	<property name="compile.no.deprecation" value="true"/>
+	
+	<!-- do not need to build javadoc -->
+	<property name="skip.javadoc" value="true"/>
+	<property name="skip.javadoc.public" value="true"/>
+	<property name="skip.javadoc.full" value="true"/>
+	<property name="whitespace.exclude" value="**/*.js"/>
+	<property name="jsObfuscator.skipobfuscation" value="true"/>
+	<property name="postcompile.override" value="calendar-post-compile"/>
+
+	<property name="exclude.pattern" value="**/*/package.html"/>
+	
+	<property name="global.exclude.pattern" value="${global.exclude.pattern},**/SharedSettings.class" />
+
+	<property name="output.jar" value="${dir.lib}/calendar.app.core.jar"/>
+	
+	<target name="calendar-post-compile" depends="gen-sqlmaps" description="">
+	</target>
+	
+	<!-- Generate ibatis sql maps for "disable orgid" environments -->
+	<target name="gen-sqlmaps" description="Generate ibatis sql maps for 'disable orgid' environments ">
+		<echo message="Generate ibatis sql maps for 'disable orgid' environments"/>
+		
+		<copy todir="${dir.build}/classes/com/ibm/lconn/calendar/db/sql">
+			<fileset dir="src/com/ibm/lconn/calendar/db/sql" includes="**/*_MT.xml"/>
+			<globmapper from="*_MT.xml" to="*.xml"/>
+		</copy>
+		
+		<replace dir="${dir.build}/classes/com/ibm/lconn/calendar/db/sql">
+			<include name="**/*.xml"/>
+			<exclude name="**/*_MT.xml"/>
+			<replacetoken>_MT</replacetoken>
+			<replacevalue></replacevalue>
+		</replace>
+		
+		<replaceregexp match="AND\s+ORG_ID\s+=\s+[a-zA-Z\?#_\.]+" replace=" " flags="g" byline="true">
+		    <fileset dir="${dir.build}/classes/com/ibm/lconn/calendar/db/sql" includes="**/*.xml" excludes="**/*_MT.xml"/>
+		</replaceregexp>
+		
+		<replaceregexp match="WHERE\s+ORG_ID\s+=\s+[a-zA-Z\?#_\.]+" replace=" " flags="g" byline="true">
+		    <fileset dir="${dir.build}/classes/com/ibm/lconn/calendar/db/sql" includes="**/*.xml" excludes="**/*_MT.xml"/>
+		</replaceregexp>
+		
+		<replaceregexp match="AND\s+[a-zA-Z]+\.ORG_ID\s+=\s+[a-zA-Z\?#_\.]+" replace=" " flags="g" byline="true">
+		    <fileset dir="${dir.build}/classes/com/ibm/lconn/calendar/db/sql" includes="**/*.xml" excludes="**/*_MT.xml"/>
+		</replaceregexp>
+		
+		<replaceregexp match="WHERE\s+[a-zA-Z]+\.ORG_ID\s+=\s+[a-zA-Z\?#_\.]+" replace=" " flags="g" byline="true">
+		    <fileset dir="${dir.build}/classes/com/ibm/lconn/calendar/db/sql" includes="**/*.xml" excludes="**/*_MT.xml"/>
+		</replaceregexp>
+		
+		<replaceregexp match="&lt;!-- AND -->\s+ORG_ID\s+=\s+[a-zA-Z\?#_\.]+" replace=" " flags="g" byline="true">
+		    <fileset dir="${dir.build}/classes/com/ibm/lconn/calendar/db/sql" includes="**/*.xml" excludes="**/*_MT.xml"/>
+		</replaceregexp>
+		
+		<replaceregexp match="&lt;!-- AND -->\s+[a-zA-Z]+\.ORG_ID\s+=\s+[a-zA-Z\?#_\.]+" replace=" " flags="g" byline="true">
+		    <fileset dir="${dir.build}/classes/com/ibm/lconn/calendar/db/sql" includes="**/*.xml" excludes="**/*_MT.xml"/>
+		</replaceregexp>
+	</target>
+
+	<!-- more Mantis imports -->
+	<import file="${env.WPLC_IMPORT}/check.xml"/>
+	<import file="${env.WPLC_IMPORT}/compile.xml"/>
+	<import file="${env.WPLC_IMPORT}/rmic.xml"/>
+	<import file="${env.WPLC_IMPORT}/package_extra.xml"/>
+	<import file="${env.WPLC_IMPORT}/javadoc.xml"/>
+	<import file="${env.WPLC_IMPORT}/jdepend.xml"/>
+	<import file="${env.WPLC_IMPORT}/clean.xml"/>
+	<import file="${env.WPLC_IMPORT}/comp_zip.xml"/>
+	<import file="${env.WPLC_IMPORT}/std_targets.xml"/>
+	<import file="${env.WPLC_IMPORT}/process_nls.xml"/>
+	<import file="${env.WPLC_IMPORT}/performance.xml"/>
+</project>

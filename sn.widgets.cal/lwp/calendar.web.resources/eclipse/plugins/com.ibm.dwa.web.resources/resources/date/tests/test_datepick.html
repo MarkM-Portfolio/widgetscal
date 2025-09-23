@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2015                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<head>
+<title>datepick Test</title>
+
+<script>
+function getCookie(name){
+    if (!document.cookie || document.cookie == '')
+        return null;
+    var items = document.cookie.split(';');
+    for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        var index = item.indexOf('=');
+        if (item.substring(0, index) == name ||
+            item.substring(0, index) == ' ' + name)
+            return unescape(item.substring(index + 1));
+    }
+    return null;
+}
+function setCookie(name, value, expire){
+    var s = name + '=' + escape(value)
+        + ((expire==null)?'':('; expires='+expire.toGMTString()));
+    if (document.location.href.substring(0, 5) == 'http:')
+        s += '; path=/';
+    document.cookie = s;
+}
+function changeTheme(){
+	setCookie("theme", document.forms[0].theme.value);
+	location.reload();
+}
+
+document.documentElement.setAttribute("dir", (getCookie("BiDi") == 1)?"rtl":"ltr");
+
+var sTheme = getCookie("theme") || "lotusui30dojo";
+var sHtml = '<style type="text/css">\n@import "../../themes/dwa.css";\n@import "../../themes/dijit-lite.css";\n@import "../themes/%1/datepick.css";\n@import "../../common/themes/%1/menu.css";\n</style>';
+document.write(sHtml.replace(/%1/g, sTheme));
+</script>
+<style>
+html, body{	
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+}
+.datepicker{
+	position:relative;
+	width:9em;
+	height:9em;
+	border:1px solid gray;
+	overflow:hidden;
+	margin:0.5em;
+	padding:0px
+}
+.preferences{
+	width:9em;
+	border:1px solid gray;
+	margin:0.5em;
+}
+</style>
+
+<script type="text/javascript" src="../../../dojo/dojo.js" djConfig="parseOnLoad:true, packages: [{name: 'dwa', location: '../dwa'}]"></script>
+<script language="JavaScript" type="text/javascript">
+	dojo.require("dojo.parser");
+	dojo.require("dwa.date.datepick");
+
+	var oToday = (new dwa.date.calendar).setDate(new Date());
+	dwa.common.commonProperty.get('p-e-calendarview-currentselected').setValue(oToday.getISO8601String());
+
+	dojo.addOnLoad(function(){
+		dojo.doc.title = dojo.doc.title + " (" + dojo.doc.compatMode + ")";
+	});
+</script>
+</head>
+<body class="dwa hannover">
+<div dojoType="dwa.date.datepick" class="datepicker" com_ibm_dwa_misc_observes_calendar="p-e-calendarview-currentselected"></div>
+<div class="preferences">
+	<form><table><tbody>
+		<tr><td>Theme:<br></td></tr>
+		<tr><td><select id="theme" name="theme" onchange="changeTheme()">
+		<option value="hannover">hannover</option>
+		<option value="lotusui30dojo" selected>lotusui30dojo</option>
+		</select></tr></td>
+	</tbody></table></form>
+</div>
+</body>
+</html>

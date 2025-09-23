@@ -1,0 +1,24 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011                                          -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+<component name="calendar.datapop" description="" project-type="source" spec-version="1.0">
+	<output-group name="dist">
+      <output type="jar" visibility="public" platform="all" location="${env.LWP_COMP_BUILD}/lib/calendar.datapop.jar"/>
+    </output-group>
+   
+	<dependency name="prereqs.sn/jakarta.commons" type="jar" />
+	<dependency name="prereqs.sn/jdom1.0" type="jar"/>
+	<dependency name="prereqs.sn/jakarta.commons.math-1.2" type="jar"/>
+	<dependency name="prereqs.sn/PdfGenerator" type="jar"/>
+	<dependency name="lc.util/base" type="jar"/>
+</component>

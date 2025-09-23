@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMap namespace="Substitution_MT">
+	<insert id="insertSubstitution" parameterClass="DBSubstitution">
+		INSERT INTO CALENDAR.CA_SUBSTITUTION
+			(SUBSTITUTION_UUID, CALENDAR_UUID, EVENT_UUID, STARTDATE, ISCANCELLED, EVENTINFO_UUID, NEWSTARTDATE, NEWENDDATE, MODIFIEDON, ORG_ID)
+		VALUES
+			(#substitution_UUID#, #calendar_UUID#, #event_UUID#, #startDate#, #isCancelled#, #eventInfo_UUID:VARCHAR#, #newStartDate:TIMESTAMP#, #newEndDate:TIMESTAMP#, #modifiedOn#, #ORG_ID#)
+	</insert>
+
+	<update id="updateSubstitution" parameterClass="DBSubstitution">
+		UPDATE CALENDAR.CA_SUBSTITUTION
+		SET STARTDATE = #startDate#, ISCANCELLED = #isCancelled#, EVENTINFO_UUID = #eventInfo_UUID:VARCHAR#, 
+			NEWSTARTDATE = #newStartDate:TIMESTAMP#, NEWENDDATE = #newEndDate:TIMESTAMP#, MODIFIEDON = #modifiedOn#
+		WHERE SUBSTITUTION_UUID = #substitution_UUID# AND ORG_ID = #ORG_ID#
+	</update>
+	
+	<delete id="deleteSubstitution" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_SUBSTITUTION WHERE SUBSTITUTION_UUID = #substitution_UUID# AND ORG_ID = #ORG_ID#
+	</delete>
+
+	<delete id="deleteSubstitutions" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_SUBSTITUTION
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				CALENDAR_UUID = #calendar_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="event_UUID">
+				EVENT_UUID = #event_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+	</delete>
+	
+	<select id="selectSubstitution" parameterClass="java.util.Map" resultClass="DBSubstitution">
+		SELECT SUBSTITUTION_UUID as substitution_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID,
+			STARTDATE as startDate, ISCANCELLED as isCancelled, EVENTINFO_UUID as eventInfo_UUID, 
+			NEWSTARTDATE as newStartDate, NEWENDDATE as newEndDate, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_SUBSTITUTION
+		WHERE SUBSTITUTION_UUID = #substitution_UUID# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<select id="selectSubstitutionByEventAndDate" parameterClass="java.util.Map" resultClass="DBSubstitution">
+		SELECT SUBSTITUTION_UUID as substitution_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID,
+			STARTDATE as startDate, ISCANCELLED as isCancelled, EVENTINFO_UUID as eventInfo_UUID, 
+			NEWSTARTDATE as newStartDate, NEWENDDATE as newEndDate, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_SUBSTITUTION
+		WHERE EVENT_UUID = #event_UUID# AND NEWSTARTDATE = #startDate# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<select id="selectSubstitutions" parameterClass="java.util.Map" resultClass="DBSubstitution">
+		SELECT SUBSTITUTION_UUID as substitution_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID,
+			STARTDATE as startDate, ISCANCELLED as isCancelled, EVENTINFO_UUID as eventInfo_UUID, 
+			NEWSTARTDATE as newStartDate, NEWENDDATE as newEndDate, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_SUBSTITUTION
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				CALENDAR_UUID = #calendar_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="event_UUID">
+				EVENT_UUID = #event_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+	</select>
+	
+	<update id="moveEventSubstitutionsInBatch" parameterClass="java.util.Map">
+		UPDATE CALENDAR.CA_SUBSTITUTION
+		<isEqual property="DBTYPE" compareValue="DB2">
+		SET STARTDATE = STARTDATE + #startDateOffset# SECONDS
+		</isEqual>
+		<!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		SET STARTDATE = STARTDATE + #startDateOffset# SECONDS
+		</isEqual>
+		<isEqual property="DBTYPE" compareValue="MSSQL">
+		SET STARTDATE = DATEADD(SECOND, #startDateOffset#, STARTDATE)
+		</isEqual>
+		<isEqual property="DBTYPE" compareValue="ORACLE">
+		SET STARTDATE = STARTDATE + NUMTODSINTERVAL(#startDateOffset#, 'SECOND')
+		</isEqual>
+		WHERE EVENT_UUID = #event_UUID# AND ORG_ID = #ORG_ID#
+	</update>
+	
+	<delete id="onShrinkRecurrenceEvent" parameterClass="DBRecurrence">
+		DELETE FROM CALENDAR.CA_SUBSTITUTION
+		WHERE EVENT_UUID = #event_UUID# AND STARTDATE > #untilRule# AND ORG_ID = #ORG_ID#
+	</delete>
+	
+	<update id="updateEventSubstitutionsTimestampInBatch" parameterClass="java.util.Map">
+		UPDATE CALENDAR.CA_SUBSTITUTION
+		<isEqual property="DBTYPE" compareValue="DB2">
+		SET MODIFIEDON = cast(#CURRENT_TIMESTAMP# as timestamp) + cast((rand() * 1000000) as int) MICROSECONDS
+		</isEqual>
+		<!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		SET MODIFIEDON = cast(#CURRENT_TIMESTAMP# as timestamp) + cast((rand() * 1000000) as int) MICROSECONDS
+		</isEqual>
+		<isEqual property="DBTYPE" compareValue="MSSQL">
+		SET MODIFIEDON = DATEADD(MILLISECOND, cast((rand(cast(cast(NEWID() AS binary(4)) AS int)) * 1000) as int), #CURRENT_TIMESTAMP#)
+		</isEqual>
+		<isEqual property="DBTYPE" compareValue="ORACLE">
+		SET MODIFIEDON = #CURRENT_TIMESTAMP# + NUMTODSINTERVAL(dbms_random.value, 'SECOND')
+		</isEqual>
+		WHERE EVENT_UUID = #event_UUID# AND ISCANCELLED = 0 AND EVENTINFO_UUID IS NOT NULL AND ORG_ID = #ORG_ID#
+	</update>
+</sqlMap>

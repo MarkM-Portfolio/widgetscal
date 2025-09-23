@@ -1,0 +1,116 @@
+/* ***************************************************************** */
+/*                                                                   */
+/* IBM Confidential                                                  */
+/*                                                                   */
+/* OCO Source Materials                                              */
+/*                                                                   */
+/* Copyright IBM Corp. 2012                                          */
+/*                                                                   */
+/* The source code for this program is not published or otherwise    */
+/* divested of its trade secrets, irrespective of what has been      */
+/* deposited with the U.S. Copyright Office.                         */
+/*                                                                   */
+/* ***************************************************************** */
+
+/* 
+	The dwa.css defines commonly used CSS rules in iNotes dojo widgets.
+*/
+
+/* VML styles for IE8 strict mode */
+v\:line, v\:rect, v\:fill, v\:roundrect, v\:stroke, v\:shape, v\:group {
+	behavior: url(#default#VML);
+	display: inline-block;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	overflow: hidden;
+	font-family: lucida, grande, helvetica, arial, sans-serif;
+}
+
+.s-hidden {
+	visibility: hidden;
+}
+
+.s-hidden-important {
+	visibility: hidden !important;
+}
+
+.s-stack {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.s-basicpanel {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.s-toppanel {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	overflow: hidden;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.s-leftpanel {
+	position: absolute;
+	left: 0px;
+	height: 100%;
+	overflow: hidden;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.s-rightpanel {
+	position: absolute;
+	right: -0px;
+	height: 100%;
+	overflow: hidden;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.s-bottompanel {
+	position: absolute;
+	left: 0px;
+	bottom: -0px;
+	width: 100%;
+	overflow: hidden;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.dijitRtl .s-stack {
+	left: auto;
+	right: 0px;
+}
+
+.dijitRtl .s-leftpanel {
+	left: auto;
+	right: 0px;
+}
+
+.dijitRtl .s-rightpanel {
+	right: auto;
+	left: -0px;
+}
+
+.dijitRtl .s-bottompanel {
+	left: auto;
+	right: 0px;
+}

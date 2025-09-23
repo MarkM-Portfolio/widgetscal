@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:v="urn:schemas-microsoft-com:vml">
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012                                          -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8; IE=EmulateIE9"/>
+	<title>CalendarPopup Test</title>
+	<style type="text/css">
+		html, body {
+			overflow: hidden;
+		}
+		.pimCalendarPopupContainer {
+			width: 320px;
+			height: 488px;
+			border: 3px solid #454545; /*for IE*/
+			border: 3px solid rgba(23, 23, 23, 0.8);
+			-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+			-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+			box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+			-moz-border-radius: 3px;
+			-webkit-border-radius: 3px;
+			border-radius: 3px;
+		}
+	</style>
+	<script type="text/javascript">
+		var theme = (window.location.search.match(/[&\?]theme=([^&]*)/i) || ["", "lotusui30dojo"])[1];
+
+		var dojoConfig = {
+			async: true,
+			isDebug: true,
+			packages:[{name: "dwa", location: "../dwa"}],
+			paths: {
+				"dwa/cv/themes": "../dwa/cv/themes/" + theme,
+				"dwa/common/themes": "../dwa/common/themes/" + theme,
+				"dwa/date/themes": "../dwa/date/themes/" + theme
+			},
+			callback: function(){
+				require([
+					"dojo",
+					"dojo/parser",
+					"dwa/cv/calendarView",
+					"dwa/data/NotesCalendarStore",
+					"dwa/data/iCalReadStore",
+					"dwa/css!dojo/resources/dojo.css",
+					"dwa/css!dijit/themes/claro/Calendar.css",
+					"dwa/css!dijit/themes/claro/Menu.css",
+					"dwa/css!dwa/themes/dijit-lite.css",
+					"dwa/css!dwa/themes/dwa.css",
+					"dwa/css!dwa/common/themes/menu.css",
+					"dwa/css!dwa/date/themes/datepick.css",
+					"dwa/css!dwa/cv/themes/calendarView.css",
+					"dwa/css!dwa/cv/themes/calendarPopup.css",
+					"dojo/domReady!"
+				], function(dojo){
+					dojo.addClass(dojo.body(), theme);
+					dojo.parser.parse();
+				});
+			}
+		};
+	</script>
+	<script type="text/javascript" src="../../../dojo/dojo.js">
+	</script>
+</head>
+<body class="claro" style="margin: 5px;">
+	<span data-dojo-type="dwa.data.NotesCalendarStore" data-dojo-id="notesStore" data-dojo-props="url: 'data/s_ReadViewEntries_Calendar.json'">
+	</span>
+	<span data-dojo-type="dwa.data.iCalReadStore" data-dojo-id="iCalStore" data-dojo-props="url: 'data/basic.ics'">
+	</span>
+	<div class="pimCalendarPopupContainer">
+		<div data-dojo-type="dwa.cv.calendarView" style="width:100%;height:100%;border-width:0px;"
+			data-dojo-props="store: [iCalStore, notesStore], summarize: true, type: 'D', fUseCalendarLite: true, fDisableInPlaceEdit: true">
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMap namespace="EventTag_MT">
+
+	<sql id="FOR_READ_ONLY">
+	    <isEqual property="DBTYPE" compareValue="DB2">
+		FOR FETCH ONLY
+	    </isEqual>
+	    <!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		FOR FETCH ONLY
+	    </isEqual>
+	</sql>
+
+	<sql id="OPTIMIZE_{1}">
+    	<isEqual property="DBTYPE" compareValue="DB2">
+	    OPTIMIZE FOR 1 ROWS
+	    </isEqual>
+	    <!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+	    OPTIMIZE FOR 1 ROWS
+	    </isEqual>
+	</sql>
+
+	<sql id="TOP_{n}">
+	    <isEqual property="DBTYPE" compareValue="MSSQL">
+	        <isNotNull property="__fetch_size">TOP($__fetch_size$)</isNotNull>
+	    </isEqual>
+	</sql>
+
+	<sql id="FETCH_{n}">
+	    <isEqual property="DBTYPE" compareValue="DB2">
+	        <isNotNull property="__fetch_size">
+	        FETCH FIRST $__fetch_size$ ROWS ONLY
+	        </isNotNull>
+	    </isEqual>
+	    <!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+	        <isNotNull property="__fetch_size">
+	        FETCH FIRST $__fetch_size$ ROWS ONLY
+	        </isNotNull>
+	    </isEqual>
+	</sql>
+
+	<!-- tag -->
+	
+	<insert id="insertEventTag" parameterClass="DBEventTag">
+		INSERT INTO CALENDAR.CA_EVENTTAG
+			(TAG_UUID, CALENDAR_UUID, EVENT_UUID, NAME, MODIFIEDON, ORG_ID)
+		VALUES
+			(#tag_UUID#, #calendar_UUID#, #event_UUID#, #name#, #modifiedOn#, #ORG_ID#)
+	</insert>
+	
+	<update id="updateEventTag" parameterClass="DBEventTag">
+		UPDATE CALENDAR.CA_EVENTTAG
+		SET CALENDAR_UUID = #calendar_UUID#, EVENT_UUID = #event_UUID#, NAME = #name#, MODIFIEDON = #modifiedOn#
+		WHERE TAG_UUID = #tag_UUID# AND ORG_ID = #ORG_ID#
+	</update>
+	
+	<select id="selectEventTag" parameterClass="java.util.Map" resultClass="DBEventTag">
+		SELECT TAG_UUID as tag_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID, NAME as name, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTTAG
+		WHERE TAG_UUID = #tag_UUID# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<delete id="deleteEventTag" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENTTAG
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="tag_UUID">
+				TAG_UUID = #tag_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="event_UUID">
+				EVENT_UUID = #event_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="name">
+				NAME = #name#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+	</delete>
+	
+	<delete id="deleteEventTags" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENTTAG 
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="event_UUID">
+				EVENT_UUID = #event_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				CALENDAR_UUID = #calendar_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+	</delete>
+	
+	<select id="selectTagsByEvent" parameterClass="java.util.Map" resultClass="DBEventTag">
+		SELECT TAG_UUID as tag_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID, NAME as name, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTTAG
+		WHERE EVENT_UUID = #event_UUID# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<!-- tag aggregation -->
+	
+	<insert id="insertEventTagStat" parameterClass="DBEventTagStat">
+		INSERT INTO CALENDAR.CA_EVENTTAGAGG
+			(TAGAGG_UUID, CALENDAR_UUID, NAME, TOTAL, LASTUSED, ORG_ID)
+		VALUES
+			(#tagagg_UUID#, #calendar_UUID#, #name#, #total#, #lastUsed#, #ORG_ID#)
+	</insert>
+	
+	<update id="updateEventTagStat" parameterClass="DBEventTagStat">
+		UPDATE CALENDAR.CA_EVENTTAGAGG
+		SET CALENDAR_UUID = #calendar_UUID#, NAME = #name#, TOTAL = #total#, LASTUSED = #lastUsed#
+		WHERE TAGAGG_UUID = #tagagg_UUID# AND ORG_ID = #ORG_ID#
+	</update>
+	
+	<select id="selectEventTagStat" parameterClass="java.util.Map" resultClass="DBEventTagStat">
+		SELECT TAGAGG_UUID as tagagg_UUID, CALENDAR_UUID as calendar_UUID, NAME as name, TOTAL as total, LASTUSED as lastUsed, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTTAGAGG
+		WHERE CALENDAR_UUID = #calendar_UUID# AND NAME = #tag# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<delete id="deleteEventTagStat" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENTTAGAGG 
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				CALENDAR_UUID = #calendar_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="tag">
+				NAME = #tag#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+	</delete>
+	
+	<update id="updateEventTagStatByDiff" parameterClass="java.util.Map">
+		UPDATE CALENDAR.CA_EVENTTAGAGG
+		SET TOTAL = TOTAL + #diff#, LASTUSED = #CURRENT_TIMESTAMP#
+		WHERE CALENDAR_UUID = #calendar_UUID# AND NAME = #tag# AND ORG_ID = #ORG_ID#
+	</update>
+	
+	<update id="updateEventTagStatOnEventDeletion" parameterClass="java.util.Map">
+		UPDATE CALENDAR.CA_EVENTTAGAGG
+		SET TOTAL = TOTAL - 1
+		WHERE CALENDAR_UUID = #calendar_UUID# AND NAME IN (SELECT NAME FROM CALENDAR.CA_EVENTTAG WHERE EVENT_UUID = #event_UUID#) AND ORG_ID = #ORG_ID#
+	</update>
+	
+	<select id="selectMostPopularEventTags" parameterClass="java.util.Map" resultClass="DBEventTagStat">
+		SELECT <include refid="EventTag_MT.TOP_{n}"/>
+		   TAGAGG_UUID as tagagg_UUID, CALENDAR_UUID as calendar_UUID, NAME as name, TOTAL as total, LASTUSED as lastUsed, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTTAGAGG
+		WHERE CALENDAR_UUID = #calendar_UUID# AND TOTAL > 0  AND ORG_ID = #ORG_ID# 
+			<isNotNull property="startsWith">
+				AND NAME LIKE #startsWith#
+			</isNotNull>
+		ORDER BY TOTAL DESC
+		<include refid="EventTag_MT.FETCH_{n}"/>
+        <include refid="EventTag_MT.FOR_READ_ONLY"/>
+	</select>
+	
+	<select id="selectRelatedEventTags" parameterClass="java.util.Map" resultClass="DBEventTagStat">
+		SELECT <include refid="EventTag_MT.TOP_{n}"/> TAG.NAME as name, COUNT(TAG.EVENT_UUID) as total, TAG.ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTTAG TAG INNER JOIN (
+				   <iterate property="tags" conjunction="INTERSECT">
+				        SELECT EVENT_UUID
+				        FROM CALENDAR.CA_EVENTTAG
+				        WHERE NAME = #tags[]# AND CALENDAR_UUID = #calendar_UUID# AND ORG_ID = #ORG_ID#
+				   </iterate>
+				   ) TMP ON TAG.EVENT_UUID = TMP.EVENT_UUID
+		WHERE TAG.CALENDAR_UUID = #calendar_UUID# AND TAG.NAME NOT IN (<iterate property="tags" conjunction=",">#tags[]#</iterate>) AND TAG.ORG_ID = #ORG_ID#
+		GROUP BY TAG.NAME, TAG.ORG_ID
+		ORDER BY COUNT(TAG.EVENT_UUID) DESC
+		<include refid="EventTag_MT.FETCH_{n}"/>
+        <include refid="EventTag_MT.FOR_READ_ONLY"/>
+	</select>
+
+</sqlMap>

@@ -1,0 +1,40 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2013, 2015                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<div id="section_instances" class="lotusSection2">
+	<div dojoAttachPoint="errorMessageAP" class="lotusMessage2" style="display: none;">
+		<img class="lconnSprite lconnSprite-iconError16" src="${blankGif}" role="presentation">
+		<span class="lotusMeta">${_lang.INTERNAL_SERVER_NOT_AVAILABLE}</span>
+	</div>
+	<div dojoAttachPoint="instanceAP">
+		<div dojoAttachPoint="noInstanceHintAP" style="display: none;">${_lang.NO_INSTANCE}</div>
+		<div dojoAttachPoint="instanceListHintAP" style="display: none;padding-bottom: 5px;"></div>
+		<div id="instanceList" class="lotusChunk">
+			<div dojoAttachPoint="loadingAP" style="display:none; text-align: center;">
+				<span class="lotusLoading" style="display: inline-block;">&nbsp;</span>
+			</div>
+			<span id="lconnEventLinkDescription" style="display:none">${_lang.LINK_OPEN_IN_NEW_WINDOW}</span>
+			<div dojoAttachPoint="instanceListAP"></div>
+		</div>
+		<div class="lotusSectionFooter" style="display: none"> 
+			<div class="lotusPaing" dojoAttachPoint="instanceBottomPagingAP">
+			</div>
+		</div>
+		<div class="lotusSectionFooter" dojoAttachPoint="icalFeedDiv"> 
+			<div class="lotusFeeds" style="margin:0px;">
+				<a title="${_lang.ICAL_FEED}" href="javascript:;" dojoAttachPoint="icalFeedLink" class="lotusFeed lotusAction" role="button">${_lang.ICAL_FEED}</a>
+			</div> 
+		</div>
+	</div>
+</div>

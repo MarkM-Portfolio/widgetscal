@@ -1,0 +1,45 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<div>
+	<div id="calendar_loading_hint">${_lang.LOADING}</div>
+	<div aria-live="assertive">
+		<div id="calendar_message_area"></div>
+	</div>
+	<div id="calendar_main" style="display:none">
+		<div class="lotusHeader">
+			<h1>${_lang.TITLE}</h1>
+		</div>
+		<div id="filterIndicator" class="lotusFilters2" style="display:none">
+		</div>	
+		<div class="lotusTabContainer">
+			<ul class="lotusTabs" role="toolbar" id="calendar_view_tabs" aria-label="${_lang.TITLE}" aria-controls="calendar_view">
+				<li id="listTabItem" class="lotusSelected">
+					<div>
+						<a id="listTab" href="javascript:;" role="button" aria-pressed="true" aria-label="${_lang.TAB_UPCOMING}">${_lang.TAB_UPCOMING}</a>
+					</div>	
+				</li>
+				<li id="gridTabItem">
+					<div>
+						<a id="gridTab" href="javascript:;" role="button" aria-pressed="false" aria-label="${_lang.TAB_CALENDAR}">${_lang.TAB_CALENDAR}</a>
+					</div>	
+				</li>
+			</ul>
+		</div>
+		<div id="calendar_view"></div>
+	</div>		
+	<div id="calendar_event_viewer"></div>
+	<div id="calendar_event_editor"></div>
+	
+</div>

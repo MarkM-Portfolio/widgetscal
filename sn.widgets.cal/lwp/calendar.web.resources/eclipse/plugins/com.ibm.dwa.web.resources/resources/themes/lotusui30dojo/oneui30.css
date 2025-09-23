@@ -1,0 +1,34 @@
+/* ***************************************************************** */
+/*                                                                   */
+/* IBM Confidential                                                  */
+/*                                                                   */
+/* OCO Source Materials                                              */
+/*                                                                   */
+/* Copyright IBM Corp. 2012                                          */
+/*                                                                   */
+/* The source code for this program is not published or otherwise    */
+/* divested of its trade secrets, irrespective of what has been      */
+/* deposited with the U.S. Copyright Office.                         */
+/*                                                                   */
+/* ***************************************************************** */
+
+/*
+ * Provide all CSS files for the lotusui30dojo theme.
+ */
+
+@import url("../dwa.css");
+@import url("../dijit-lite.css");
+@import url("../../common/themes/lotusui30dojo/dialog.css");
+@import url("../../common/themes/lotusui30dojo/menu.css");
+@import url("../../cv/themes/lotusui30dojo/calendarView.css");
+@import url("../../cv/themes/lotusui30dojo/miniCalendarView.css");
+@import url("../../date/themes/lotusui30dojo/datepick.css");
+@import url("../../experimental/lv/themes/lotusui30dojo/listViewHandSet.css");
+@import url("../../experimental/lv/themes/lotusui30dojo/listViewHandSetFixedRow.css");
+@import url("../../experimental/lv/themes/lotusui30dojo/listViewHandSetStandard.css");
+@import url("../../experimental/lv/themes/lotusui30dojo/listViewPagerHandSet.css");
+@import url("../../layout/themes/lotusui30dojo/_ScrollableMixin.css");
+@import url("../../layout/themes/lotusui30dojo/_ScrollableMixin-webkit.css");
+@import url("../../lv/themes/lotusui30dojo/listView.css");
+@import url("../../tree/themes/lotusui30dojo/Tree.css");
+@import url("../../widget/themes/lotusui30dojo/Menu.css");

@@ -1,0 +1,76 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2013                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+<project name="calendar.sn.install" default="development" basedir=".">
+
+	<import file="${env.WPLC_IMPORT}/std_props.xml"/>
+	<import file="${env.WPLC_IMPORT}/std_dirs.xml"/>
+	<import file="${env.WPLC_IMPORT}/copyright.xml"/>
+	<import file="${env.WPLC_IMPORT}/clean.xml"/>
+	<import file="${env.WPLC_IMPORT}/nojavadoc.xml"/>
+	<import file="${env.WPLC_IMPORT}/noprocess_nls.xml"/>
+	<import file="${env.WPLC_IMPORT}/noperformance.xml"/>
+	<import file="${env.WPLC_IMPORT}/manifest.xml"/>
+	
+	<target name="development" depends="production"/>
+
+	<target name="production" depends="stageCalendar"/>
+	
+	<target name="stageCalendar">
+		<!-- remove existing build directory -->
+		<delete dir="${dir.build}"/>
+		
+		<!-- Do not distribute .sql in application jar.  We will distribute these outside install for ease of use. -->
+		<locateComponent component="calendar.db" locateBuildDir="false" property="calendar.db.dir"/>
+		<copy todir="${dir.build}/db.scripts/communities">
+			<fileset dir="${calendar.db.dir}/framework">
+				<include name="**/oracle/**"/>
+				<include name="**/db2/**"/>
+				<include name="**/sqlserver/**"/>
+				<include name="**/db2_IBMi/**"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${dir.build}/db.scripts/calendar">
+			<fileset dir="${calendar.db.dir}/framework">
+				<include name="**/oracle/**"/>
+				<include name="**/db2/**"/>
+				<include name="**/sqlserver/**"/>
+				<include name="**/db2_IBMi/**"/>
+			</fileset>
+		</copy>
+		
+		<!-- Do not distribute .xml in application jar.  We will distribute these outside install for ease of use. -->
+		<locateComponent component="calendar.config" locateBuildDir="false" property="calendar.config.dir"/>
+		<copy todir="${dir.build}/configurations/calendar">
+			<fileset dir="${calendar.config.dir}">
+				<include name="**/calendar-config.xsd"/>
+				<include name="**/calendar-config.xml"/>
+			</fileset>
+		</copy>
+		
+		<!-- remove Windows line returns so that the script will work on Linux -->
+		<fixcrlf srcdir="${dir.build}/db.scripts/communities/db2" eol="lf" includes="**/createDb.sql"/>
+		<fixcrlf srcdir="${dir.build}/db.scripts/calendar/db2" eol="lf" includes="**/createDb.sql"/>
+		<fixcrlf srcdir="${dir.build}/configurations/calendar" eol="lf" includes="**/calendar-config.x*"/>
+		
+		<antcall target="crConvert_1to3Files">
+			<param name="files.ToConvert" value="${dir.build}/db.scripts/communities/db2/*.sql,${dir.build}/db.scripts/communities/db2/fixup/*.sql,${dir.build}/db.scripts/communities/oracle/*.sql,${dir.build}/db.scripts/communities/oracle/fixup/*.sql,${dir.build}/db.scripts/communities/sqlserver/*.sql,${dir.build}/db.scripts/communities/sqlserver/fixup/*.sql,${dir.build}/configurations/calendar/calendar-config.x*"/>
+		</antcall>
+		
+		<antcall target="crConvert_1to3Files">
+			<param name="files.ToConvert" value="${dir.build}/db.scripts/calendar/db2/*.sql,${dir.build}/db.scripts/calendar/db2/fixup/*.sql,${dir.build}/db.scripts/calendar/oracle/*.sql,${dir.build}/db.scripts/calendar/oracle/fixup/*.sql,${dir.build}/db.scripts/calendar/sqlserver/*.sql,${dir.build}/db.scripts/calendar/sqlserver/fixup/*.sql,${dir.build}/configurations/calendar/calendar-config.x*"/>
+		</antcall>
+	</target>
+	
+</project>

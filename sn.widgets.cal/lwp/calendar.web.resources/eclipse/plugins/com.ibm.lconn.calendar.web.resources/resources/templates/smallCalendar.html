@@ -1,0 +1,62 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2013                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<div class="datePickerContainer">
+ <table role="presentation" cellspacing="0" cellpadding="0" class="dijitCalendarContainer" role="grid" summary="${_resourceBundle.CALENDAR_SUMMARY}">
+	<thead>
+		<tr class="dijitReset dijitCalendarMonthContainer" valign="top">
+			<th class='dijitReset'>
+				<a role="button" tabindex="0" dojoAttachEvent="onclick: previousMonth, onkeypress: previousMonthA11y"  class="dijitInline dijitCalendarIncrementControl dijitCalendarDecrease" alt="${_resourceBundle.PREVIOUS_MONTH}" title="${_resourceBundle.PREVIOUS_MONTH}" aria-labelledby="${id}_labelPrevious">
+					<span id="${id}_labelPrevious" style="display: none; visibility: hidden;">${_resourceBundle.PREVIOUS_MONTH}</span>
+					<span class="previousMonthText">-</span>
+				</a>
+			</th>
+			<th class='dijitReset' colspan="5">
+                <div class="dijitVisible">
+					<div class="dijitMenuPassive dijitHidden" dojoAttachPoint="monthDropDown" dojoAttachEvent="onmouseup: _onMonthSelect, onmouseover: _onMenuHover, onmouseout: _onMenuHover">
+						<div class="dijitCalendarMonthLabelTemplate dijitCalendarMonthLabel"></div>
+					</div>
+                </div>
+				<div dojoAttachPoint="monthLabelSpacer" class="dijitSpacer"></div>
+				<div dojoAttachPoint="monthLabelNode" class="dijitCalendarMonthLabel dijitInline dijitVisible" dojoAttachEvent="onmousedown: _onMonthToggle"></div>
+			</th>
+			<th class='dijitReset'>
+				<a role="button" tabindex="0" dojoAttachEvent="onclick: nextMonth, onkeypress: nextMonthA11y" class="dijitInline dijitCalendarIncrementControl dijitCalendarIncrease" alt="${_resourceBundle.NEXT_MONTH}" title="${_resourceBundle.NEXT_MONTH}" aria-labelledby="${id}_labelNext">
+					<span id="${id}_labelNext" style="display: none; visibility: hidden;">${_resourceBundle.NEXT_MONTH}</span>
+					<span class="nextMonthText">+</span>
+				</a>
+			</th>
+		</tr>
+		<tr>
+			<th class="dijitReset dijitCalendarDayLabelTemplate"><span class="dijitCalendarDayLabel"></span></th>
+		</tr>
+	</thead>
+	<tbody dojoAttachEvent="onclick: _onDayClick" class="dijitReset dijitCalendarBodyContainer">
+		<tr class="dijitReset dijitCalendarWeekTemplate">
+			<td class="dijitReset dijitCalendarDateTemplate"><span class="dijitCalendarDateLabel"></span></td>
+		</tr>
+	</tbody>
+	<tfoot class="dijitReset dijitCalendarYearContainer">
+		<tr>
+			<td class='dijitReset' valign="top" colspan="7">
+				<h3 class="dijitCalendarYearLabel">
+					<span role="button" tabindex="0" dojoAttachPoint="previousYearLabelNode" dojoAttachEvent="onkeypress: previousYearA11y" class="dijitInline dijitCalendarPreviousYear"></span>
+					<span dojoAttachPoint="currentYearLabelNode" class="dijitInline dijitCalendarSelectedYear"></span>
+					<span role="button" tabindex="0" dojoAttachPoint="nextYearLabelNode" dojoAttachEvent="onkeypress: nextYearA11y" class="dijitInline dijitCalendarNextYear"></span>
+				</h3>
+			</td>
+		</tr>
+	</tfoot>
+ </table>
+</div>

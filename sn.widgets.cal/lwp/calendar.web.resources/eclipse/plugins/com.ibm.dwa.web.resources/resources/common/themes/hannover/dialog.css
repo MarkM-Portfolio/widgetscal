@@ -1,0 +1,50 @@
+/* ***************************************************************** */
+/*                                                                   */
+/* IBM Confidential                                                  */
+/*                                                                   */
+/* OCO Source Materials                                              */
+/*                                                                   */
+/* Copyright IBM Corp. 2012                                          */
+/*                                                                   */
+/* The source code for this program is not published or otherwise    */
+/* divested of its trade secrets, irrespective of what has been      */
+/* deposited with the U.S. Copyright Office.                         */
+/*                                                                   */
+/* ***************************************************************** */
+
+.s-noselecttext {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+}
+
+.s-label-light {
+    font-family: lucida grande,helvetica,arial,sans-serif;
+	font-size: 70%;
+	font-weight: normal;
+	color: rgb(90,90,115);
+}
+
+.s-handcursor {
+	cursor: pointer;
+}
+
+.s-balloon-container {
+	position: absolute;
+	overflow: hidden;
+}
+
+.s-dialog-body-overlay {
+	background-color: white;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+	position: absolute; 
+	cursor:not-allowed;
+	z-index: 600;
+}
+
+.s-modeless-body-overlay {
+	background-color: white;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	cursor: not-allowed;
+}

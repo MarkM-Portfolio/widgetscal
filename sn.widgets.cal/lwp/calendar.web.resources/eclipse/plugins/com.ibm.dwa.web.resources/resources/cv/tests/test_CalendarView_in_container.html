@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012                                          -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<head>
+<title>CalendarView in BorderContainer Test</title>
+
+<style type="text/css">
+	@import "../../themes/dwa.css";
+	@import "../../themes/dijit-lite.css";
+	@import "../../../dijit/themes/tundra/tundra.css";
+	@import "../themes/lotusui30dojo/calendarView.css";
+	@import "../../date/themes/lotusui30dojo/datepick.css";
+	@import "../../common/themes/lotusui30dojo/menu.css";
+</style>
+<style>
+html, body{ 	
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+	overflow: hidden;
+}
+#p1 {
+	background-color: #ccffcc;
+	height: 70px;
+	font-size: 16pt;
+	font-family: sans-serif;
+	padding: 10px 0px 0px 10px;
+		
+}
+#p2 {
+	background-color: #ccccff;
+	width: 120px;
+	font-size: 9pt;
+	font-family: lucida grande,helvetica,arial,sans-serif;
+}
+#p3 {
+	overflow: hidden;
+}
+#p2 DIV {
+	cursor: pointer;
+	margin-bottom: 2px;
+}
+#p2 DIV IMG {
+	width: 17px;
+	height: 16px;
+	vertical-align: middle;
+	margin-right: 2px;
+	background-image:url(images/caloutlineicons.gif);
+}
+</style>
+
+<script type="text/javascript" src="../../../dojo/dojo.js" djConfig="parseOnLoad:true, packages: [{name: 'dwa', location: '../dwa'}]"></script>
+<script language="JavaScript" type="text/javascript">
+	dojo.require("dojo.parser");
+	dojo.require("dijit.layout.BorderContainer");
+	dojo.require("dijit.layout.ContentPane");
+	dojo.require("dwa.data.iCalReadStore");
+	dojo.require("dwa.cv.calendarView");
+	var type = "W";
+	function switchView(e){
+		var widget = dijit.byId("e-calendarview");
+		var summarize = dojo.byId("s").checked;
+		if(e){
+			type = e.currentTarget.id;
+		}
+		widget.drawCalendar(type, summarize);
+		widget.onActivated();
+		var arr = ["D","T","F","W","2","M","Y"];
+		for(var i in arr){
+			var elem = dojo.byId(arr[i]);
+			elem.style.backgroundColor = (elem.id==type)?"#C3C3C3":"";
+		}
+	}
+	dojo.addOnLoad(function(){
+		dojo.doc.title = dojo.doc.title + " (" + dojo.doc.compatMode + ")";
+		dojo.connect(dojo.byId("D"), "onclick", "switchView");
+		dojo.connect(dojo.byId("T"), "onclick", "switchView");
+		dojo.connect(dojo.byId("F"), "onclick", "switchView");
+		dojo.connect(dojo.byId("W"), "onclick", "switchView");
+		dojo.connect(dojo.byId("2"), "onclick", "switchView");
+		dojo.connect(dojo.byId("M"), "onclick", "switchView");
+		dojo.connect(dojo.byId("Y"), "onclick", "switchView");
+		var widget = dijit.byId("e-calendarview");
+		dojo.byId(widget.type).style.backgroundColor = "#C3C3C3";
+	});
+</script>
+</head>
+<body class="dwa hannover tundra">
+	<div dojoType="dwa.data.iCalReadStore" jsId="iCalStore" url="data/2009USHolidays.ics"></div>
+	<div dojoType="dijit.layout.BorderContainer" id="watchedBC" persist="false" style="height: 100%; width: 100%">
+		<div id="p1" dojoType="dijit.layout.ContentPane" region="top" splitter="true">Dojo-based iNotes Calendar View</div>
+		<div id="p2" dojoType="dijit.layout.ContentPane" region="left" splitter="true">
+			<div id="D"><img src="../../common/images/transparent.gif" style="background-position:0px 0px">One Day</div>
+			<div id="T"><img src="../../common/images/transparent.gif" style="background-position:-17px 0px">Two Days</div>
+			<div id="F"><img src="../../common/images/transparent.gif" style="background-position:-34px 0px">One Work Week</div>
+			<div id="W"><img src="../../common/images/transparent.gif" style="background-position:-51px 0px">One Week</div>
+			<div id="2"><img src="../../common/images/transparent.gif" style="background-position:-68px 0px">Two Weeks</div>
+			<div id="M"><img src="../../common/images/transparent.gif" style="background-position:-85px 0px">One Month</div>
+			<div id="Y"><img src="../../common/images/transparent.gif" style="background-position:-102px 0px">One Year</div>
+			<div><input id="s" type="checkbox" name="chk" onclick="switchView()"><label for="s">Summarize</label></div>
+
+		</div>
+		<div id="e-calendarview" dojoType="dwa.cv.calendarView"
+			type="W" summarize="false" date="2009/4/15"
+			store="iCalStore" region="center"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2016                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMap namespace="UserInfo_MT">
+	<cacheModel id="getUserByUUID_cache" type="LRU" readOnly="false">
+       <flushInterval minutes="5"/>
+       <property name="size" value="10" />
+    </cacheModel>
+    
+	<resultMap id="DBUser" class="DBUser">
+		<result property="userUUID" column="MEMBER_UUID"/>
+		<result property="userExtID" column="DIRECTORY_UUID"/>
+		<result property="userEmail" column="EMAIL"/>
+		<result property="userName" column="DISPLAY"/>
+		<result property="userState" column="STATE"/>
+		<result property="isExternal" column="ISEXTERNAL"/>
+		<result property="ORG_ID" column="ORG_ID"/>
+	</resultMap>
+	
+	<select id="getUserByEmail" parameterClass="java.util.Map" resultMap="DBUser">
+		SELECT MEMBER_UUID, DIRECTORY_UUID, EMAIL, DISPLAY, STATE, ORG_ID, ISEXTERNAL
+		FROM CALENDAR.CA_USER
+		WHERE EMAIL = #email# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<select id="getUserByUUID" parameterClass="java.util.Map" resultMap="DBUser" cacheModel="getUserByUUID_cache">
+		SELECT MEMBER_UUID, DIRECTORY_UUID, EMAIL, DISPLAY, STATE, ORG_ID, ISEXTERNAL
+		FROM CALENDAR.CA_USER
+		WHERE MEMBER_UUID = #userUUID# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<select id="getUserByUUID_DB2" parameterClass="java.util.Map" resultMap="DBUser" cacheModel="getUserByUUID_cache">
+		SELECT MEMBER_UUID, DIRECTORY_UUID, EMAIL, DISPLAY, STATE, ORG_ID, ISEXTERNAL
+		FROM CALENDAR.CA_USER
+		WHERE MEMBER_UUID = #userUUID# AND ORG_ID = #ORG_ID#
+		FOR FETCH ONLY
+	</select>
+	
+	<!-- Change by Connections for IBM i team. -->
+	<select id="getUserByUUID_AS400" parameterClass="java.util.Map" resultMap="DBUser" cacheModel="getUserByUUID_cache">
+		SELECT MEMBER_UUID, DIRECTORY_UUID, EMAIL, DISPLAY, STATE, ORG_ID, ISEXTERNAL
+		FROM CALENDAR.CA_USER
+		WHERE MEMBER_UUID = #userUUID# AND ORG_ID = #ORG_ID#
+		FOR FETCH ONLY
+	</select>
+	
+	<select id="getUserByExtID" parameterClass="java.util.Map" resultMap="DBUser">
+		SELECT MEMBER_UUID, DIRECTORY_UUID, EMAIL, DISPLAY, STATE, ORG_ID, ISEXTERNAL
+		FROM CALENDAR.CA_USER
+		WHERE DIRECTORY_UUID = #userExtID# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<select id="getUserByExtID_DB2" parameterClass="java.util.Map" resultMap="DBUser">
+		SELECT MEMBER_UUID, DIRECTORY_UUID, EMAIL, DISPLAY, STATE, ORG_ID, ISEXTERNAL
+		FROM CALENDAR.CA_USER
+		WHERE DIRECTORY_UUID = #userExtID# AND ORG_ID = #ORG_ID#
+		FOR FETCH ONLY
+	</select>
+	
+	<!-- Change by Connections for IBM i team. -->
+	<select id="getUserByExtID_AS400" parameterClass="java.util.Map" resultMap="DBUser">
+		SELECT MEMBER_UUID, DIRECTORY_UUID, EMAIL, DISPLAY, STATE, ORG_ID, ISEXTERNAL
+		FROM CALENDAR.CA_USER
+		WHERE DIRECTORY_UUID = #userExtID# AND ORG_ID = #ORG_ID#
+		FOR FETCH ONLY
+	</select>
+	
+	<insert id="insertUserMembership" parameterClass="DBMembership">
+		INSERT INTO CALENDAR.CA_MEMBERSHIP
+			(CALENDAR_UUID, MEMBER_UUID, ROLE, ORG_ID)
+		VALUES
+			(#calendar_UUID#, #member_UUID#, #role#, #ORG_ID#)
+	</insert>
+	
+	<update id="updateUserMembership" parameterClass="DBMembership">
+		UPDATE CALENDAR.CA_MEMBERSHIP
+		SET ROLE = #role#
+		WHERE MEMBER_UUID = #member_UUID# AND CALENDAR_UUID = #calendar_UUID# AND ORG_ID = #ORG_ID#
+	</update>
+	
+	<delete id="deleteUserMembership" parameterClass="DBMembership">
+		DELETE FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #member_UUID# AND CALENDAR_UUID = #calendar_UUID# AND ORG_ID = #ORG_ID#
+	</delete>
+	
+	<select id="getUserMembership" parameterClass="java.util.Map" resultClass="int">
+		SELECT ROLE
+		FROM CALENDAR.CA_MEMBERSHIP
+		WHERE CALENDAR_UUID = #calendar_UUID# AND MEMBER_UUID = #member_UUID# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<select id="getUserMembership_DB2" parameterClass="java.util.Map" resultClass="int">
+		SELECT ROLE
+		FROM CALENDAR.CA_MEMBERSHIP
+		WHERE CALENDAR_UUID = #calendar_UUID# AND MEMBER_UUID = #member_UUID# AND ORG_ID = #ORG_ID#
+		FOR FETCH ONLY
+	</select>
+	
+	<!-- Change by Connections for IBM i team. -->
+	<select id="getUserMembership_AS400" parameterClass="java.util.Map" resultClass="int">
+		SELECT ROLE
+		FROM CALENDAR.CA_MEMBERSHIP
+		WHERE CALENDAR_UUID = #calendar_UUID# AND MEMBER_UUID = #member_UUID# AND ORG_ID = #ORG_ID#
+		FOR FETCH ONLY
+	</select>
+	
+	<select id="getUserMemberships" parameterClass="java.util.Map" resultClass="DBMembership">
+		SELECT CALENDAR_UUID as calendar_UUID, MEMBER_UUID as member_UUID, ROLE as role, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_MEMBERSHIP
+		WHERE MEMBER_UUID = #member_UUID# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<select id="getUserMemberships_DB2" parameterClass="java.util.Map" resultClass="DBMembership">
+		SELECT CALENDAR_UUID as calendar_UUID, MEMBER_UUID as member_UUID, ROLE as role, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_MEMBERSHIP
+		WHERE MEMBER_UUID = #member_UUID# AND ORG_ID = #ORG_ID#
+		FOR FETCH ONLY
+	</select>
+	
+	<!-- Change by Connections for IBM i team. -->
+	<select id="getUserMemberships_AS400" parameterClass="java.util.Map" resultClass="DBMembership">
+		SELECT CALENDAR_UUID as calendar_UUID, MEMBER_UUID as member_UUID, ROLE as role, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_MEMBERSHIP
+		WHERE MEMBER_UUID = #member_UUID# AND ORG_ID = #ORG_ID#
+		FOR FETCH ONLY
+	</select>
+	
+	<!-- TODO: MOVE TO USING COMMUNITIES UTIL JAR -->
+	<insert id="insertMemberProfile" parameterClass="map" >
+		INSERT INTO SNCOMM.MEMBERPROFILE (
+			MEMBER_UUID,
+			DIRECTORY_UUID,
+			DISPLAY,
+			LOWER_DISPLAY,
+			EMAIL,
+			LOCALE,
+			LASTLOGIN,
+			ORG_ID,
+			ISEXTERNAL
+		) VALUES (
+			#memberUuid#,
+			#directoryUuid#,
+			#displayName#,
+            <isEqual property="DBTYPE" compareValue="DB2">
+	        LOWER( CAST( #displayName# AS VARCHAR(256) ) ),
+            </isEqual>
+            <!-- Change by Connections for IBM i team. -->					 
+            <isEqual property="DBTYPE" compareValue="AS400">
+	        LOWER( CAST( #displayName# AS VARCHAR(256) ) ),
+            </isEqual>						 
+            <isNotEqual property="DBTYPE" compareValue="DB2">
+                <isNotEqual property="DBTYPE" compareValue="AS400">
+	        LOWER( #displayName# ),
+                </isNotEqual>
+            </isNotEqual>			  
+            <isNull property="email">
+	        NULL,
+            </isNull>
+            <isNotNull property="email">
+	        #email#,
+            </isNotNull>
+	        #locale#,
+            <isNull property="lastLogin">
+	        NULL,
+            </isNull>
+            <isNotNull property="lastLogin">			
+	        #lastLogin#,
+            </isNotNull>
+            <isNull property="orgId">
+	        NULL,
+            </isNull>
+            <isNotNull property="orgId">			
+	        #orgId#,
+            </isNotNull>
+            #isExternal#
+		)
+	</insert>
+	
+	<insert id="insertMemberLogin" parameterClass="map">
+		INSERT INTO SNCOMM.MEMBERLOGIN ( MEMBER_UUID, LOGINNAME, LOWER_LOGIN ) 
+		VALUES ( 
+		    #memberUuid#, 
+            <isNull property="loginName">
+			NULL,
+			NULL
+            </isNull>
+            <isNotNull property="loginName">
+			#loginName#,
+               <isEqual property="DBTYPE" compareValue="DB2">
+	        LOWER( CAST ( #loginName# AS VARCHAR(256) ) )
+               </isEqual>							
+               <!-- Change by Connections for IBM i team. -->
+               <isEqual property="DBTYPE" compareValue="AS400">
+	        LOWER( CAST ( #loginName# AS VARCHAR(256) ) )
+               </isEqual>									
+               <isNotEqual property="DBTYPE" compareValue="DB2">
+                   <isNotEqual property="DBTYPE" compareValue="AS400">
+	        LOWER( #loginName# )
+                   </isNotEqual>
+               </isNotEqual>
+           </isNotNull>				
+		)
+	</insert>
+</sqlMap>

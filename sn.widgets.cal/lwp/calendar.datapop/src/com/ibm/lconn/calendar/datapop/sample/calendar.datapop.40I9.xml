@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011                                          -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<foreach id="main-loop" input="file('membership','${datasource}')" var="communityUuid">
+	<log file="${logger}" />
+	
+	<context name="owners" value="{communityUuid}|1" />
+	<context name="members" value="{communityUuid}|0" />
+	
+	<context name="event-title" value="{random(text,5,250,29.0,16.0,1.0)}" expand="false" />
+	<context name="event-content" value="{random(text,500,10000,1000.0,200.0,1.0)}" expand="false" />
+	<context name="event-location" value="{random(text,5,50,10.0,10.0,1.0)}" expand="false" />
+	
+	<context name="comment-content" value="{random(text,50,200,100.0,30.0,1.0)}" expand="false" />
+	
+	<context name="weekdays" value="list(['SU','MO','TU','WE','TH','FR','SA'])" />
+	
+	<context name="1_year" value="525600" /> <!-- 365 * 24 * 60 -->
+	<context name="24_hours" value="1440" /> <!-- 24 * 60 -->
+	<context name="10_mins" value="10" /> 
+	
+	<context name="__random__" input="range[0-${tagpool.size})" selector="random(1)" /> 
+	
+	<!-- add events widget for 80% community, which is configurable through the 'probability'property (default value: ${add-widget.percentage}) -->
+	<task id="add-widget" request="community.events.widget.add">
+		<context name="authors" value="{owners};{members}" />
+		
+		<login input="file('membership','${datasource}',[{owners}])" selector="random(1)" />
+		<input name="communityUuid" value="{communityUuid}" />
+		
+		<!-- select some community, set events rolemapping to READER -->
+		<!-- 30% of the communities (with events widget) will be selected, which is configurable through the 'probability' property (default value: ${update-widget-rolemapping.percentage}) -->
+		<task id="update-widget-rolemapping" request="community.events.preferences.update">
+			<input name="calendarUuid" value="{communityUuid}" />
+			<input name="members_Role" value="reader" />
+			
+			<context name="authors" value="{owners}" scope="add-widget" />
+		</task>
+		
+		<!-- populate events (normal events, single day) -->
+		<!-- create 50 to 100 normal events each community, which is configurable through the 'input' property -->
+		<repeat input="range[${event.per-community}]" selector="random(1)">
+			<task id="single-event" request="community.events.event.entry.create" output="event">
+				<login input="file('membership','${datasource}',[{authors}])" selector="random(1)" />
+				
+				<!-- generate a random time, from 'now' to within one year -->
+				<!-- this time will be used as the start time of the event -->
+				<context name="_time_" input="range[{now()},${event.startdate.range}]" selector="random(1)" />
+				
+				<!-- event attributes -->
+				<!-- here 'title', 'tags', 'content' and 'location' are generated as random string, whose length match the normal distribution -->
+				<!-- each event will have 0 - 3 tags -->
+				<!-- some of the events will be set as 'allday' events, < ~5% -->
+				<input name="calendarUuid" value="{communityUuid}" />
+				<input name="title" value="{event-title}" />
+				<input name="tags" input="file('plain','${tagpool}')" selector="gaussian(0-3,{__random__},${event-tag.distribution.delta})" />
+				<input name="content" value="{event-content}" />
+				<input name="location" value="{event-location}" />
+				<input name="allday" input="list([0,1])" selector="random(1, [0.95, 0.05])" />
+				
+				<!-- use the random time generated above as the start time, 
+				     and end time is a random time within 24 hours after start time,
+				     event duration is at least 10 minutes -->
+				<input name="startDate" value="{_time_}" type="iso8601-date" />
+				<input name="endDate" input="range({_time_},{24_hours}|{10_mins})" selector="random(1)" type="iso8601-date" />
+				
+				<input name="atomid.prefix" value="urn:lsid:ibm.com:calendar:event:" />
+				
+				<!-- create comment for this event, 30% probability, configurable through the 'probability' property (Default value: ${comment.percentage}) -->
+				<repeat id="add-comment" input="range[${comment.per-event}]" selector="random(1)">
+					<task id="comment" request="community.events.event.comment.create">
+						<login input="file('membership','${datasource}',[{owners};{members}])" selector="random(1)" />
+						
+						<input name="eventUuid" value="{event.eventUuid}" />
+						<input name="content" value="{comment-content}" />
+					</task>
+				</repeat>
+			</task>
+		</repeat>
+		
+		<!-- populate repeat events -->
+		<!-- create 20 to 40 repeating events each community, which is configurable through the 'input' property -->
+		<repeat input="range[${repeat-event.per-community}]" selector="random(1)">
+			
+			<!-- repeat event by week, 80% probability, configurable through the 'probability' property (Default value: ${repeat-event.byweek.percentage}) -->
+			<task id="repeat-event.byweek" request="community.events.series.entry.create" output="event">
+				<login input="file('membership','${datasource}',[{authors}])" selector="random(1)" />
+				
+				<!-- generate a random time, from 'now' to within one year -->
+				<!-- this time will be used as the start time of the event -->
+				<context name="_time_" input="range[{now()},${event.startdate.range}]" selector="random(1)" />
+				
+				<!-- event attributes -->
+				
+				<!-- here 'title', 'tags', 'content' and 'location' are generated as random string, whose length match the normal distribution -->
+				<!-- each event will have 0 - 3 tags -->
+				<!-- some of the events will be set as 'allday' events, < 1% -->
+				<input name="calendarUuid" value="{communityUuid}" />
+				<input name="title" value="{event-title}" />
+				<input name="tags" input="file('plain','${tagpool}')" selector="gaussian(0-3,{__random__},${event-tag.distribution.delta})" />
+				<input name="content" value="{event-content}" />
+				<input name="location" value="{event-location}" />
+				<input name="allday" input="list([0,1])" selector="random(1, [0.99, 0.01])" />
+				
+				<!-- use the random time generated above as the start time, 
+				     and end time is a random time within 24 hours after start time,
+				     event duration is at least 10 minutes -->
+				<input name="startDate" value="{_time_}" type="iso8601-date" />
+				<input name="endDate" input="range({_time_},{24_hours}|{10_mins})" selector="random(1)" type="iso8601-date" />
+				
+				<!-- 'frequency' is always set to "WEEKLY", as we are creating 'repeat-by-week' events -->
+				<!-- 'interval' is 1 or 2, selected by random -->
+				<!-- 'byDay' attribute is selected by random, 1 - 3 days per week -->
+				<input name="frequency" value="WEEKLY" />
+				<input name="interval" input="list([1,2])" selector="random(1)" />
+				<input name="byDay" input="{weekdays}" selector="random(1-3)" />
+				
+				<!-- 
+				     'repeatUntil' attribute: 
+				         * it is a value within 1 year from the event start time 
+				         * the value is selected according to normal distribution, >~70% probability is around 2 - 4 months from the event start time
+				 -->
+				<input name="repeatUntil" input="range({_time_},{1_year})" selector="gaussian(1,0.25,0.08)" type="iso8601-date" />
+				
+				<input name="atomid.prefix" value="urn:lsid:ibm.com:calendar:event:" />
+				
+				<!-- update some event instances by random, e.g. generate some exception event instances -->
+				<task request="community.events.series.instances.list" output="event.instances">
+					<input name="eventUuid" value="{event.eventUuid}" />
+					
+					<foreach input="list(event.instances.startDate)" var="instanceDate">
+						<!-- 30% instances of the event will be updated, configurable through the 'probability' property (Default value: ${repeat-event-byweek.exception.percentage}) -->
+						<task id="repeat-event-byweek.exception" request="community.events.series.entry.instance.update">
+							<input name="eventUuid" value="{event.eventUuid}" />
+							<input name="instanceDate" value="{instanceDate}" />
+							<input name="content" value="{event-content}" />
+							<input name="location" value="{event-location}" />
+						</task>
+					</foreach>
+				</task>
+				
+				
+				<!-- delete some event instances by random, e.g. generate some exception event instances (cancel) -->
+				<task request="community.events.series.instances.list" output="event.instances">
+					<input name="eventUuid" value="{event.eventUuid}" />
+					
+					<foreach input="list(event.instances.startDate)" var="instanceDate">
+						<!-- 10% instances of the event will be canceled, configurable through the 'probability' property (Default value: ${repeat-event-byweek.cancel.percentage}) -->
+						<task id="repeat-event-byweek.cancel" request="community.events.series.entry.instance.delete">
+							<input name="eventUuid" value="{event.eventUuid}" />
+							<input name="instanceDate" value="{instanceDate}" />
+						</task>
+					</foreach>
+				</task>
+				
+				<!-- create comment for this event, 30% probability, configurable through the 'probability' property (Default value: ${comment.percentage}) -->
+				<repeat id="add-comment" input="range[${comment.per-event}]" selector="random(1)">
+					<task id="comment" request="community.events.event.comment.create">
+						<login input="file('membership','${datasource}',[{owners};{members}])" selector="random(1)" />
+						
+						<input name="eventUuid" value="{event.eventUuid}" />
+						<input name="content" value="{comment-content}" />
+					</task>
+				</repeat>
+			</task>
+			
+			<!-- repeat event by day, 20% probability, configurable through the 'probability' property (Default value: ${repeat-event.byday.percentage}) -->
+			<task id="repeat-event.byday" request="community.events.series.entry.create" output="event">
+				<login input="file('membership','${datasource}',[{authors}])" selector="random(1)" />
+				
+				<!-- generate a random time, from 'now' to within one year -->
+				<!-- this time will be used as the start time of the event -->
+				<context name="_time_" input="range[{now()},${event.startdate.range}]" selector="random(1)" />
+				
+				<!-- event attributes -->
+				
+				<!-- here 'title', 'content' and 'location' are generated as random string, whose length match the normal distribution -->
+				<!-- some of the events will be set as 'allday' events, < 1% -->
+				<input name="calendarUuid" value="{communityUuid}" />
+				<input name="title" value="{event-title}" />
+				<input name="content" value="{event-content}" />
+				<input name="location" value="{event-location}" />
+				<input name="allday" input="list([0,1])" selector="random(1, [0.99, 0.01])" />
+				
+				<!-- use the random time generated above as the start time, 
+				     and end time is a random time within 24 hours after start time,
+				     event duration is at least 10 minutes -->
+				<input name="startDate" value="{_time_}" type="iso8601-date" />
+				<input name="endDate" input="range({_time_},{24_hours}|{10_mins})" selector="random(1)" type="iso8601-date" />
+				
+				<!-- frequency is always set to "DAILY", as we are creating 'repeat-by-day' events -->
+				<!-- 'byDay' attribute is selected by random, 5 - 7 days of a week -->
+				<!-- 
+				     'repeatUntil' attribute: 
+				         * it is a value within 1 year from the event start time 
+				         * the value is selected according to normal distribution, >~70% probability is around 5 - 9 days from the event start time
+				 -->
+				<input name="frequency" value="DAILY" />
+				<input name="byDay" input="{weekdays}" selector="random(5-7)" />
+				<input name="repeatUntil" input="range({_time_},{1_year})" selector="gaussian(1,0.02,0.00548)" type="iso8601-date" />
+				
+				<input name="atomid.prefix" value="urn:lsid:ibm.com:calendar:event:" />
+				
+				<!-- update some event instances by random, e.g. generate some exception event instances -->
+				<task request="community.events.series.instances.list" output="event.instances">
+					<input name="eventUuid" value="{event.eventUuid}" />
+				
+					<foreach input="list(event.instances.startDate)" var="instanceDate">
+						<!-- 50% instances of the event will be updated, configurable through the 'probability' property (Default value: ${repeat-event-byday.exception.percentage}) -->
+						<task id="repeat-event-byday.exception" request="community.events.series.entry.instance.update">
+							<input name="eventUuid" value="{event.eventUuid}" />
+							<input name="instanceDate" value="{instanceDate}" />
+							<input name="content" value="{event-content}" />
+							<input name="location" value="{event-location}" />
+						</task>
+					</foreach>
+				</task>
+				
+				<!-- delete some event instances by random, e.g. generate some exception event instances (cancel) -->
+				<task request="community.events.series.instances.list" output="event.instances">
+					<input name="eventUuid" value="{event.eventUuid}" />
+				
+					<foreach input="list(event.instances.startDate)" var="instanceDate">
+						<!-- 5% instances of the event will be canceled, configurable through the 'probability' property (Default value: ${repeat-event-byday.cancel.percentage})-->
+						<task id="repeat-event-byday.cancel" request="community.events.series.entry.instance.delete">
+							<input name="eventUuid" value="{event.eventUuid}" />
+							<input name="instanceDate" value="{instanceDate}" />
+						</task>
+					</foreach>
+				</task>
+				
+				<!-- create comment for this event, 30% probability, configurable through the 'probability' property (Default value: ${comment.percentage}) -->
+				<repeat id="add-comment" input="range[${comment.per-event}]" selector="random(1)">
+					<task id="comment" request="community.events.event.comment.create">
+						<login input="file('membership','${datasource}',[{owners};{members}])" selector="random(1)" />
+						
+						<input name="eventUuid" value="{event.eventUuid}" />
+						<input name="content" value="{comment-content}" />
+					</task>
+				</repeat>
+			</task>
+		</repeat>
+	</task>
+</foreach>

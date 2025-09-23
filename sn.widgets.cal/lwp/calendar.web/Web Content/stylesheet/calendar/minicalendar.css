@@ -1,0 +1,52 @@
+/* ***************************************************************** */
+/*                                                                   */
+/* IBM Confidential                                                  */
+/*                                                                   */
+/* OCO Source Materials                                              */
+/*                                                                   */
+/* Copyright IBM Corp. 2011, 2017                                    */
+/*                                                                   */
+/* The source code for this program is not published or otherwise    */
+/* divested of its trade secrets, irrespective of what has been      */
+/* deposited with the U.S. Copyright Office.                         */
+/*                                                                   */
+/* ***************************************************************** */
+
+/* mini calendar theme, these are pulled from
+	allstyle.css on the homepage*/
+
+.previousMonthText, .nextMonthText {
+	display: none;
+}
+
+.datePickerContainer { border: none; }
+
+.datePickerContainer table {
+	width: 100%;
+}
+
+.eventsDiv {
+	padding: 5px 0px 0px 0px;
+}
+
+.eventDiv {
+	margin-bottom: 4px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.communities-widget-appearance .eventDiv:not(:last-child) {
+	padding: 0 0 26px;
+	margin: 0;
+}
+
+.oneDayCalendarIcon {
+    background-image: url(../../javascript/dwa/common/images/basicicons.gif);
+	background-repeat: no-repeat;
+	display: inline-block;
+	width:24px;
+	height:25px;
+	background-position: -105px -85px
+}
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2016                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<messagebundle>
+  <msg name="title_number_events_to_show">표시할 이벤트 수:</msg> 
+  <msg name="title_type_all">관심 대상으로 등록했거나 참여하는 모든 이벤트</msg> 
+  <msg name="title_type_attend">참여하는 이벤트</msg> 
+  <msg name="title_type_follow">관심 대상으로 등록한 이벤트</msg> 
+  <msg name="title_show">표시:</msg> 
+  <msg name="title">커뮤니티 이벤트</msg> 
+  <msg name="decription">관심 대상으로 등록했거나 참여한다고 표시한 이벤트가 표시됩니다.</msg> 
+</messagebundle> 

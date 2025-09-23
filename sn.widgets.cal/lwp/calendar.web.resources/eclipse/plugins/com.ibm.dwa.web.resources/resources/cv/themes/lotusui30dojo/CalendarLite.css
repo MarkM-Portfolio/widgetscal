@@ -1,0 +1,53 @@
+/* ***************************************************************** */
+/*                                                                   */
+/* IBM Confidential                                                  */
+/*                                                                   */
+/* OCO Source Materials                                              */
+/*                                                                   */
+/* Copyright IBM Corp. 2012, 2013                                    */
+/*                                                                   */
+/* The source code for this program is not published or otherwise    */
+/* divested of its trade secrets, irrespective of what has been      */
+/* deposited with the U.S. Copyright Office.                         */
+/*                                                                   */
+/* ***************************************************************** */
+
+.lotusui30dojo .dijitCalendar .dijitCalendarYearLabel {
+	text-align: left;
+	padding: 10px 10px 0 10px;
+}
+
+.lotusui30dojo .dijitCalendar .dijitCalendarYearLabel .dijitCalendarTodayButton {
+	font-size: 0.9em;
+	font-weight: bold;
+	color: #333333;
+	border: none;
+	background-color: #e7e7e7;
+	background: -moz-linear-gradient(top, #ededed 0%, #e1e1e1 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ededed), color-stop(100%, #e1e1e1));
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+	float: left;
+	padding: 0px 5px;
+	margin-bottom: 10px;
+	outline-width: 0;
+	cursor: pointer;
+}
+
+.lotusui30dojo .dijitCalendar .dijitCalendarYearLabel .dijitCalendarTodayText {
+	float: right;
+	margin-bottom: 10px;
+}
+
+.dj_gecko .lotusui30dojo .dwaCalendarFocusedDate {
+	outline-width: 0px;
+	border: 1px dotted gray;
+	padding: 0 !important;
+}
+
+.dj_gecko .lotusui30dojo .dijitCalendarEnabledDate {
+	padding: 1px;
+}

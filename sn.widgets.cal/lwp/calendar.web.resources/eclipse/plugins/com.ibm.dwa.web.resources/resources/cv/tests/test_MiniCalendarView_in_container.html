@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012                                          -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+	<head>
+		<title>miniCalendarView in BorderContainer Test</title>
+		<style type="text/css">
+			@import "../../themes/dwa.css";	
+			@import "../../themes/dijit-lite.css";
+			@import "../../../dijit/themes/tundra/tundra.css";
+			@import "../themes/lotusui30dojo/calendarView.css";
+			@import "../themes/lotusui30dojo/miniCalendarView.css";
+			@import "../../date/themes/lotusui30dojo/datepick.css";
+			@import "../../common/themes/lotusui30dojo/menu.css";
+		</style>
+		<style>
+			html, body {
+			    width: 100%;
+			    height: 100%;
+			    padding: 0px;
+			    margin: 0px;
+			    overflow: hidden;
+			}
+		</style>
+		<script language="JavaScript" type="text/javascript">
+			var djConfig = {
+				parseOnLoad: true,
+				isDebug: false,
+				packages: [{name: 'dwa', location: '../dwa'}]
+			};
+		</script>
+		<script type="text/javascript" src="../../../dojo/dojo.js">
+		</script>
+		<script type="text/javascript">
+			dojo.require("dojo.parser");
+			dojo.require("dijit.layout.BorderContainer");
+			dojo.require("dijit.layout.ContentPane");
+			dojo.require("dijit.layout.AccordionContainer");
+			dojo.require("dwa.cv.calendarView");
+			dojo.require("dwa.cv.miniCalendarView");
+			dojo.require("dwa.data.NotesCalendarStore");
+			dojo.require("dwa.data.iCalReadStore");
+			
+			dojo.addOnLoad(function() {
+				dojo.doc.title = dojo.doc.title + " (" + dojo.doc.compatMode + ")";
+			});
+		</script>
+	</head>
+	<body class="dwa hannover tundra">
+		<div dojoType="dwa.data.iCalReadStore" jsId="iCalStore1" url="data/basic.ics" fontColorMeeting="395D94" bgColorMeeting="FF82BD" borderColorMeeting="5495D5">
+		</div>
+		<div dojoType="dwa.data.iCalReadStore" jsId="iCalStore2" url="data/basic.ics" fontColorMeeting="395D94" bgColorMeeting="FF82BD" borderColorMeeting="5495D5">
+		</div>
+		<div dojoType="dijit.layout.BorderContainer" persist="false" style="height: 100%; width: 100%">
+			<div id="p2" dojoType="dijit.layout.ContentPane" style="width:75%;" region="left" splitter="true">
+				<div dojoType="dwa.cv.calendarView" jsId="calendarView" date="2009/4/15" store="iCalStore1">
+				</div>
+			</div>
+			<div dojoType="dijit.layout.AccordionContainer" style="width: 100%; height: 100%; overflow: hidden;" region="center">
+				<div dojoType="dijit.layout.AccordionPane" selected="true" title="miniCalendarView">
+					<div dojoType="dwa.cv.miniCalendarView" jsId="miniCalendarView" date="2009/4/15" store="iCalStore2">
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2015                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<Module>
+	<ModulePrefs title="__MSG_title__"
+		description="__MSG_description__" width="100%">
+		<Require feature="opensocial-0.9"/>
+		<Require feature="opensocial-data" />
+		<Require feature="opensocial-templates">
+           <Param name="requireLibrary">../com.ibm.social.gadget/loader/ResourceLoaderTemplate.xml</Param>
+        </Require>
+		<Require feature="osapi" />
+		<Require feature="embedded-experiences" />
+		<Require feature="views"/>	
+		<Require feature="open-views"/>			
+		<Require feature="dynamic-width"/>		
+		<Require feature="dynamic-height"/>		
+		<Require feature="settitle"/>	
+		<Optional feature="sso-domain" /> 	
+		<Optional feature="com.ibm.connections.theme"/>
+		<Optional feature="smartcloud3"/>
+		<Link rel="ibm.connections.help" href="endpoint://help/topic/com.ibm.lotus.connections.homepage.help/t_hp_using_events_widget.html" />
+      	<Locale messages="./CalendarData/nls/calendarGadgets_ALL_ALL.xml"/>
+      	<Locale lang="ar" messages="./CalendarData/nls/calendarGadgets_ar_ALL.xml" language_direction="rtl"/> 
+      	<Locale lang="" country="ar" messages="./CalendarData/nls/calendarGadgets_ar_ALL.xml" language_direction="rtl"/>     
+      	<Locale lang="en" messages="./CalendarData/nls/calendarGadgets_en_ALL.xml"/>
+      	<Locale lang="" country="en" messages="./CalendarData/nls/calendarGadgets_en_ALL.xml"/>
+      	<Locale lang="ca" messages="./CalendarData/nls/calendarGadgets_ca_ALL.xml"/>
+      	<Locale lang="" country="ca" messages="./CalendarData/nls/calendarGadgets_ca_ALL.xml"/>
+      	<Locale lang="cs" messages="./CalendarData/nls/calendarGadgets_cs_ALL.xml"/>
+      	<Locale lang="" country="cs" messages="./CalendarData/nls/calendarGadgets_cs_ALL.xml"/>
+      	<Locale lang="da" messages="./CalendarData/nls/calendarGadgets_da_ALL.xml"/>
+      	<Locale lang="" country="da" messages="./CalendarData/nls/calendarGadgets_da_ALL.xml"/>
+      	<Locale lang="de" messages="./CalendarData/nls/calendarGadgets_de_ALL.xml"/>
+      	<Locale lang="" country="de" messages="./CalendarData/nls/calendarGadgets_de_ALL.xml"/>
+      	<Locale lang="el" messages="./CalendarData/nls/calendarGadgets_el_ALL.xml"/>
+      	<Locale lang="" country="el" messages="./CalendarData/nls/calendarGadgets_el_ALL.xml"/>
+      	<Locale lang="es" messages="./CalendarData/nls/calendarGadgets_es_ALL.xml"/>
+      	<Locale lang="" country="es" messages="./CalendarData/nls/calendarGadgets_es_ALL.xml"/>
+      	<Locale lang="fi" messages="./CalendarData/nls/calendarGadgets_fi_ALL.xml"/>
+      	<Locale lang="" country="fi" messages="./CalendarData/nls/calendarGadgets_fi_ALL.xml"/>
+      	<Locale lang="fr" messages="./CalendarData/nls/calendarGadgets_fr_ALL.xml"/>
+      	<Locale lang="" country="fr" messages="./CalendarData/nls/calendarGadgets_fr_ALL.xml"/>
+      	<Locale lang="hu" messages="./CalendarData/nls/calendarGadgets_hu_ALL.xml"/>
+      	<Locale lang="" country="hu" messages="./CalendarData/nls/calendarGadgets_hu_ALL.xml"/>
+      	<Locale lang="it" messages="./CalendarData/nls/calendarGadgets_it_ALL.xml"/>
+      	<Locale lang="" country="it" messages="./CalendarData/nls/calendarGadgets_it_ALL.xml"/>
+      	<Locale lang="ja" messages="./CalendarData/nls/calendarGadgets_ja_ALL.xml"/>
+      	<Locale lang="" country="ja" messages="./CalendarData/nls/calendarGadgets_ja_ALL.xml"/>
+      	<Locale lang="kk" messages="./CalendarData/nls/calendarGadgets_kk_ALL.xml"/>
+      	<Locale lang="" country="kk" messages="./CalendarData/nls/calendarGadgets_kk_ALL.xml"/>
+      	<Locale lang="ko" messages="./CalendarData/nls/calendarGadgets_ko_ALL.xml"/>
+      	<Locale lang="" country="ko" messages="./CalendarData/nls/calendarGadgets_ko_ALL.xml"/>
+      	<Locale lang="nl" messages="./CalendarData/nls/calendarGadgets_nl_ALL.xml"/>
+      	<Locale lang="" country="nl" messages="./CalendarData/nls/calendarGadgets_nl_ALL.xml"/>
+      	<Locale lang="no" messages="./CalendarData/nls/calendarGadgets_no_ALL.xml"/>
+      	<Locale lang="" country="no" messages="./CalendarData/nls/calendarGadgets_no_ALL.xml"/>
+      	<Locale lang="nb" messages="./CalendarData/nls/calendarGadgets_no_ALL.xml"/>
+      	<Locale lang="nn" messages="./CalendarData/nls/calendarGadgets_no_ALL.xml"/>
+      	<Locale lang="pl" messages="./CalendarData/nls/calendarGadgets_pl_ALL.xml"/>
+      	<Locale lang="" country="pl" messages="./CalendarData/nls/calendarGadgets_pl_ALL.xml"/>
+      	<Locale lang="pt" messages="./CalendarData/nls/calendarGadgets_pt_ALL.xml"/>
+      	<Locale lang="" country="pt" messages="./CalendarData/nls/calendarGadgets_pt_ALL.xml"/>
+      	<Locale lang="pt" country="PT" messages="./CalendarData/nls/calendarGadgets_pt_ALL.xml"/>
+      	<Locale lang="pt" country="pt" messages="./CalendarData/nls/calendarGadgets_pt_ALL.xml"/>
+      	<Locale lang="pt" country="BR" messages="./CalendarData/nls/calendarGadgets_pt_BR_ALL.xml"/>
+      	<Locale lang="pt" country="br" messages="./CalendarData/nls/calendarGadgets_pt_BR_ALL.xml"/>
+      	<Locale lang="ru" messages="./CalendarData/nls/calendarGadgets_ru_ALL.xml"/>
+      	<Locale lang="" country="ru" messages="./CalendarData/nls/calendarGadgets_ru_ALL.xml"/>
+      	<Locale lang="sl" messages="./CalendarData/nls/calendarGadgets_sl_ALL.xml"/>
+      	<Locale lang="" country="sl" messages="./CalendarData/nls/calendarGadgets_sl_ALL.xml"/>
+      	<Locale lang="sv" messages="./CalendarData/nls/calendarGadgets_sv_ALL.xml"/>
+      	<Locale lang="" country="sv" messages="./CalendarData/nls/calendarGadgets_sv_ALL.xml"/>
+      	<Locale lang="th" messages="./CalendarData/nls/calendarGadgets_th_ALL.xml"/>
+      	<Locale lang="" country="th" messages="./CalendarData/nls/calendarGadgets_th_ALL.xml"/>
+      	<Locale lang="tr" messages="./CalendarData/nls/calendarGadgets_tr_ALL.xml"/>
+      	<Locale lang="" country="tr" messages="./CalendarData/nls/calendarGadgets_tr_ALL.xml"/>
+      	<Locale lang="zh" messages="./CalendarData/nls/calendarGadgets_zh_ALL.xml"/>
+      	<Locale lang="" country="zh" messages="./CalendarData/nls/calendarGadgets_zh_ALL.xml"/>
+      	<Locale lang="zh" country="TW" messages="./CalendarData/nls/calendarGadgets_zh_TW_ALL.xml"/>
+      	<Locale lang="zh" country="tw" messages="./CalendarData/nls/calendarGadgets_zh_TW_ALL.xml"/>
+      	<Locale lang="zh" country="HK" messages="./CalendarData/nls/calendarGadgets_zh_TW_ALL.xml"/>
+      	<Locale lang="zh" country="hk" messages="./CalendarData/nls/calendarGadgets_zh_TW_ALL.xml"/>
+      	<Locale lang="zh" country="MO" messages="./CalendarData/nls/calendarGadgets_zh_TW_ALL.xml"/>
+      	<Locale lang="zh" country="mo" messages="./CalendarData/nls/calendarGadgets_zh_TW_ALL.xml"/>
+      	<Locale lang="iw" messages="./CalendarData/nls/calendarGadgets_iw_ALL.xml" language_direction="rtl"/>
+      	<Locale lang="" country="he" messages="./CalendarData/nls/calendarGadgets_iw_ALL.xml" language_direction="rtl"/>    
+      	<Locale lang="he" messages="./CalendarData/nls/calendarGadgets_iw_ALL.xml" language_direction="rtl"/>      
+	</ModulePrefs>	
+	<UserPref name="ps" display_name="__MSG_title_number_events_to_show__"
+		default_value="5" datatype="enum">
+		<EnumValue value="1" display_value="1" />
+		<EnumValue value="2" display_value="2" />
+		<EnumValue value="3" display_value="3" />
+		<EnumValue value="4" display_value="4" />
+		<EnumValue value="5" display_value="5" />
+		<EnumValue value="6" display_value="6" />
+		<EnumValue value="7" display_value="7" />
+		<EnumValue value="8" display_value="8" />
+		<EnumValue value="9" display_value="9" />
+		<EnumValue value="10" display_value="10" />
+	</UserPref>
+	<UserPref name="type" display_name="__MSG_title_show__"
+		default_value="all" datatype="enum">
+		<EnumValue value="all" display_value="__MSG_title_type_all__" />
+		<EnumValue value="attend" display_value="__MSG_title_type_attend__" />
+		<EnumValue value="follow" display_value="__MSG_title_type_follow__" />
+	</UserPref>
+	<Content view="default" type="html">
+	  <![CDATA[
+      <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">   
+
+      <!--[if IE 6]><script type="text/javascript">document.getElementsByTagName("html")[0].className+=" lotusui_ie lotusui_ie6";</script><![endif]-->
+      <!--[if IE 7]><script type="text/javascript">document.getElementsByTagName("html")[0].className+=" lotusui_ie lotusui_ie7";</script><![endif]-->
+      <!--[if IE 8]><script type="text/javascript">document.getElementsByTagName("html")[0].className+=" lotusui_ie lotusui_ie8";</script><![endif]-->
+      <!--[if IE 9]><script type="text/javascript">document.getElementsByTagName("html")[0].className+=" lotusui_ie lotusui_ie9";</script><![endif]-->
+	  
+	  <script type="text/os-data" xmlns:os="http://ns.opensocial.org/2008/markup">
+        <os:HttpRequest key="versionStamp" method="GET" href="../../ic/forms/api/version/versionStamp"/>
+	  </script>
+	  
+	  <script type="text/os-data" xmlns:os="http://ns.opensocial.org/2008/markup">
+         <os:HttpRequest key="icResourceData" method="GET" href="../../ic/forms/api/resloader/CalendarGadget"/>
+      </script>
+	  
+	  <script type="text/os-template" xmlns:lconn="http://www.ibm.com/ibm/connections" >
+         <lconn:importResources/>
+      </script>  
+	  
+	  <div id="gadgetDiv">
+			<div class="lotusContent" style="border-style:none;margin-left:25px">
+				<div style="text-align: center;" id="gadgetLoading">
+				</div>
+				<div id="gadgetBody" style="display:none">
+					<div id="__gadgetBody__placeholder"></div>
+				</div>
+			</div>
+	  </div> 
+
+      <!-- Initialize the gadget -->
+      <script type="text/javascript">
+      	 function getGadgetContext() {
+            var baseUrl = window.location.href;		
+            
+			var gadgetUrlRE = /[?&]url=([^&]+)/;
+			var hostInfoRE = /http(s)?:\/\/([^\/]+)([^?]+)/;
+			var gadgetUrl = decodeURIComponent(baseUrl.match(gadgetUrlRE)[1]);
+			var hostInfo = gadgetUrl.match(hostInfoRE);	
+			var gadgetPath = "/web/lconn.calendar/CalendarGadget.xml";
+			
+			var baseProtocol = hostInfo[1] ? "https" : "http";			
+			var baseHost = hostInfo[2];
+			var basePath = hostInfo[3].substring(0, hostInfo[3].lastIndexOf(gadgetPath));
+			
+			var langInfoRE = /[?&]lang=([^&]+)/;
+			var countryInfoRE = /[?&]country=([^&]+)/;
+			var lang = '', country = '';
+			try {
+			    lang = baseUrl.match(langInfoRE)[1];
+			}catch(err){}
+			try {
+			    country = baseUrl.match(countryInfoRE)[1];
+			    country = country.toLowerCase();
+			}catch(err){}
+			
+			if(lang == '' && country == '') {
+			    var prefs = new gadgets.Prefs();
+			    lang = prefs.getLang();
+			    country = prefs.getCountry();
+			} 
+			if(lang == '') {
+		        lang = country;
+		        country = '';
+		    }
+			
+			// normalize lang/locale
+			var t = {
+			   'he_': ['iw', ''],
+			   'iw_il': ['iw', ''],
+			   'nb_': ['nb', ''],
+			   'nb_no': ['nb', ''],
+			   'nn_': ['nb', ''],
+			   'nn_no': ['nb', ''],
+			   'pt_pt': ['pt', ''],
+			   'zh_hk': ['zh', 'tw'],
+			   'zh_mo': ['zh', 'tw']
+			}[lang + '_' + country];
+			if(typeof t != 'undefined') {
+			   lang = t[0];
+			   country = t[1];
+			}
+			
+			// dojo locale
+			var dojoLocale = lang;
+			if(country != '') {
+			   dojoLocale = lang + '-' + country;
+			}
+			var t = {
+			   'iw': 'he',
+			   'pt': 'pt-pt'
+			}[dojoLocale];
+			if(typeof t != 'undefined') {
+			   dojoLocale = t;
+			}
+			
+			return {
+				baseProtocol: baseProtocol,
+				baseHost: baseHost,
+				basePath: basePath,
+				lang: lang,
+				country: country,
+				dojoLocale: dojoLocale,
+				versionStamp: opensocial.data.getDataContext().getDataSet("versionStamp").content.versionStamp,
+				rtl: (lang == 'iw' || lang == 'ar')
+			};
+         }
+         
+         function onLoadCalendarGadget() {
+            try {
+         	    var ctx = getGadgetContext();
+         	    
+         	    window.djConfig = {
+			        baseUrl: (ctx.baseProtocol + "://" + ctx.baseHost) + ctx.basePath + "/web/dojo/",
+			        locale: ctx.dojoLocale,
+			        blankGif: ctx.baseProtocol + "://" + ctx.baseHost + ctx.basePath + "/web/com.ibm.oneui.styles/css/images/blank.gif?etag=" + ctx.versionStamp,
+			        usePlainJson: true,
+			        localizationComplete: true,
+			        isSecure: (ctx.baseProtocol == "https")
+			    };
+			
+			    window.dojoLocale = ctx.dojoLocale;
+         
+			    document.getElementById('gadgetLoading').innerHTML = 
+						'<img src="' + ctx.baseProtocol + '://' + ctx.baseHost + ctx.basePath + '/web/com.ibm.lconn.core.styles.oneui3/images/loading.gif?etag=' + ctx.versionStamp + '" />';
+				gadgets.window.adjustHeight();
+			 
+				dojo.addClass(dojo.body(), "lotusui lotusui30 lotusui30_fonts lotusui30_layout lotusui30_body lotusui30dojo");
+				var prefs = new gadgets.Prefs();
+				var ps = prefs.getInt("ps"); 
+				var type= prefs.getString("type");
+				
+				var commUrl = lconn.core.config.services.communities.url;
+				var commUrlSSL = lconn.core.config.services.communities.secureUrl;
+				if(!commUrlSSL) commUrlSSL = commUrl;
+				
+				document.body.style.overflow = 'hidden';
+				
+				var store = new lconn.calendar.CalendarStore({
+					followUrl: (ctx.baseProtocol == "https"? commUrlSSL : commUrl)+"/calendar/atom_form/follow",
+					_calendar: {
+						isOwner: false,
+						isMember: false
+					}
+				});
+				var upcomingFollowingList = new lconn.calendar.UpcomingFollowingList({calendar: {
+						store: store,
+						followType: type,
+						ps: ps,
+						rootUrl: (ctx.baseProtocol == "https"? commUrlSSL : commUrl)+"/calendar"
+					},
+					onSizeChange: function(height) {
+						  dojo.byId('gadgetBody').style.display = '';
+						  dojo.byId('gadgetLoading').style.display = 'none';
+						  if(height) {
+							 var gadgetDiv = dojo.body();
+							 var gadgetEndY = dojo.position(gadgetDiv).y + dojo.position(gadgetDiv).h;
+							 if(height > gadgetEndY) {
+								gadgets.window.adjustHeight(dojo.position(gadgetDiv).h + (height- gadgetEndY));
+								return;
+							 }
+						  }
+						  gadgets.window.adjustHeight();
+					},
+					errorHandler: function(){
+						dojo.byId('gadgetBody').style.display = '';
+						dojo.byId('gadgetLoading').style.display = 'none';
+					}
+				},
+				dojo.byId('__gadgetBody__placeholder'));
+			} catch(err) {
+			    console.debug(err);
+			}
+         } 
+
+         gadgets.util.registerOnLoadHandler(function() {
+		    opensocial.data.getDataContext().getDataSet("icResourceData").content.css = [];
+            var initComplete = com.ibm.social.gadget.loader.bootstrap.init();
+         	initComplete.then(onLoadCalendarGadget);
+         }); 
+      </script> 
+      ]]>
+	</Content>
+	<Content view="subscribeICalDialog" type="html">
+	    <![CDATA[
+	    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">   
+
+        <!--[if IE 6]><script type="text/javascript">document.getElementsByTagName("html")[0].className+=" lotusui_ie lotusui_ie6";</script><![endif]-->
+        <!--[if IE 7]><script type="text/javascript">document.getElementsByTagName("html")[0].className+=" lotusui_ie lotusui_ie7";</script><![endif]-->
+        <!--[if IE 8]><script type="text/javascript">document.getElementsByTagName("html")[0].className+=" lotusui_ie lotusui_ie8";</script><![endif]-->
+        <!--[if IE 9]><script type="text/javascript">document.getElementsByTagName("html")[0].className+=" lotusui_ie lotusui_ie9";</script><![endif]-->
+	    
+	    <script type="text/os-data" xmlns:os="http://ns.opensocial.org/2008/markup">
+        	<os:HttpRequest key="versionStamp" method="GET" href="../../ic/forms/api/version/versionStamp"/>
+	  	</script>
+	  	
+	  	<script type="text/os-data" xmlns:os="http://ns.opensocial.org/2008/markup">
+            <os:HttpRequest key="icResourceData" method="GET" href="../../ic/forms/api/resloader/CalendarGadget"/>
+        </script>
+	  
+	    <script type="text/os-template" xmlns:lconn="http://www.ibm.com/ibm/connections" >
+            <lconn:importResources/>
+        </script>  
+	  	
+	    <div class="lconnCalendarGadget">
+		    <div id="dialogContextBox" style="display:none;" class="lotusDialog">
+			    <div class="lotusDialogContent">
+				    <div id="hintLabel" style="font-weight:bold;max-width:700px"></div>
+					<div style="margin-top:5px;max-width:700px">
+					    <a target="_blank" href="" id="feedLink" aria-describedby="hintLabel"></a>
+					</div>
+				</div>
+				<div id="dialogFooter" role="presentation" class="lotusDialogFooter" >
+					<input id="submitButton" type="button" class="lotusFormButton" value="" > 
+				</div>
+			</div>
+		</div>
+		
+	    <script type="text/javascript">
+      	 function getGadgetContext() {
+            var baseUrl = window.location.href;		
+            
+			var gadgetUrlRE = /[?&]url=([^&]+)/;
+			var hostInfoRE = /http(s)?:\/\/([^\/]+)([^?]+)/;
+			var gadgetUrl = decodeURIComponent(baseUrl.match(gadgetUrlRE)[1]);
+			var hostInfo = gadgetUrl.match(hostInfoRE);	
+			var gadgetPath = "/web/lconn.calendar/CalendarGadget.xml";
+			
+			var baseProtocol = hostInfo[1] ? "https" : "http";			
+			var baseHost = hostInfo[2];
+			var basePath = hostInfo[3].substring(0, hostInfo[3].lastIndexOf(gadgetPath));
+			
+			var langInfoRE = /[?&]lang=([^&]+)/;
+			var countryInfoRE = /[?&]country=([^&]+)/;
+			var lang = '', country = '';
+			try {
+			    lang = baseUrl.match(langInfoRE)[1];
+			}catch(err){}
+			try {
+			    country = baseUrl.match(countryInfoRE)[1];
+			    country = country.toLowerCase();
+			}catch(err){}
+			
+			if(lang == '' && country == '') {
+			    var prefs = new gadgets.Prefs();
+			    lang = prefs.getLang();
+			    country = prefs.getCountry();
+			} 
+			if(lang == '') {
+		        lang = country;
+		        country = '';
+		    }
+			
+			// normalize lang/locale
+			var t = {
+			   'he_': ['iw', ''],
+			   'iw_il': ['iw', ''],
+			   'nb_': ['nb', ''],
+			   'nb_no': ['nb', ''],
+			   'nn_': ['nb', ''],
+			   'nn_no': ['nb', ''],
+			   'pt_pt': ['pt', ''],
+			   'zh_hk': ['zh', 'tw'],
+			   'zh_mo': ['zh', 'tw']
+			}[lang + '_' + country];
+			if(typeof t != 'undefined') {
+			   lang = t[0];
+			   country = t[1];
+			}
+			
+			// dojo locale
+			var dojoLocale = lang;
+			if(country != '') {
+			   dojoLocale = lang + '-' + country;
+			}
+			var t = {
+			   'iw': 'he',
+			   'pt': 'pt-pt'
+			}[dojoLocale];
+			if(typeof t != 'undefined') {
+			   dojoLocale = t;
+			}
+			
+			return {
+				baseProtocol: baseProtocol,
+				baseHost: baseHost,
+				basePath: basePath,
+				lang: lang,
+				country: country,
+				dojoLocale: dojoLocale,
+				versionStamp: opensocial.data.getDataContext().getDataSet("versionStamp").content.versionStamp,
+				rtl: (lang == 'iw' || lang == 'ar')
+			};
+         }
+        </script>
+		 
+		<script type="text/javascript">
+	    function onLoadSubscribeICalDialog() {
+	    	var ctx = getGadgetContext();
+	        document.body.className += ' lotusui30_fonts lotusui30_body lotusui lotusui30 lotusui30_layout lotusui30dojo';
+			
+			var params = gadgets.views.getParams();
+			gadgets.window.setTitle(params.title);
+			document.getElementById('hintLabel').innerHTML = params.hint;
+			document.getElementById('feedLink').href = params.url;
+			document.getElementById('feedLink').innerHTML = params.url;
+			document.getElementById('submitButton').value = params.submit;
+			document.getElementById('submitButton').onclick = function(){gadgets.views.close();};
+			
+			document.getElementById('feedLink').onkeydown = function(evt) {
+			    var key;
+			    if(window.event) {
+			    	evt = window.event;
+			    	key = evt.keyCode;
+				}
+				else if(evt.which) {
+				    key = evt.which;
+				}
+				if(key == 9) {
+			        document.getElementById('submitButton').focus();
+			        if(evt.preventDefault)
+			        	evt.preventDefault();
+			        else
+			        	evt.returnValue = false;
+			        if(evt.stopPropagation)
+			        	evt.stopPropagation();
+			        else
+			        	evt.cancelBubble = true;
+			        return false;
+			    }
+			};
+			
+			document.getElementById('submitButton').onkeydown = function(evt) {
+			    var key;
+			    if(window.event) {
+			    	evt = window.event;
+			    	key = evt.keyCode;
+				}
+				else if(evt.which) {
+				    key = evt.which;
+				}
+				if(key == 9) {
+			        document.getElementById('feedLink').focus();
+			        if(evt.preventDefault)
+			        	evt.preventDefault();
+			        else
+			        	evt.returnValue = false;
+			        if(evt.stopPropagation)
+			        	evt.stopPropagation();
+			        else
+			        	evt.cancelBubble = true;
+			        return false;
+			    }
+			};
+			
+			document.onkeydown = function(evt) {
+			    var key;
+			    if(window.event) {
+			    	evt = window.event;
+			    	key = evt.keyCode;
+				}
+				else if(evt.which) {
+				    key = evt.which;
+				}
+				if(key == 27) {
+			        gadgets.views.close();
+			        if(evt.preventDefault)
+			        	evt.preventDefault();
+			        else
+			        	evt.returnValue = false;
+			        if(evt.stopPropagation)
+			        	evt.stopPropagation();
+			        else
+			        	evt.cancelBubble = true;
+			        return false;
+			    }
+			};
+			
+			var contentBox = document.getElementById('dialogContextBox');
+			contentBox.style.display = '';
+			contentBox.onresize= function() { 
+				var contentHeight = 1 + contentBox.scrollHeight;
+	        	gadgets.window.adjustHeight(contentHeight > 150 ? contentHeight: 150);
+			};
+			gadgets.window.adjustWidth(700);
+	        document.getElementById('feedLink').focus();
+		}
+
+		__init_calendarGadget2 = function() {
+		    if (gadgets && gadgets.util) {    	         
+			    gadgets.util.registerOnLoadHandler(function() {
+		    		opensocial.data.getDataContext().getDataSet("icResourceData").content.css = [];
+		            var initComplete = com.ibm.social.gadget.loader.bootstrap.init();
+        		 	initComplete.then(onLoadSubscribeICalDialog);
+		         }); 
+     		} else {
+		     	// retry until gadgets namespace is there 
+     			setTimeout("__init_calendarGadget2();", 50); 
+		     }    
+		}	
+		__init_calendarGadget2();
+		</script>
+		]]>
+	</Content>
+</Module>

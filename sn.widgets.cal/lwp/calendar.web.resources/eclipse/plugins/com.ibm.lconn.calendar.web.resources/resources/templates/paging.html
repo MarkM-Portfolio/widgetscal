@@ -1,0 +1,39 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2015                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<div class="lotusPaging" style="display:none; background: none repeat scroll 0 0 transparent; padding-left: 0; padding-right: 0;">
+	<div dojoAttachPoint="pageInfoAP" class="lotusLeft" style="display:none"></div>
+	<ul dojoAttachPoint="pagePSAP" class="lotusLeft lotusInlinelist" role="toolbar" aria-label="${_lang.PAGING_SHOW}" style="display:none">
+		<li class="lotusFirst">${_lang.PAGING_SHOW}</li>
+		<li class="lotusFirst" dojoAttachPoint="ps10AP"></li>
+		<li dojoAttachPoint="ps20AP"></li>
+		<li dojoAttachPoint="ps50AP"></li>
+		<li class="lotusLast" >${_lang.PAGING_ITEMS}</li>
+	</ul>
+	<ul dojoAttachPoint="pageNavAP" class="lotusRight lotusInlinelist" style="display:none">
+		<li class="lotusFirst" dojoAttachPoint="previousLinkAP" style="display:none;">
+			<a title="${_lang.PAGING_PREVIOUS_TITLE}" aria-label="${_lang.PAGING_PREVIOUS_TITLE}" dojoAttachEvent="onclick:_previous" href="javascript:;">${_lang.PAGING_PREVIOUS}</a>
+		</li>
+		<li class="lotusFirst" dojoAttachPoint="previousTextAP">${_lang.PAGING_PREVIOUS}</li>
+		<li dojoAttachPoint="nextLinkAP" style="display:none;">
+			<a title="${_lang.PAGING_NEXT_TITLE}" aria-label="${_lang.PAGING_NEXT_TITLE}" dojoAttachEvent="onclick:_next" href="javascript:;">${_lang.PAGING_NEXT}</a>
+		</li>
+		<li dojoAttachPoint="nextTextAP">${_lang.PAGING_NEXT}</li>
+	</ul>
+	<div dojoAttachPoint="pageListAP" style="display:none"><ul></ul></div>
+	<div dojoAttachPoint="pageJumpAP" style="display:none">
+		<form dojoAttachPoint="pageJumpFormAP" dojoAttachEvent="onsubmit:_jump" method="get" action="javascript:;" >
+		</form>
+	</div>
+</div>

@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMap namespace="EventFollowing_MT">
+
+	<insert id="insertEventFollowingRecord" parameterClass="DBEventFollowingRecord">
+		INSERT INTO CALENDAR.CA_EVENTFOLLOWING
+			(EVFLW_UUID, CALENDAR_UUID, EVENT_UUID, EVENTITEM_UUID, EVENTITEM_TYPE, ENDDATE, USER_UUID, FOLLOW, MODIFIEDON, ORG_ID)
+		VALUES
+			(#uuid#, #calendarUuid#, #eventUuid#, #itemUuid#, #itemType#, #itemEndDate#, #userUuid#, #followType#, #modifiedOn#, #ORG_ID#)
+	</insert>
+	
+	<select id="selectEventFollowingRecordById" parameterClass="java.util.Map" resultClass="DBEventFollowingRecord">
+		SELECT EVFLW_UUID as uuid, CALENDAR_UUID as calendarUuid, EVENT_UUID as eventUuid, 
+			EVENTITEM_UUID as itemUuid, EVENTITEM_TYPE as itemType, 
+			ENDDATE as itemEndDate, USER_UUID as userUuid,
+			FOLLOW as followType, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTFOLLOWING
+		WHERE EVFLW_UUID = #recordUUID# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<select id="selectEventFollowingRecord" parameterClass="java.util.Map" resultClass="DBEventFollowingRecord">
+		SELECT EVFLW_UUID as uuid, CALENDAR_UUID as calendarUuid, EVENT_UUID as eventUuid, 
+			EVENTITEM_UUID as itemUuid, EVENTITEM_TYPE as itemType, 
+			ENDDATE as itemEndDate, USER_UUID as userUuid,
+			FOLLOW as followType, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTFOLLOWING
+		WHERE EVENTITEM_UUID = #itemUuid# AND EVENTITEM_TYPE = #itemType# AND USER_UUID = #userUuid# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<select id="selectFollowingRecordsOfEvent" parameterClass="java.util.Map" resultClass="DBEventFollowingRecord">
+		SELECT EVFLW_UUID as uuid, CALENDAR_UUID as calendarUuid, EVENT_UUID as eventUuid, 
+			EVENTITEM_UUID as itemUuid, EVENTITEM_TYPE as itemType, 
+			ENDDATE as itemEndDate, USER_UUID as userUuid,
+			FOLLOW as followType, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTFOLLOWING
+		WHERE 
+			(
+				(EVENTITEM_UUID = #eventUuid# AND EVENTITEM_TYPE = 0) 
+				<isEqual property="itemType" compareValue="1">
+					OR (EVENTITEM_UUID = #itemUuid# AND EVENTITEM_TYPE = 1)
+				</isEqual>
+			)
+			<isNotNull property="followType">
+					<isEqual property="followType" compareValue="1">
+						AND	FOLLOW IN (1, 3, 17, 19)
+					</isEqual>
+					<isEqual property="followType" compareValue="2">
+						AND	FOLLOW IN (2, 3, 18, 19)
+					</isEqual>
+					<isEqual property="followType" compareValue="16">
+						AND	FOLLOW IN (17, 18, 19)
+					</isEqual>
+			</isNotNull>
+			AND ORG_ID = #ORG_ID#		
+		ORDER BY MODIFIEDON	DESC	
+	</select>
+
+	<select id="selectFollowingRecordsOfEvent_{0,n}_DB2" parameterClass="java.util.Map" resultClass="DBEventFollowingRecord">
+		SELECT EVFLW_UUID as uuid, CALENDAR_UUID as calendarUuid, EVENT_UUID as eventUuid, 
+			EVENTITEM_UUID as itemUuid, EVENTITEM_TYPE as itemType, 
+			ENDDATE as itemEndDate, USER_UUID as userUuid,
+			FOLLOW as followType, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTFOLLOWING
+		WHERE 
+		    (
+				(EVENTITEM_UUID = #eventUuid# AND EVENTITEM_TYPE = 0) 
+				<isEqual property="itemType" compareValue="1">
+					OR (EVENTITEM_UUID = #itemUuid# AND EVENTITEM_TYPE = 1)
+				</isEqual>
+			)
+			<isNotNull property="followType">
+					<isEqual property="followType" compareValue="1">
+						AND	FOLLOW IN (1, 3, 17, 19)
+					</isEqual>
+					<isEqual property="followType" compareValue="2">
+						AND	FOLLOW IN (2, 3, 18, 19)
+					</isEqual>
+					<isEqual property="followType" compareValue="16">
+						AND	FOLLOW IN (17, 18, 19)
+					</isEqual>
+			</isNotNull>
+			AND ORG_ID = #ORG_ID#		
+		ORDER BY MODIFIEDON DESC		
+		FETCH FIRST $__fetch_size$ ROWS ONLY
+		FOR FETCH ONLY
+	</select>
+	
+	<!-- Change by Connections for IBM i team. -->
+	<select id="selectFollowingRecordsOfEvent_{0,n}_AS400" parameterClass="java.util.Map" resultClass="DBEventFollowingRecord">
+		SELECT EVFLW_UUID as uuid, CALENDAR_UUID as calendarUuid, EVENT_UUID as eventUuid, 
+			EVENTITEM_UUID as itemUuid, EVENTITEM_TYPE as itemType, 
+			ENDDATE as itemEndDate, USER_UUID as userUuid,
+			FOLLOW as followType, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID
+		FROM CALENDAR.CA_EVENTFOLLOWING
+		WHERE 
+		    (
+				(EVENTITEM_UUID = #eventUuid# AND EVENTITEM_TYPE = 0) 
+				<isEqual property="itemType" compareValue="1">
+					OR (EVENTITEM_UUID = #itemUuid# AND EVENTITEM_TYPE = 1)
+				</isEqual>
+			)
+			<isNotNull property="followType">
+					<isEqual property="followType" compareValue="1">
+						AND	FOLLOW IN (1, 3, 17, 19)
+					</isEqual>
+					<isEqual property="followType" compareValue="2">
+						AND	FOLLOW IN (2, 3, 18, 19)
+					</isEqual>
+					<isEqual property="followType" compareValue="16">
+						AND	FOLLOW IN (17, 18, 19)
+					</isEqual>
+			</isNotNull>
+		    AND ORG_ID = #ORG_ID#		
+		ORDER BY MODIFIEDON DESC		
+		FETCH FIRST $__fetch_size$ ROWS ONLY
+		FOR FETCH ONLY
+	</select>
+	
+	<select id="selectFollowingRecordsOfEvent_{m,n}" parameterClass="java.util.Map" resultClass="DBEventFollowingRecord">
+		SELECT uuid, calendarUuid, eventUuid, itemUuid, itemType, itemEndDate,userUuid, modifiedOn, ORG_ID
+		FROM (
+			SELECT EVFLW_UUID as uuid, CALENDAR_UUID as calendarUuid, EVENT_UUID as eventUuid, 
+				EVENTITEM_UUID as itemUuid, EVENTITEM_TYPE as itemType, 
+				ENDDATE as itemEndDate, USER_UUID as userUuid,
+				FOLLOW as followType, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID, ROW_NUMBER() over (ORDER BY MODIFIEDON DESC) rn
+		    FROM CALENDAR.CA_EVENTFOLLOWING
+			WHERE 
+			    (
+					(EVENTITEM_UUID = #eventUuid# AND EVENTITEM_TYPE = 0) 
+					<isEqual property="itemType" compareValue="1">
+						OR (EVENTITEM_UUID = #itemUuid# AND EVENTITEM_TYPE = 1)
+					</isEqual>
+				)
+				<isNotNull property="followType">
+						<isEqual property="followType" compareValue="1">
+							AND	FOLLOW IN (1, 3, 17, 19)
+						</isEqual>
+						<isEqual property="followType" compareValue="2">
+							AND	FOLLOW IN (2, 3, 18, 19)
+						</isEqual>
+						<isEqual property="followType" compareValue="16">
+							AND	FOLLOW IN (17, 18, 19)
+						</isEqual>
+				</isNotNull>	
+				AND ORG_ID = #ORG_ID#		
+			<isEqual property="DBTYPE" compareValue="DB2">
+			FETCH FIRST $__end_row$ ROWS ONLY
+			</isEqual>
+			<!-- Change by Connections for IBM i team. -->
+			<isEqual property="DBTYPE" compareValue="AS400">
+			FETCH FIRST $__end_row$ ROWS ONLY
+			</isEqual>
+			) t
+			WHERE rn >= $__start_row$ AND rn &lt; $__end_row$
+			ORDER BY rn
+			<isEqual property="DBTYPE" compareValue="DB2">
+			FETCH FIRST $__fetch_size$ ROWS ONLY
+			FOR FETCH ONLY
+			</isEqual>
+			<!-- Change by Connections for IBM i team. -->
+			<isEqual property="DBTYPE" compareValue="AS400">
+			FETCH FIRST $__fetch_size$ ROWS ONLY
+			FOR FETCH ONLY
+			</isEqual>
+	</select>
+
+	<select id="selectFollowingRecordsOfEventCount" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT COUNT(1) FROM CALENDAR.CA_EVENTFOLLOWING
+		WHERE 
+		    (
+				(EVENTITEM_UUID = #eventUuid# AND EVENTITEM_TYPE = 0) 
+				<isEqual property="itemType" compareValue="1">
+					OR (EVENTITEM_UUID = #itemUuid# AND EVENTITEM_TYPE = 1)
+				</isEqual>
+			)
+			<isNotNull property="followType">
+					<isEqual property="followType" compareValue="1">
+						AND	FOLLOW IN (1, 3, 17, 19)
+					</isEqual>
+					<isEqual property="followType" compareValue="2">
+						AND	FOLLOW IN (2, 3, 18, 19)
+					</isEqual>
+					<isEqual property="followType" compareValue="16">
+						AND	FOLLOW IN (17, 18, 19)
+					</isEqual>
+			</isNotNull>	
+			AND ORG_ID = #ORG_ID#
+	</select>
+	
+	
+	<update id="updateEventFollowingRecord" parameterClass="DBEventFollowingRecord">
+	    UPDATE CALENDAR.CA_EVENTFOLLOWING
+	    SET CALENDAR_UUID = #calendarUuid#, EVENT_UUID = #eventUuid#, 
+	    	EVENTITEM_UUID = #itemUuid#, EVENTITEM_TYPE = #itemType#, ENDDATE = #itemEndDate#,
+	    	USER_UUID = #userUuid#, FOLLOW = #followType#, MODIFIEDON = #modifiedOn#
+	    WHERE EVFLW_UUID = #uuid# AND ORG_ID = #ORG_ID#
+	</update>
+
+	<delete id="deleteEventFollowingRecord" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENTFOLLOWING WHERE EVFLW_UUID = #recordUUID# AND ORG_ID = #ORG_ID#
+	</delete>
+	
+	<delete id="deleteEventFollowingRecords" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENTFOLLOWING 
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="eventUuid">
+				EVENT_UUID = #eventUuid#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendarUuid">
+				CALENDAR_UUID = #calendarUuid#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="userUuid">
+				USER_UUID = #userUuid#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+	</delete>
+	
+	<delete id="deleteObsoleteEventFollowingRecords" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENTFOLLOWING 
+		WHERE FOLLOW IN (0, 16) AND USER_UUID = #userUuid# AND ORG_ID = #ORG_ID#
+			<isNotNull property="eventUuid">
+				AND EVENT_UUID = #eventUuid#
+			</isNotNull>
+			<isNotNull property="itemUuid">
+				AND EVENTITEM_UUID = #itemUuid#
+			</isNotNull>
+			<isNotNull property="itemType">
+				AND EVENTITEM_TYPE = #itemType#
+			</isNotNull>
+	</delete>
+	
+	<update id="updateEventFollowingMasks" parameterClass="java.util.Map">
+		UPDATE CALENDAR.CA_EVENTFOLLOWING 
+		SET FOLLOW = 
+			<isEqual property="followType" compareValue="1">
+				FOLLOW $op$ 1
+			</isEqual>
+			<isEqual property="followType" compareValue="2">
+				FOLLOW $op$ 2
+			</isEqual>
+			<isEqual property="followType" compareValue="3">
+				<isEqual property="op" compareValue="-">
+					CASE
+						WHEN FOLLOW IN (1, 17) THEN FOLLOW - 1
+						WHEN FOLLOW IN (2, 18) THEN FOLLOW - 2
+						WHEN FOLLOW IN (3, 19) THEN FOLLOW - 3
+					END
+				</isEqual>
+				<isEqual property="op" compareValue="+">
+					CASE
+						WHEN FOLLOW IN (1, 17) THEN FOLLOW + 2
+						WHEN FOLLOW IN (2, 18) THEN FOLLOW + 1
+					END
+				</isEqual>
+			</isEqual>
+			<isEqual property="followType" compareValue="16">
+				<isEqual property="op" compareValue="-">
+					FOLLOW - 16
+				</isEqual>
+				<isEqual property="op" compareValue="+">
+					FOLLOW + 16
+				</isEqual>
+			</isEqual>
+			<isEqual property="followType" compareValue="17">
+				<isEqual property="op" compareValue="-">
+					CASE
+						WHEN FOLLOW IN (1, 3) THEN FOLLOW - 1
+						WHEN FOLLOW IN (17, 19) THEN FOLLOW - 17
+						WHEN FOLLOW = 18 THEN FOLLOW - 16
+					END
+				</isEqual>
+				<isEqual property="op" compareValue="+">
+					CASE
+						WHEN FOLLOW IN (1, 3) THEN FOLLOW + 16
+						WHEN FOLLOW = 2 THEN FOLLOW + 17
+						WHEN FOLLOW = 18 THEN FOLLOW + 1
+					END
+				</isEqual>
+			</isEqual>
+			<isEqual property="followType" compareValue="18">
+				<isEqual property="op" compareValue="-">
+					CASE
+						WHEN FOLLOW IN (2, 3) THEN FOLLOW - 2
+						WHEN FOLLOW IN (18, 19) THEN FOLLOW - 18
+						WHEN FOLLOW = 17 THEN FOLLOW - 16
+					END
+				</isEqual>
+				<isEqual property="op" compareValue="+">
+					CASE
+						WHEN FOLLOW IN (2, 3) THEN FOLLOW + 16
+						WHEN FOLLOW = 1 THEN FOLLOW + 18
+						WHEN FOLLOW = 17 THEN FOLLOW + 2
+					END
+				</isEqual>
+			</isEqual>
+			<isEqual property="followType" compareValue="19">
+				<isEqual property="op" compareValue="-">
+					0
+				</isEqual>
+				<isEqual property="op" compareValue="+">
+					19
+				</isEqual>
+			</isEqual>
+		WHERE USER_UUID = #userUuid# AND ORG_ID = #ORG_ID#
+			<isNotNull property="eventUuid">
+				AND EVENT_UUID = #eventUuid#
+			</isNotNull>
+			<isNotNull property="itemUuid">
+				AND EVENTITEM_UUID = #itemUuid#
+			</isNotNull>
+			<isNotNull property="itemType">
+				AND EVENTITEM_TYPE = #itemType#
+			</isNotNull>
+			<isEqual property="followType" compareValue="1">
+				AND FOLLOW IN (1, 3, 17, 19)
+			</isEqual>
+			<isEqual property="followType" compareValue="2">
+				AND FOLLOW IN (2, 3, 18, 19)
+			</isEqual>
+			<isEqual property="followType" compareValue="3">
+				<isEqual property="op" compareValue="+">
+				AND FOLLOW IN (1, 2, 17, 18)
+				</isEqual>
+			</isEqual>
+			<isEqual property="followType" compareValue="16">
+				<isEqual property="op" compareValue="-">
+				AND FOLLOW IN (17, 18, 19)
+				</isEqual>
+				<isEqual property="op" compareValue="+">
+				AND FOLLOW IN (1, 2, 3)
+				</isEqual>
+			</isEqual>
+			<isEqual property="followType" compareValue="17">
+				<isEqual property="op" compareValue="-">
+				AND FOLLOW IN (1, 3, 17, 18, 19)
+				</isEqual>
+				<isEqual property="op" compareValue="+">
+				AND FOLLOW IN (1, 2, 3, 18)
+				</isEqual>
+			</isEqual>
+			<isEqual property="followType" compareValue="18">
+				<isEqual property="op" compareValue="-">
+				AND FOLLOW IN (2, 3, 17, 18, 19)
+				</isEqual>
+				<isEqual property="op" compareValue="+">
+				AND FOLLOW IN (1, 2, 3, 17)
+				</isEqual>
+			</isEqual>
+	</update>
+	
+	<update id="updateEndDateOfEventItem" parameterClass="java.util.Map">
+	    UPDATE CALENDAR.CA_EVENTFOLLOWING
+	    <dynamic prepend="SET">
+			<isNotNull removeFirstPrepend="true" prepend="," property="endDate">
+				ENDDATE = #endDate#
+			</isNotNull>
+		</dynamic>
+		WHERE EVENTITEM_UUID = #itemUuid# AND EVENTITEM_TYPE = #itemType# AND ORG_ID = #ORG_ID#
+	</update>
+	
+</sqlMap>

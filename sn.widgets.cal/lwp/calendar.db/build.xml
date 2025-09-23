@@ -1,0 +1,20 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- (C) Copyright IBM Corp. 2011                                      -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<project name="calendar.db" default="development" basedir=".">
+  <import file="${env.WPLC_IMPORT}/std_props.xml"/>
+  <import file="${env.WPLC_IMPORT}/root_build.xml"/>
+  <import file="${env.WPLC_IMPORT}/std_targets.xml"/>
+  <import file="${env.WPLC_IMPORT}/nojavadoc.xml"/>
+</project>

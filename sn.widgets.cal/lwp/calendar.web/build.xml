@@ -1,0 +1,35 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011                                          -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+<project name="calendar.web" default="development" basedir=".">
+	<import file="${env.WPLC_IMPORT}/std_props.xml"/>
+	<import file="${env.WPLC_IMPORT}/std_dirs.xml"/>
+	
+	<property name="jsObfuscator.skipobfuscation" value="true"/>
+	<property name="war.exclude.pattern" value="**/.jazzignore,/WEB-INF/debug.props,/WEB-INF/debug.props/**/*" /> <!-- temp disable ,/WEB-INF/tlds/**/* -->
+
+	<property name="output.war" value="${dir.lib}/calendar.war"/>
+	
+	<!-- more Mantis imports -->
+	<import file="${env.WPLC_IMPORT}/check.xml"/>
+	<import file="${env.WPLC_IMPORT}/compile.xml"/>
+	<import file="${env.WPLC_IMPORT}/rmic.xml"/>
+	<import file="${env.WPLC_IMPORT}/package_extra.xml"/>
+	<import file="${env.WPLC_IMPORT}/nojavadoc.xml"/>
+	<import file="${env.WPLC_IMPORT}/jdepend.xml"/>
+	<import file="${env.WPLC_IMPORT}/clean.xml"/>
+	<import file="${env.WPLC_IMPORT}/comp_zip.xml"/>
+	<import file="${env.WPLC_IMPORT}/std_targets.xml"/>
+	<import file="${env.WPLC_IMPORT}/process_nls.xml"/>
+	<import file="${env.WPLC_IMPORT}/performance.xml"/>
+</project>

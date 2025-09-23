@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMap namespace="DeletionHistory_MT">
+
+	<insert id="insertDeletionHistory" parameterClass="java.util.Map">
+		INSERT INTO CALENDAR.CA_DELETION_HISTORY
+			(DELHISTORY_UUID, CALENDAR_UUID, OBJECT_TYPE, OBJECT_UUID, DBMODTIME, ORG_ID)
+		VALUES
+			(#DELHISTORY_UUID#, #CALENDAR_UUID#, #OBJECT_TYPE#, #OBJECT_UUID#, #DBMODTIME#, #ORG_ID#)
+	</insert>
+	
+	<insert id="insertInstanceDeletionHistoryForEvent" parameterClass="java.util.Map">
+		INSERT INTO CALENDAR.CA_DELETION_HISTORY (DELHISTORY_UUID, CALENDAR_UUID, OBJECT_TYPE, OBJECT_UUID, DBMODTIME, ORG_ID)
+			SELECT EVENTINST_UUID, CALENDAR_UUID, 1, EVENTINST_UUID, 
+				<isEqual property="DBTYPE" compareValue="DB2">
+				cast(#DBMODTIME# as timestamp) - cast((rand() * 1000000) as int) MICROSECONDS
+				</isEqual>
+				<!-- Change by Connections for IBM i team. -->
+				<isEqual property="DBTYPE" compareValue="AS400">
+				cast('$DBMODTIME_AS400$' as timestamp) - cast((rand() * 1000000) as int) MICROSECONDS
+				</isEqual>
+				<isEqual property="DBTYPE" compareValue="MSSQL">
+				DATEADD(MILLISECOND, cast((rand(cast(cast(NEWID() AS binary(4)) AS int)) * -1000) as int), #DBMODTIME#)
+				</isEqual>
+				<isEqual property="DBTYPE" compareValue="ORACLE">
+				#DBMODTIME# - NUMTODSINTERVAL(dbms_random.value, 'SECOND')
+				</isEqual>
+				, ORG_ID
+			FROM CALENDAR.CA_EVENTINSTANCE
+			WHERE EVENT_UUID = #EVENT_UUID# 
+	</insert>
+	
+	<insert id="insertInstanceDeletionHistoryForCalendar" parameterClass="java.util.Map">
+		INSERT INTO CALENDAR.CA_DELETION_HISTORY (DELHISTORY_UUID, CALENDAR_UUID, OBJECT_TYPE, OBJECT_UUID, DBMODTIME, ORG_ID)
+			SELECT EVENTINST_UUID, CALENDAR_UUID, 1, EVENTINST_UUID, 
+				<isEqual property="DBTYPE" compareValue="DB2">
+				cast(#DBMODTIME# as timestamp) - cast((rand() * 1000000) as int) MICROSECONDS
+				</isEqual>
+				<!-- Change by Connections for IBM i team. -->
+				<isEqual property="DBTYPE" compareValue="AS400">
+				cast('$DBMODTIME_AS400$' as timestamp) - cast((rand() * 1000000) as int) MICROSECONDS
+				</isEqual>
+				<isEqual property="DBTYPE" compareValue="MSSQL">
+				DATEADD(MILLISECOND, cast((rand(cast(cast(NEWID() AS binary(4)) AS int)) * -1000) as int), #DBMODTIME#)
+				</isEqual>
+				<isEqual property="DBTYPE" compareValue="ORACLE">
+				#DBMODTIME# - NUMTODSINTERVAL(dbms_random.value, 'SECOND')
+				</isEqual>
+				, ORG_ID
+			FROM CALENDAR.CA_EVENTINSTANCE
+			WHERE CALENDAR_UUID = #CALENDAR_UUID# AND (EVENTINFO_UUID IS NOT NULL OR EVENTINST_UUID IN (SELECT DISTINCT EVENT_UUID FROM CALENDAR.CA_EVENTCOMMENT WHERE CALENDAR_UUID = #CALENDAR_UUID#))
+	</insert>
+	
+	<insert id="insertEventDeletionHistoryForCalendar" parameterClass="java.util.Map">
+		INSERT INTO CALENDAR.CA_DELETION_HISTORY (DELHISTORY_UUID, CALENDAR_UUID, OBJECT_TYPE, OBJECT_UUID, DBMODTIME, ORG_ID)
+			SELECT EVENT_UUID, CALENDAR_UUID, 0, EVENT_UUID, 
+				<isEqual property="DBTYPE" compareValue="DB2">
+				cast(#DBMODTIME# as timestamp) - cast((rand() * 1000000) as int) MICROSECONDS
+				</isEqual>
+				<!-- Change by Connections for IBM i team. -->
+				<isEqual property="DBTYPE" compareValue="AS400">
+				cast('$DBMODTIME_AS400$' as timestamp) - cast((rand() * 1000000) as int) MICROSECONDS
+				</isEqual>
+				<isEqual property="DBTYPE" compareValue="MSSQL">
+				DATEADD(MILLISECOND, cast((rand(cast(cast(NEWID() AS binary(4)) AS int)) * -1000) as int), #DBMODTIME#)
+				</isEqual>
+				<isEqual property="DBTYPE" compareValue="ORACLE">
+				#DBMODTIME# - NUMTODSINTERVAL(dbms_random.value, 'SECOND')
+				</isEqual>
+				, ORG_ID
+			FROM CALENDAR.CA_EVENT
+			WHERE CALENDAR_UUID = #CALENDAR_UUID#
+	</insert>
+
+	<delete id="clearDeletionHistory" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_DELETION_HISTORY WHERE DBMODTIME &lt; #DBMODTIME# AND ORG_ID = #ORG_ID#
+	</delete>
+</sqlMap>

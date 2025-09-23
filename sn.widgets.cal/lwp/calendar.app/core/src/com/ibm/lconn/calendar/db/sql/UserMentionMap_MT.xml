@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2014                                          -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMap namespace="UserMention_MT">
+
+	<insert id="insertUserMentionData" parameterClass="DBUserMention">
+		INSERT INTO CALENDAR.CA_USERMENTION(MENTION_UUID, OBJECT_ID, OBJECT_TYPE, CALENDAR_UUID, USER_UUID, MENTIONEDBY, CREATEDON, ORG_ID)
+		VALUES(#mention_UUID#, #objectId#, #objectType#, #calendar_UUID#, #user_UUID#, #mentionedBy#, #createdOn#, #ORG_ID:VARCHAR#)
+	</insert>
+	
+	<update id="updateUserMentionData" parameterClass="DBUserMention">
+	    UPDATE CALENDAR.CA_USERMENTION
+	    SET OBJECT_TYPE = #objectType#
+	    WHERE MENTION_UUID = #mention_UUID# AND ORG_ID = #ORG_ID#
+	</update>
+	
+	<delete id="deleteUserMentionData" parameterClass="DBUserMention">
+	    DELETE CALENDAR.CA_USERMENTION WHERE MENTION_UUID = #mention_UUID# AND ORG_ID = #ORG_ID#
+	</delete>
+	
+	<delete id="deleteUserMentionDataByEvent" parameterClass="map">
+	    DELETE CALENDAR.CA_USERMENTION 
+	    WHERE ((OBJECT_ID = #event_UUID# AND (OBJECT_TYPE = 1 OR OBJECT_TYPE = 9))
+	       OR (OBJECT_ID IN (SELECT EVENTINST_UUID FROM CALENDAR.CA_EVENTINSTANCE WHERE EVENT_UUID = #event_UUID#) AND (OBJECT_TYPE = 2 OR OBJECT_TYPE = 10)))
+	       AND ORG_ID = #ORG_ID# 
+	</delete>
+	
+	<delete id="deleteUserMentionDataByEventInstance" parameterClass="map">
+	    DELETE CALENDAR.CA_USERMENTION 
+	    WHERE OBJECT_ID = #eventInst_UUID# AND (OBJECT_TYPE = 2 OR OBJECT_TYPE = 10) AND ORG_ID = #ORG_ID# 
+	</delete>
+	
+	<delete id="deleteUserMentionDataByCalendar" parameterClass="map">
+	    DELETE CALENDAR.CA_USERMENTION WHERE CALENDAR_UUID = #calendar_UUID# AND ORG_ID = #ORG_ID# 
+	</delete>
+	
+	<select id="getUserMentionDataByObject" parameterClass="map" resultClass="DBUserMention">
+	    SELECT MENTION_UUID as mention_UUID, OBJECT_ID as objectId, OBJECT_TYPE as objectType, CALENDAR_UUID as calendar_UUID, USER_UUID as user_UUID, MENTIONEDBY as mentionedBy, CREATEDON as createdOn, ORG_ID
+	    FROM CALENDAR.CA_USERMENTION
+	    WHERE OBJECT_ID = #objectId# AND (OBJECT_TYPE = #objectType1# OR OBJECT_TYPE = #objectType2#) AND ORG_ID = #ORG_ID# 
+	</select>
+
+</sqlMap>

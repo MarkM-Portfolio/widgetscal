@@ -1,0 +1,28 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2013                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<div id="lconnTagCloudFilter-${id}" role="region" aria-labelledby="tagsText-${id}" aria-expanded="true" class="lotusSection">
+    <label class="lotusOffScreen" aria-live="polite" id="lconnTagCloudFilter-${id}_hint" status="expanded">${_lang.EXPANDED_SECTION}</label>
+    <h2>
+        <a role="button" class="lotusSprite lotusArrow lotusTwistyOpen" id='tagsArrow-${id}' href="javascript:;" onclick="toggleTags('tagsArrow-${id}','altOpen-${id}','altClosed-${id}','lconnTagCloudContent-${id}'); return false;" title="${_lang.CLOSE_SECTION}">
+        	<span id="altOpen-${id}" class="lotusAltText">&#x25bc;</span>
+        	<span id="altClosed-${id}" class="lotusHidden">&#x25B6;</span>
+        </a>
+        <span role="button" id="tagsText-${id}" class="lotusLeft" onclick="toggleTags('tagsArrow-${id}','altOpen-${id}','altClosed-${id}','lconnTagCloudContent-${id}'); return false;">${_lang.TAGS_TITLE}</span>
+        <span class="lotusRight" id="tagsHelpSPN-${id}"></span>             
+    </h2>
+    <div class="lotusSectionBody" id="lconnTagCloudContent-${id}">
+    	<div></div>
+    </div>
+</div>

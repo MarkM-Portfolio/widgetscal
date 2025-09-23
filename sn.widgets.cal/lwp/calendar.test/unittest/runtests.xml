@@ -1,0 +1,113 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2006, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<project basedir="."> 
+   <target name="test_init">
+      <mkdir dir="${basedir}/report"/>	
+    	
+   	  <delete>
+   	    <fileset dir="${basedir}/report">
+   	   	  <include name="**/*.*"/>
+   	   	</fileset>
+   	  </delete>
+    	
+      <delete>
+   		<fileset dir="${basedir}/ext/exclasses">
+   		  <include name="**/SqlMapConfig.xml"/>
+   		</fileset>
+      </delete>
+   	
+   	  <copy todir="${basedir}/ext/exclasses">
+   	   	<fileset dir="${basedir}/ext" includes="**/SqlMapConfig.xml" />
+   	 	<fileset dir="${basedir}/ext" includes="**/daoConfig.xml" />
+   	  </copy>
+	
+      <replace file="${basedir}/ext/exclasses/com/ibm/lconn/calendar/db/sql/SqlMapConfig.xml" propertyFile="${basedir}/conf/db.properties" summary="yes">
+      	<replacefilter 
+      	    token="{JDBC.Driver}" 
+      	    property="database.driver"/>
+      	<replacefilter 
+      	    token="{JDBC.ConnectionURL}" 
+      	    property="database.url"/>
+      	<replacefilter 
+      	    token="{JDBC.Username}" 
+      	    property="database.user"/>
+  		<replacefilter 
+      	    token="{JDBC.Password}" 
+      	    property="database.password"/>
+  	  </replace>
+   	
+   	  <path id="bld.test.cp">
+      	 <pathelement location="${basedir}/ext/exclasses"/>
+      	 <pathelement location="${basedir}/conf"/>
+      	 <pathelement location="${basedir}/lib/calendar.test.jar"/>
+      	 <fileset dir="${basedir}/jdbc">
+      	 	<include name="**/*.jar"/>
+      	 </fileset>
+   	     <fileset dir="${basedir}/ext/libs">
+   	     	<include name="**/*.jar"/>
+   	     </fileset>
+      </path>
+   </target>
+	
+   <target name="test" depends="test_init">
+   		<mkdir dir="${basedir}/report/xml"/>
+	    <junit printsummary="on" fork="yes" forkmode="once" timeout="3600000">
+	    	<sysproperty key="test.config.files" value="${basedir}/conf"/>
+	        <classpath>
+	        	<path refid="bld.test.cp"/>
+	        </classpath>
+	        <test name="com.ibm.lconn.calendar.test.AllTests" toDir="${basedir}/report/xml">
+	        	<formatter type="plain" usefile="false"/>
+	        	<formatter type="xml"/>
+	        </test>
+	    </junit>
+    </target>
+	
+	<target name="report" depends="test" >
+        <mkdir dir="${basedir}/report/html"/>
+        <junitreport todir="${basedir}/report/xml">
+            <fileset dir="${basedir}/report/xml">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report todir="${basedir}/report/html"/>
+        </junitreport>
+   </target>
+   
+   <target name="test-in-container">
+   	   <taskdef name="junitee" classname="org.junitee.anttask.JUnitEETask">
+   		  <classpath>
+   			  <pathelement location="${basedir}/ext/libs/junitee-anttask.jar"/>
+   		  </classpath>
+   	   </taskdef>
+   	
+	   <mkdir dir="${basedir}/report/xml"/>
+       <junitee url="${communitiesSvcRef}/calendar/__internal/junitee" printsummary="true">
+			<formatter type="plain" usefile="false"/>
+            <formatter type="xml"/>
+			<test name="com.ibm.lconn.calendar.test.RunInContainerTests" toDir="${basedir}/report/xml" />
+	   </junitee>
+   </target>
+   
+   <target name="report-in-container" depends="test-in-container" >
+        <mkdir dir="${basedir}/report/html"/>
+        <junitreport todir="${basedir}/report/xml">
+            <fileset dir="${basedir}/report/xml">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report todir="${basedir}/report/html"/>
+        </junitreport>
+    </target>
+	
+</project>

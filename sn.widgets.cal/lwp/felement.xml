@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2006, 2015                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+<felement  name="sn.widgets.cal"
+           description="calendar"
+           version="001.000"
+           build-platform="single"
+           execution-platform="all">
+
+  <dependency name="sn.infra" version="001.000" build-stream="IC10.0_Infra" build-level="LAST"/>
+  <dependency name="sn.infra.ui" version="001.000" build-stream="IC10.0_UI" build-level="LAST"/>
+  <dependency name="sn.prereqs" version="003.500" build-stream="IC10.0_Prereqs" build-level="LAST_GOOD"/>
+  
+  <build-label build-stream="IC10.0_Infra" state="BVT"/>
+  <build-label build-stream="IC10.0_UI" state="BVT"/>
+  <build-label build-stream="IC10.0_Prereqs" state="live"/>
+  <build-label build-stream="IC10.0_WidgetsCal" state="live"/>
+</felement>

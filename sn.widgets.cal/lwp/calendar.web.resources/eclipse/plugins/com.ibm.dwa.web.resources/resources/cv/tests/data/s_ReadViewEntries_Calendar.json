@@ -1,0 +1,221 @@
+/* (c) Copyright 1985-2009 IBM Corporation. All rights reserved. */
+/* $HaikuForm - 298 */
+{entries:{
+"@timestamp": "20090913T131040,27Z",
+"@toplevelentries": "7",
+"@rangeentries": "2",
+"viewentry": [
+{
+"@position": "1",
+"@unid": "DAECD7E17AB47DCD4925763000482E46",
+"@noteid": "1172",
+"@siblings": "7",
+"entrydata": [
+{
+"@columnnumber": "0",
+"@name": "$134",
+"datetime": {
+"0": "20090415T030000,00Z"
+}
+},
+{
+"@columnnumber": "1",
+"@name": "$149",
+"numberlist": {
+"number": [
+{
+"0": "205"
+},
+{
+"0": "0"
+}
+]
+}
+},
+{
+"@columnnumber": "2",
+"@name": "$144",
+"datetime": {
+"0": "20090415T030000,00Z"
+}
+},
+{
+"@columnnumber": "3",
+"@name": "$145",
+"text": {
+"0": "-"
+}
+},
+{
+"@columnnumber": "4",
+"@name": "$146",
+"datetime": {
+"0": "20090415T040000,00Z"
+}
+},
+{
+"@columnnumber": "5",
+"@name": "$147",
+"text": {
+"0": "My Appointment"
+}
+},
+{
+"@columnnumber": "6",
+"@name": "$151",
+"text": {
+"0": "My Appointment"
+}
+},
+{
+"@columnnumber": "7",
+"@name": "$152",
+"text": {
+"0": "0"
+}
+},
+{
+"@columnnumber": "8",
+"@name": "$153",
+"text": {
+"0": "guest"
+}
+},
+{
+"@columnnumber": "9",
+"@name": "$154",
+"number": {
+"0": "0"
+}
+},
+{
+"@columnnumber": "10",
+"@name": "$160",
+"text": {
+"0": "Accepted"
+}
+},
+{
+"@columnnumber": "11",
+"@name": "$UserData",
+"text": {
+"0": ""
+}
+}
+]
+},
+{
+"@position": "2",
+"@unid": "100000C7AB316A204925763000483F36",
+"@noteid": "1176",
+"@siblings": "7",
+"entrydata": [
+{
+"@columnnumber": "0",
+"@name": "$134",
+"datetime": {
+"0": "20090415T110000,00Z"
+}
+},
+{
+"@columnnumber": "1",
+"@name": "$149",
+"numberlist": {
+"number": [
+{
+"0": "210"
+},
+{
+"0": "0"
+}
+]
+}
+},
+{
+"@columnnumber": "2",
+"@name": "$144",
+"datetime": {
+"0": "20090415T110000,00Z"
+}
+},
+{
+"@columnnumber": "3",
+"@name": "$145",
+"text": {
+"0": "-"
+}
+},
+{
+"@columnnumber": "4",
+"@name": "$146",
+"datetime": {
+"0": "20090415T120000,00Z"
+}
+},
+{
+"@columnnumber": "5",
+"@name": "$147",
+"textlist": {
+"text": [
+{
+"0": "My Meeting"
+},
+{
+"0": "guest"
+}
+]
+}
+},
+{
+"@columnnumber": "6",
+"@name": "$151",
+"textlist": {
+"text": [
+{
+"0": "My Meeting"
+},
+{
+"0": "guest"
+}
+]
+}
+},
+{
+"@columnnumber": "7",
+"@name": "$152",
+"text": {
+"0": "3"
+}
+},
+{
+"@columnnumber": "8",
+"@name": "$153",
+"text": {
+"0": "guest"
+}
+},
+{
+"@columnnumber": "9",
+"@name": "$154",
+"number": {
+"0": "0"
+}
+},
+{
+"@columnnumber": "10",
+"@name": "$160",
+"text": {
+"0": "Accepted"
+}
+},
+{
+"@columnnumber": "11",
+"@name": "$UserData",
+"text": {
+"0": ""
+}
+}
+]
+}
+]
+}      } 

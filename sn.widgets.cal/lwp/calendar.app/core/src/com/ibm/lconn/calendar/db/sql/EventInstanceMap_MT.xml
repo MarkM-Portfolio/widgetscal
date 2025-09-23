@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2014                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<sqlMap namespace="EventInstance_MT">
+	<insert id="insertEventInstance" parameterClass="DBEventInstance">
+		INSERT INTO CALENDAR.CA_EVENTINSTANCE
+			(EVENTINST_UUID, CALENDAR_UUID, EVENT_UUID, EVENTINFO_UUID, STARTDATE, ENDDATE, ORG_ID)
+		VALUES
+			(#eventInst_UUID#, #calendar_UUID#, #event_UUID#, #eventInfo_UUID:VARCHAR#, #startDate#, #endDate#, #ORG_ID#)
+	</insert>
+
+	<update id="updateEventInstance" parameterClass="DBEventInstance">
+		UPDATE CALENDAR.CA_EVENTINSTANCE
+		SET EVENTINFO_UUID = #eventInfo_UUID:VARCHAR#, STARTDATE = #startDate#, ENDDATE = #endDate#, MODIFIEDBY = #modifiedBy#, MODIFIEDON = #modifiedOn#, DBMODTIME = #dbModifiedOn# 
+		WHERE EVENTINST_UUID = #eventInst_UUID# AND ORG_ID = #ORG_ID#
+	</update>
+	
+	<delete id="deleteEventInstance" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENTINSTANCE WHERE EVENTINST_UUID = #instanceUUID# AND ORG_ID = #ORG_ID#
+	</delete>
+	
+	<delete id="deleteEventInstances" parameterClass="java.util.Map">
+		DELETE FROM CALENDAR.CA_EVENTINSTANCE
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				CALENDAR_UUID = #calendar_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="event_UUID">
+				EVENT_UUID = #event_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+	</delete>
+	
+	<select id="selectEventInstance" parameterClass="java.util.Map" resultClass="DBEventInstance">
+		SELECT EVENTINST_UUID as eventInst_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID,
+			STARTDATE as startDate, ENDDATE as endDate, EVENTINFO_UUID as eventInfo_UUID,
+			MODIFIEDBY as modifiedBy, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID 
+		FROM CALENDAR.CA_EVENTINSTANCE
+		WHERE EVENTINST_UUID = #instanceUUID# AND ORG_ID = #ORG_ID#
+	</select>
+
+	<select id="selectEventInstanceByEventAndDate" parameterClass="java.util.Map" resultClass="DBEventInstance">
+		SELECT EVENTINST_UUID as eventInst_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID,
+			STARTDATE as startDate, ENDDATE as endDate, EVENTINFO_UUID as eventInfo_UUID,
+			MODIFIEDBY as modifiedBy, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID  
+		FROM CALENDAR.CA_EVENTINSTANCE
+		WHERE EVENT_UUID = #event_UUID# AND STARTDATE = #startDate# AND ORG_ID = #ORG_ID#
+	</select>
+	
+	<select id="selectEventInstances" parameterClass="java.util.Map" resultClass="DBEventInstance">
+		SELECT EVENTINST_UUID as eventInst_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID,
+			STARTDATE as startDate, ENDDATE as endDate, EVENTINFO_UUID as eventInfo_UUID,
+			MODIFIEDBY as modifiedBy, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID  
+		FROM CALENDAR.CA_EVENTINSTANCE
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				CALENDAR_UUID = #calendar_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="event_UUID">
+				EVENT_UUID = #event_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="dateBegin">
+				ENDDATE <![CDATA[ >= ]]> #dateBegin#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="dateEnd">
+				ENDDATE <![CDATA[ < ]]> #dateEnd#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="tags">
+				EVENT_UUID IN 
+					(
+					<iterate property="tags" conjunction="INTERSECT">
+						SELECT EVENT_UUID
+						FROM CALENDAR.CA_EVENTTAG
+						WHERE NAME = #tags[]# AND ORG_ID = #ORG_ID#
+						   <isNotNull property="calendar_UUID">
+								AND CALENDAR_UUID = #calendar_UUID#
+						   </isNotNull>
+					</iterate>
+					)
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="exceptions">
+				<isEqual property="exceptions" compareValue="0">
+				EVENTINST_UUID NOT IN (
+			       SELECT SUBSTITUTION_UUID 
+			       FROM CALENDAR.CA_SUBSTITUTION  
+			       WHERE EVENT_UUID = #event_UUID# AND (NEWSTARTDATE IS NOT NULL OR NEWENDDATE IS NOT NULL) AND ORG_ID = #ORG_ID#
+			    )
+				</isEqual>
+				<isEqual property="exceptions" compareValue="1">
+				EVENTINST_UUID IN (
+			       SELECT SUBSTITUTION_UUID 
+			       FROM CALENDAR.CA_SUBSTITUTION 
+			       WHERE EVENT_UUID = #event_UUID# AND (NEWSTARTDATE IS NOT NULL OR NEWENDDATE IS NOT NULL) AND ORG_ID = #ORG_ID#
+			    )
+				</isEqual>
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+		ORDER BY STARTDATE $SORT_ORDER$, EVENTINST_UUID
+		<isEqual property="DBTYPE" compareValue="DB2">
+		FOR FETCH ONLY
+		</isEqual>
+		<!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		FOR FETCH ONLY
+		</isEqual>
+	</select>
+	
+	<select id="selectEventInstances_{0,n}_DB2" parameterClass="java.util.Map" resultClass="DBEventInstance">
+		SELECT EVENTINST_UUID as eventInst_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID,
+			STARTDATE as startDate, ENDDATE as endDate, EVENTINFO_UUID as eventInfo_UUID,
+			MODIFIEDBY as modifiedBy, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID  
+		FROM CALENDAR.CA_EVENTINSTANCE
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				CALENDAR_UUID = #calendar_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="event_UUID">
+				EVENT_UUID = #event_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="dateBegin">
+				ENDDATE <![CDATA[ >= ]]> #dateBegin#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="dateEnd">
+				ENDDATE <![CDATA[ < ]]> #dateEnd#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="tags">
+				EVENT_UUID IN 
+					(
+					<iterate property="tags" conjunction="INTERSECT">
+						SELECT EVENT_UUID
+						FROM CALENDAR.CA_EVENTTAG
+						WHERE NAME = #tags[]# AND ORG_ID = #ORG_ID#
+							<isNotNull property="calendar_UUID">
+								AND CALENDAR_UUID = #calendar_UUID#
+						    </isNotNull>
+					</iterate>
+					)
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="exceptions">
+				<isEqual property="exceptions" compareValue="0">
+				EVENTINST_UUID NOT IN (
+			       SELECT SUBSTITUTION_UUID 
+			       FROM CALENDAR.CA_SUBSTITUTION  
+			       WHERE EVENT_UUID = #event_UUID# AND (NEWSTARTDATE IS NOT NULL OR NEWENDDATE IS NOT NULL) AND ORG_ID = #ORG_ID#
+			    )
+				</isEqual>
+				<isEqual property="exceptions" compareValue="1">
+				EVENTINST_UUID IN (
+			       SELECT SUBSTITUTION_UUID 
+			       FROM CALENDAR.CA_SUBSTITUTION 
+			       WHERE EVENT_UUID = #event_UUID# AND (NEWSTARTDATE IS NOT NULL OR NEWENDDATE IS NOT NULL) AND ORG_ID = #ORG_ID#
+			    )
+				</isEqual>
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+		ORDER BY STARTDATE $SORT_ORDER$, EVENTINST_UUID
+		FETCH FIRST $__fetch_size$ ROWS ONLY
+		FOR FETCH ONLY
+	</select>
+	
+	<!-- Change by Connections for IBM i team. -->
+	<select id="selectEventInstances_{0,n}_AS400" parameterClass="java.util.Map" resultClass="DBEventInstance">
+		SELECT EVENTINST_UUID as eventInst_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID,
+			STARTDATE as startDate, ENDDATE as endDate, EVENTINFO_UUID as eventInfo_UUID,
+			MODIFIEDBY as modifiedBy, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID  
+		FROM CALENDAR.CA_EVENTINSTANCE
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				CALENDAR_UUID = #calendar_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="event_UUID">
+				EVENT_UUID = #event_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="dateBegin">
+				ENDDATE <![CDATA[ >= ]]> #dateBegin#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="dateEnd">
+				ENDDATE <![CDATA[ < ]]> #dateEnd#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="tags">
+				EVENT_UUID IN 
+					(
+					<iterate property="tags" conjunction="INTERSECT">
+						SELECT EVENT_UUID
+						FROM CALENDAR.CA_EVENTTAG
+						WHERE NAME = #tags[]# AND ORG_ID = #ORG_ID#
+							<isNotNull property="calendar_UUID">
+								AND CALENDAR_UUID = #calendar_UUID#
+						    </isNotNull>
+					</iterate>
+					)
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="exceptions">
+				<isEqual property="exceptions" compareValue="0">
+				EVENTINST_UUID NOT IN (
+			       SELECT SUBSTITUTION_UUID 
+			       FROM CALENDAR.CA_SUBSTITUTION  
+			       WHERE EVENT_UUID = #event_UUID# AND (NEWSTARTDATE IS NOT NULL OR NEWENDDATE IS NOT NULL) AND ORG_ID = #ORG_ID#
+			    )
+				</isEqual>
+				<isEqual property="exceptions" compareValue="1">
+				EVENTINST_UUID IN (
+			       SELECT SUBSTITUTION_UUID 
+			       FROM CALENDAR.CA_SUBSTITUTION 
+			       WHERE EVENT_UUID = #event_UUID# AND (NEWSTARTDATE IS NOT NULL OR NEWENDDATE IS NOT NULL) AND ORG_ID = #ORG_ID#
+			    )
+				</isEqual>
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->    ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+		ORDER BY STARTDATE $SORT_ORDER$, EVENTINST_UUID
+		FETCH FIRST $__fetch_size$ ROWS ONLY
+		FOR FETCH ONLY
+	</select>
+	
+	<select id="selectEventInstances_{m,n}" parameterClass="java.util.Map" resultClass="DBEventInstance">
+		SELECT eventInst_UUID, calendar_UUID, event_UUID, startDate, endDate, eventInfo_UUID, modifiedBy, modifiedOn, ORG_ID
+		FROM 
+		  (
+			SELECT EVENTINST_UUID as eventInst_UUID, CALENDAR_UUID as calendar_UUID, EVENT_UUID as event_UUID,
+				STARTDATE as startDate, ENDDATE as endDate, EVENTINFO_UUID as eventInfo_UUID,
+				MODIFIEDBY as modifiedBy, MODIFIEDON as modifiedOn, ORG_ID as ORG_ID,
+				ROW_NUMBER() over (ORDER BY STARTDATE $SORT_ORDER$, EVENTINST_UUID) rn
+			FROM CALENDAR.CA_EVENTINSTANCE
+			<dynamic prepend="WHERE">
+				<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+					CALENDAR_UUID = #calendar_UUID#
+				</isNotNull>
+				<isNotNull removeFirstPrepend="true" prepend="AND" property="event_UUID">
+					EVENT_UUID = #event_UUID#
+				</isNotNull>
+				<isNotNull removeFirstPrepend="true" prepend="AND" property="dateBegin">
+					ENDDATE <![CDATA[ >= ]]> #dateBegin#
+				</isNotNull>
+				<isNotNull removeFirstPrepend="true" prepend="AND" property="dateEnd">
+					ENDDATE <![CDATA[ < ]]> #dateEnd#
+				</isNotNull>
+				<isNotNull removeFirstPrepend="true" prepend="AND" property="tags">
+					EVENT_UUID IN 
+						(
+						<iterate property="tags" conjunction="INTERSECT">
+							SELECT EVENT_UUID
+							FROM CALENDAR.CA_EVENTTAG
+							WHERE NAME = #tags[]# AND ORG_ID = #ORG_ID#
+								<isNotNull property="calendar_UUID">
+									AND CALENDAR_UUID = #calendar_UUID#
+							    </isNotNull>
+						</iterate>
+						)
+				</isNotNull>
+				<isNotNull removeFirstPrepend="true" prepend="AND" property="exceptions">
+				    <isEqual property="exceptions" compareValue="0">
+				    EVENTINST_UUID NOT IN (
+			           SELECT SUBSTITUTION_UUID 
+			           FROM CALENDAR.CA_SUBSTITUTION  
+			           WHERE EVENT_UUID = #event_UUID# AND (NEWSTARTDATE IS NOT NULL OR NEWENDDATE IS NOT NULL) AND ORG_ID = #ORG_ID#
+			        )
+				    </isEqual>
+				    <isEqual property="exceptions" compareValue="1">
+				    EVENTINST_UUID IN (
+			           SELECT SUBSTITUTION_UUID 
+			           FROM CALENDAR.CA_SUBSTITUTION 
+			           WHERE EVENT_UUID = #event_UUID# AND (NEWSTARTDATE IS NOT NULL OR NEWENDDATE IS NOT NULL) AND ORG_ID = #ORG_ID#
+			        )
+				    </isEqual>
+			    </isNotNull>
+				<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->        ORG_ID = #ORG_ID#
+			    </isNotNull>
+			</dynamic>
+			<isEqual property="DBTYPE" compareValue="DB2">
+			ORDER BY STARTDATE $SORT_ORDER$, EVENTINST_UUID
+			FETCH FIRST $__end_row$ ROWS ONLY
+			</isEqual>
+			<!-- Change by Connections for IBM i team. -->
+			<isEqual property="DBTYPE" compareValue="AS400">
+			ORDER BY STARTDATE $SORT_ORDER$, EVENTINST_UUID
+			FETCH FIRST $__end_row$ ROWS ONLY
+			</isEqual>
+		  ) t
+		WHERE
+		    rn >= $__start_row$
+			AND
+			rn &lt; $__end_row$
+		ORDER BY rn
+		<isEqual property="DBTYPE" compareValue="DB2">
+		FETCH FIRST $__fetch_size$ ROWS ONLY
+		FOR FETCH ONLY
+		</isEqual>
+		<!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		FETCH FIRST $__fetch_size$ ROWS ONLY
+		FOR FETCH ONLY
+		</isEqual>
+	</select>
+	
+	<select id="selectEventInstancesCount" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT COUNT(1) 
+		FROM CALENDAR.CA_EVENTINSTANCE
+		<dynamic prepend="WHERE">
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="calendar_UUID">
+				CALENDAR_UUID = #calendar_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="event_UUID">
+				EVENT_UUID = #event_UUID#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="dateBegin">
+				ENDDATE <![CDATA[ >= ]]> #dateBegin#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="dateEnd">
+				ENDDATE <![CDATA[ < ]]> #dateEnd#
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="tags">
+				EVENT_UUID IN 
+					(
+					<iterate property="tags" conjunction="INTERSECT">
+						SELECT EVENT_UUID
+						FROM CALENDAR.CA_EVENTTAG
+						WHERE NAME = #tags[]# AND ORG_ID = #ORG_ID#
+							<isNotNull property="calendar_UUID">
+								AND CALENDAR_UUID = #calendar_UUID#
+						    </isNotNull>
+					</iterate>
+					)
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="exceptions">
+				<isEqual property="exceptions" compareValue="0">
+				EVENTINST_UUID NOT IN (
+			       SELECT SUBSTITUTION_UUID 
+			       FROM CALENDAR.CA_SUBSTITUTION  
+			       WHERE EVENT_UUID = #event_UUID# AND (NEWSTARTDATE IS NOT NULL OR NEWENDDATE IS NOT NULL) AND ORG_ID = #ORG_ID#
+			    )
+				</isEqual>
+				<isEqual property="exceptions" compareValue="1">
+				EVENTINST_UUID IN (
+			       SELECT SUBSTITUTION_UUID 
+			       FROM CALENDAR.CA_SUBSTITUTION 
+			       WHERE EVENT_UUID = #event_UUID# AND (NEWSTARTDATE IS NOT NULL OR NEWENDDATE IS NOT NULL) AND ORG_ID = #ORG_ID#
+			    )
+				</isEqual>
+			</isNotNull>
+			<isNotNull removeFirstPrepend="true" prepend="AND" property="ORG_ID">
+<!-- AND -->	ORG_ID = #ORG_ID#
+			</isNotNull>
+		</dynamic>
+		<isEqual property="DBTYPE" compareValue="DB2">
+		FOR FETCH ONLY
+		</isEqual>
+		<!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		FOR FETCH ONLY
+		</isEqual>
+	</select>
+	
+	<select id="selectFollowedEventInstances" parameterClass="java.util.Map" resultClass="DBEventInstance">
+		SELECT INST.EVENTINST_UUID as eventInst_UUID, INST.CALENDAR_UUID as calendar_UUID, INST.EVENT_UUID as event_UUID,
+			INST.STARTDATE as startDate, INST.ENDDATE as endDate, INST.EVENTINFO_UUID as eventInfo_UUID,
+			INST.MODIFIEDBY as modifiedBy, INST.MODIFIEDON as modifiedOn, INST.ORG_ID AS ORG_ID  
+		FROM CALENDAR.CA_EVENTFOLLOWING FLW
+			INNER JOIN CALENDAR.CA_CALENDAR CAL ON FLW.CALENDAR_UUID = CAL.CALENDAR_UUID AND CAL.ORG_ID = #ORG_ID#
+			INNER JOIN CALENDAR.CA_EVENTINSTANCE INST ON ((FLW.EVENTITEM_TYPE = 1 AND FLW.EVENTITEM_UUID = INST.EVENTINST_UUID) OR (FLW.EVENTITEM_TYPE = 0 AND FLW.EVENTITEM_UUID = INST.EVENT_UUID)) AND INST.ORG_ID = #ORG_ID#
+		WHERE FLW.USER_UUID = #userId#
+			AND FLW.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+			AND INST.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+			AND INST.ENDDATE <![CDATA[ < ]]> #dateEnd#
+			AND ((CAL.VISIBILITY = 1 <isNotNull property="loginUserOrgId"> AND CAL.ORG_ID = #loginUserOrgId# </isNotNull>) 
+			       OR (FLW.CALENDAR_UUID IN (SELECT CALENDAR_UUID FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #userId#)))
+			<isNotNull property="followType">
+				<isEqual property="followType" compareValue="1">
+					AND	FLW.FOLLOW IN (1, 3, 17, 19)
+				</isEqual>
+				<isEqual property="followType" compareValue="2">
+					AND	FLW.FOLLOW IN (2, 3, 18, 19)
+				</isEqual>
+				<isEqual property="followType" compareValue="16">
+					AND	FLW.FOLLOW IN (17, 18, 19)
+				</isEqual>
+			</isNotNull>
+			AND FLW.ORG_ID = #ORG_ID#
+		<isEqual property="DBTYPE" compareValue="DB2">
+		FOR FETCH ONLY
+		</isEqual>
+		<!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		FOR FETCH ONLY
+		</isEqual>
+	</select>
+	
+	<select id="selectUpcomingFollowedEventInstances" parameterClass="java.util.Map" resultClass="DBEventInstance">
+		SELECT INST.EVENTINST_UUID as eventInst_UUID, INST.CALENDAR_UUID as calendar_UUID, INST.EVENT_UUID as event_UUID,
+			INST.STARTDATE as startDate, INST.ENDDATE as endDate, INST.EVENTINFO_UUID as eventInfo_UUID,
+			INST.MODIFIEDBY as modifiedBy, INST.MODIFIEDON as modifiedOn, INST.ORG_ID as ORG_ID 
+		FROM CALENDAR.CA_EVENTFOLLOWING FLW
+			INNER JOIN CALENDAR.CA_CALENDAR CAL ON FLW.CALENDAR_UUID = CAL.CALENDAR_UUID AND CAL.ORG_ID = #ORG_ID#
+			INNER JOIN CALENDAR.CA_EVENTINSTANCE INST ON ((FLW.EVENTITEM_TYPE = 1 AND FLW.EVENTITEM_UUID = INST.EVENTINST_UUID) OR (FLW.EVENTITEM_TYPE = 0 AND FLW.EVENTITEM_UUID = INST.EVENT_UUID)) AND INST.ORG_ID = #ORG_ID#
+		WHERE FLW.USER_UUID = #userId#
+			AND FLW.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+			AND INST.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+			AND ((CAL.VISIBILITY = 1 <isNotNull property="loginUserOrgId"> AND CAL.ORG_ID = #loginUserOrgId# </isNotNull>) 
+			     OR (FLW.CALENDAR_UUID IN (SELECT CALENDAR_UUID FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #userId#)))
+			<isNotNull property="followType">
+				<isEqual property="followType" compareValue="1">
+					AND	FLW.FOLLOW IN (1, 3, 17, 19)
+				</isEqual>
+				<isEqual property="followType" compareValue="2">
+					AND	FLW.FOLLOW IN (2, 3, 18, 19)
+				</isEqual>
+				<isEqual property="followType" compareValue="16">
+					AND	FLW.FOLLOW IN (17, 18, 19)
+				</isEqual>
+			</isNotNull>
+			AND FLW.ORG_ID = #ORG_ID#
+		<isEqual property="DBTYPE" compareValue="DB2">
+		FOR FETCH ONLY
+		</isEqual>
+		<!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		FOR FETCH ONLY
+		</isEqual>
+	</select>
+	
+	<select id="selectUpcomingFollowedEventInstances_{0,n}_DB2" parameterClass="java.util.Map" resultClass="DBEventInstance">
+		SELECT INST.EVENTINST_UUID as eventInst_UUID, INST.CALENDAR_UUID as calendar_UUID, INST.EVENT_UUID as event_UUID,
+			INST.STARTDATE as startDate, INST.ENDDATE as endDate, INST.EVENTINFO_UUID as eventInfo_UUID,
+			INST.MODIFIEDBY as modifiedBy, INST.MODIFIEDON as modifiedOn, INST.ORG_ID as ORG_ID, COUNT(1) OVER () as parentCollectionSize
+		FROM CALENDAR.CA_EVENTFOLLOWING FLW
+			INNER JOIN CALENDAR.CA_CALENDAR CAL ON FLW.CALENDAR_UUID = CAL.CALENDAR_UUID AND CAL.ORG_ID = #ORG_ID#
+			INNER JOIN CALENDAR.CA_EVENTINSTANCE INST ON ((FLW.EVENTITEM_TYPE = 1 AND FLW.EVENTITEM_UUID = INST.EVENTINST_UUID) OR (FLW.EVENTITEM_TYPE = 0 AND FLW.EVENTITEM_UUID = INST.EVENT_UUID)) AND INST.ORG_ID = #ORG_ID#
+		WHERE FLW.USER_UUID = #userId#
+			AND FLW.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+			AND INST.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+			AND ((CAL.VISIBILITY = 1 <isNotNull property="loginUserOrgId"> AND CAL.ORG_ID = #loginUserOrgId# </isNotNull>) 
+			    OR (FLW.CALENDAR_UUID IN (SELECT CALENDAR_UUID FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #userId#)))
+			<isNotNull property="followType">
+				<isEqual property="followType" compareValue="1">
+					AND	FLW.FOLLOW IN (1, 3, 17, 19)
+				</isEqual>
+				<isEqual property="followType" compareValue="2">
+					AND	FLW.FOLLOW IN (2, 3, 18, 19)
+				</isEqual>
+				<isEqual property="followType" compareValue="16">
+					AND	FLW.FOLLOW IN (17, 18, 19)
+				</isEqual>
+			</isNotNull>
+			AND FLW.ORG_ID = #ORG_ID#
+		ORDER BY INST.STARTDATE ASC, INST.EVENTINST_UUID
+		FETCH FIRST $__fetch_size$ ROWS ONLY
+		FOR FETCH ONLY
+	</select>
+	
+	<select id="selectUpcomingFollowedEventInstances_{m,n}" parameterClass="java.util.Map" resultClass="DBEventInstance">
+		SELECT eventInst_UUID, calendar_UUID, event_UUID, startDate, endDate, eventInfo_UUID, modifiedBy, modifiedOn, ORG_ID, parentCollectionSize
+		FROM 
+		  (
+			SELECT INST.EVENTINST_UUID as eventInst_UUID, INST.CALENDAR_UUID as calendar_UUID, INST.EVENT_UUID as event_UUID,
+				INST.STARTDATE as startDate, INST.ENDDATE as endDate, INST.EVENTINFO_UUID as eventInfo_UUID,
+				INST.MODIFIEDBY as modifiedBy, INST.MODIFIEDON as modifiedOn, INST.ORG_ID as ORG_ID, COUNT(1) OVER () as parentCollectionSize,
+				ROW_NUMBER() over (ORDER BY INST.STARTDATE ASC, INST.EVENTINST_UUID) rn
+			FROM CALENDAR.CA_EVENTFOLLOWING FLW
+				INNER JOIN CALENDAR.CA_CALENDAR CAL ON FLW.CALENDAR_UUID = CAL.CALENDAR_UUID AND CAL.ORG_ID = #ORG_ID#
+				INNER JOIN CALENDAR.CA_EVENTINSTANCE INST ON ((FLW.EVENTITEM_TYPE = 1 AND FLW.EVENTITEM_UUID = INST.EVENTINST_UUID) OR (FLW.EVENTITEM_TYPE = 0 AND FLW.EVENTITEM_UUID = INST.EVENT_UUID)) AND INST.ORG_ID = #ORG_ID#
+			WHERE FLW.USER_UUID = #userId#
+				AND FLW.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+				AND INST.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+				AND ((CAL.VISIBILITY = 1 <isNotNull property="loginUserOrgId"> AND CAL.ORG_ID = #loginUserOrgId# </isNotNull>) 
+				    OR (FLW.CALENDAR_UUID IN (SELECT CALENDAR_UUID FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #userId#)))
+				<isNotNull property="followType">
+					<isEqual property="followType" compareValue="1">
+						AND	FLW.FOLLOW IN (1, 3, 17, 19)
+					</isEqual>
+					<isEqual property="followType" compareValue="2">
+						AND	FLW.FOLLOW IN (2, 3, 18, 19)
+					</isEqual>
+					<isEqual property="followType" compareValue="16">
+						AND	FLW.FOLLOW IN (17, 18, 19)
+					</isEqual>
+				</isNotNull>
+				AND FLW.ORG_ID = #ORG_ID#
+			<isEqual property="DBTYPE" compareValue="DB2">
+			ORDER BY INST.STARTDATE ASC, INST.EVENTINST_UUID
+			FETCH FIRST $__end_row$ ROWS ONLY
+			</isEqual>
+		  ) t
+		WHERE
+			rn = 1
+			OR
+			(
+		        rn >= $__start_row$
+			    AND
+			    rn &lt; $__end_row$
+			)
+		ORDER BY rn
+		<isEqual property="DBTYPE" compareValue="DB2">
+		FETCH FIRST $__fetch_size_p1$ ROWS ONLY
+		FOR FETCH ONLY
+		</isEqual>
+	</select>
+	
+	<!-- Change by Connections for IBM i team. -->
+	<select id="selectUpcomingFollowedEventInstances_{0,n}_AS400" parameterClass="java.util.Map" resultClass="DBEventInstance">
+		SELECT INST.EVENTINST_UUID as eventInst_UUID, INST.CALENDAR_UUID as calendar_UUID, INST.EVENT_UUID as event_UUID,
+			INST.STARTDATE as startDate, INST.ENDDATE as endDate, INST.EVENTINFO_UUID as eventInfo_UUID,
+			INST.MODIFIEDBY as modifiedBy, INST.MODIFIEDON as modifiedOn, INST.ORG_ID as ORG_ID, 
+			(SELECT COUNT(1) 
+				FROM CALENDAR.CA_EVENTFOLLOWING 
+				INNER JOIN CALENDAR.CA_CALENDAR CAL ON FLW.CALENDAR_UUID = CAL.CALENDAR_UUID AND CAL.ORG_ID = #ORG_ID#
+				INNER JOIN CALENDAR.CA_EVENTINSTANCE INST ON ((FLW.EVENTITEM_TYPE = 1 AND FLW.EVENTITEM_UUID = INST.EVENTINST_UUID) OR (FLW.EVENTITEM_TYPE = 0 AND FLW.EVENTITEM_UUID = INST.EVENT_UUID)) AND INST.ORG_ID = #ORG_ID#
+			WHERE FLW.USER_UUID = #userId#
+				AND FLW.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+				AND INST.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+				AND ((CAL.VISIBILITY = 1 <isNotNull property="loginUserOrgId"> AND CAL.ORG_ID = #loginUserOrgId# </isNotNull>) 
+				    OR (FLW.CALENDAR_UUID IN (SELECT CALENDAR_UUID FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #userId#)))
+				<isNotNull property="followType">
+					<isEqual property="followType" compareValue="1">
+						AND	FLW.FOLLOW IN (1, 3, 17, 19)
+					</isEqual>
+					<isEqual property="followType" compareValue="2">
+						AND	FLW.FOLLOW IN (2, 3, 18, 19)
+					</isEqual>
+					<isEqual property="followType" compareValue="16">
+						AND	FLW.FOLLOW IN (17, 18, 19)
+					</isEqual>
+				</isNotNull>
+				AND FLW.ORG_ID = #ORG_ID#
+			) as parentCollectionSize
+		FROM CALENDAR.CA_EVENTFOLLOWING FLW
+			INNER JOIN CALENDAR.CA_CALENDAR CAL ON FLW.CALENDAR_UUID = CAL.CALENDAR_UUID AND CAL.ORG_ID = #ORG_ID#
+			INNER JOIN CALENDAR.CA_EVENTINSTANCE INST ON ((FLW.EVENTITEM_TYPE = 1 AND FLW.EVENTITEM_UUID = INST.EVENTINST_UUID) OR (FLW.EVENTITEM_TYPE = 0 AND FLW.EVENTITEM_UUID = INST.EVENT_UUID)) AND INST.ORG_ID = #ORG_ID#
+		WHERE FLW.USER_UUID = #userId#
+			AND FLW.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+			AND INST.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+			AND ((CAL.VISIBILITY = 1 <isNotNull property="loginUserOrgId"> AND CAL.ORG_ID = #loginUserOrgId# </isNotNull>) 
+			    OR (FLW.CALENDAR_UUID IN (SELECT CALENDAR_UUID FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #userId#)))
+			<isNotNull property="followType">
+				<isEqual property="followType" compareValue="1">
+					AND	FLW.FOLLOW IN (1, 3, 17, 19)
+				</isEqual>
+				<isEqual property="followType" compareValue="2">
+					AND	FLW.FOLLOW IN (2, 3, 18, 19)
+				</isEqual>
+				<isEqual property="followType" compareValue="16">
+					AND	FLW.FOLLOW IN (17, 18, 19)
+				</isEqual>
+			</isNotNull>
+			AND FLW.ORG_ID = #ORG_ID#
+		ORDER BY INST.STARTDATE ASC, INST.EVENTINST_UUID
+		FETCH FIRST $__fetch_size$ ROWS ONLY
+		FOR FETCH ONLY
+	</select>
+	
+	<!-- Change by Connections for IBM i team. -->
+	<select id="selectUpcomingFollowedEventInstances_{m,n}_AS400" parameterClass="java.util.Map" resultClass="DBEventInstance">
+		SELECT eventInst_UUID, calendar_UUID, event_UUID, startDate, endDate, eventInfo_UUID, modifiedBy, modifiedOn, ORG_ID, parentCollectionSize
+		FROM 
+		  (
+			SELECT INST.EVENTINST_UUID as eventInst_UUID, INST.CALENDAR_UUID as calendar_UUID, INST.EVENT_UUID as event_UUID,
+				INST.STARTDATE as startDate, INST.ENDDATE as endDate, INST.EVENTINFO_UUID as eventInfo_UUID,
+				INST.MODIFIEDBY as modifiedBy, INST.MODIFIEDON as modifiedOn, INST.ORG_ID as ORG_ID, 
+				(SELECT COUNT(1) 
+					FROM CALENDAR.CA_EVENTFOLLOWING FLW
+					INNER JOIN CALENDAR.CA_CALENDAR CAL ON FLW.CALENDAR_UUID = CAL.CALENDAR_UUID AND CAL.ORG_ID = #ORG_ID#
+					INNER JOIN CALENDAR.CA_EVENTINSTANCE INST ON ((FLW.EVENTITEM_TYPE = 1 AND FLW.EVENTITEM_UUID = INST.EVENTINST_UUID) OR (FLW.EVENTITEM_TYPE = 0 AND FLW.EVENTITEM_UUID = INST.EVENT_UUID)) AND INST.ORG_ID = #ORG_ID#
+				WHERE FLW.USER_UUID = #userId#
+					AND FLW.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+					AND INST.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+					AND ((CAL.VISIBILITY = 1 <isNotNull property="loginUserOrgId"> AND CAL.ORG_ID = #loginUserOrgId# </isNotNull>) 
+					    OR (FLW.CALENDAR_UUID IN (SELECT CALENDAR_UUID FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #userId#)))
+					<isNotNull property="followType">
+						<isEqual property="followType" compareValue="1">
+							AND	FLW.FOLLOW IN (1, 3, 17, 19)
+						</isEqual>
+						<isEqual property="followType" compareValue="2">
+							AND	FLW.FOLLOW IN (2, 3, 18, 19)
+						</isEqual>
+						<isEqual property="followType" compareValue="16">
+							AND	FLW.FOLLOW IN (17, 18, 19)
+						</isEqual>
+					</isNotNull>
+					AND FLW.ORG_ID = #ORG_ID#
+				) as parentCollectionSize,
+				ROW_NUMBER() over (ORDER BY INST.STARTDATE ASC, INST.EVENTINST_UUID) rn
+			FROM CALENDAR.CA_EVENTFOLLOWING FLW
+				INNER JOIN CALENDAR.CA_CALENDAR CAL ON FLW.CALENDAR_UUID = CAL.CALENDAR_UUID AND CAL.ORG_ID = #ORG_ID#
+				INNER JOIN CALENDAR.CA_EVENTINSTANCE INST ON ((FLW.EVENTITEM_TYPE = 1 AND FLW.EVENTITEM_UUID = INST.EVENTINST_UUID) OR (FLW.EVENTITEM_TYPE = 0 AND FLW.EVENTITEM_UUID = INST.EVENT_UUID)) AND INST.ORG_ID = #ORG_ID#
+			WHERE FLW.USER_UUID = #userId#
+				AND FLW.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+				AND INST.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+				AND ((CAL.VISIBILITY = 1 <isNotNull property="loginUserOrgId"> AND CAL.ORG_ID = #loginUserOrgId# </isNotNull>) 
+				    OR (FLW.CALENDAR_UUID IN (SELECT CALENDAR_UUID FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #userId#)))
+				<isNotNull property="followType">
+					<isEqual property="followType" compareValue="1">
+						AND	FLW.FOLLOW IN (1, 3, 17, 19)
+					</isEqual>
+					<isEqual property="followType" compareValue="2">
+						AND	FLW.FOLLOW IN (2, 3, 18, 19)
+					</isEqual>
+					<isEqual property="followType" compareValue="16">
+						AND	FLW.FOLLOW IN (17, 18, 19)
+					</isEqual>
+				</isNotNull>
+				AND FLW.ORG_ID = #ORG_ID#
+			ORDER BY INST.STARTDATE ASC, INST.EVENTINST_UUID
+			FETCH FIRST $__end_row$ ROWS ONLY
+		  ) t
+		WHERE
+			rn = 1
+			OR
+			(
+		        rn >= $__start_row$
+			    AND
+			    rn &lt; $__end_row$
+			)
+		ORDER BY rn
+		FETCH FIRST $__fetch_size_p1$ ROWS ONLY
+		FOR FETCH ONLY
+	</select>
+
+	
+	<select id="selectUpcomingFollowedEventInstancesCount" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT COUNT(1)
+		FROM CALENDAR.CA_EVENTFOLLOWING FLW
+			INNER JOIN CALENDAR.CA_CALENDAR CAL ON FLW.CALENDAR_UUID = CAL.CALENDAR_UUID AND CAL.ORG_ID = #ORG_ID#
+			INNER JOIN CALENDAR.CA_EVENTINSTANCE INST ON ((FLW.EVENTITEM_TYPE = 1 AND FLW.EVENTITEM_UUID = INST.EVENTINST_UUID) OR (FLW.EVENTITEM_TYPE = 0 AND FLW.EVENTITEM_UUID = INST.EVENT_UUID)) AND INST.ORG_ID = #ORG_ID#
+		WHERE FLW.USER_UUID = #userId#
+			AND FLW.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+			AND INST.ENDDATE <![CDATA[ >= ]]> #dateBegin#
+			AND ((CAL.VISIBILITY = 1 <isNotNull property="loginUserOrgId"> AND CAL.ORG_ID = #loginUserOrgId# </isNotNull>) 
+			    OR (FLW.CALENDAR_UUID IN (SELECT CALENDAR_UUID FROM CALENDAR.CA_MEMBERSHIP WHERE MEMBER_UUID = #userId#)))
+			<isNotNull property="followType">
+				<isEqual property="followType" compareValue="1">
+					AND	FLW.FOLLOW IN (1, 3, 17, 19)
+				</isEqual>
+				<isEqual property="followType" compareValue="2">
+					AND	FLW.FOLLOW IN (2, 3, 18, 19)
+				</isEqual>
+				<isEqual property="followType" compareValue="16">
+					AND	FLW.FOLLOW IN (17, 18, 19)
+				</isEqual>
+			</isNotNull>
+			AND FLW.ORG_ID = #ORG_ID#
+		<isEqual property="DBTYPE" compareValue="DB2">
+		FOR FETCH ONLY
+		</isEqual>
+		<!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		FOR FETCH ONLY
+		</isEqual>
+	</select>
+	
+	<select id="selectLatestEndDate" parameterClass="java.util.Map" resultClass="java.util.Date">
+		SELECT MAX(ENDDATE) 
+		FROM CALENDAR.CA_EVENTINSTANCE
+		WHERE EVENT_UUID = #event_UUID# AND ORG_ID = #ORG_ID#
+		<isEqual property="DBTYPE" compareValue="DB2">
+		FOR FETCH ONLY
+		</isEqual>
+		<!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		FOR FETCH ONLY
+		</isEqual>
+	</select>
+	
+	<update id="resetEventInstancesLastModified" parameterClass="java.util.Map">
+		UPDATE CALENDAR.CA_EVENTINSTANCE
+		SET MODIFIEDON = NULL, MODIFIEDBY = NULL
+		WHERE EVENT_UUID = #event_UUID# AND ORG_ID = #ORG_ID#
+			<isNotNull property="fields">
+			AND (
+					EVENTINFO_UUID IS NULL <isNotEmpty property="fields"> OR
+				    (
+						EVENTINFO_UUID IS NOT NULL AND EXISTS (
+						     SELECT 1 
+						     FROM CALENDAR.CA_EVENTINFO INF
+						     WHERE INF.EVENT_UUID = #event_UUID# AND INF.EVENTINFO_UUID = CALENDAR.CA_EVENTINSTANCE.EVENTINFO_UUID AND INF.ORG_ID = #ORG_ID# AND 
+						       (
+						     	<iterate property="fields" conjunction="OR">
+									INF.$fields[]$ IS NULL
+								</iterate>
+							   )
+						)
+					 ) </isNotEmpty>
+				 )
+			</isNotNull>
+	</update>
+	
+	<update id="moveEventInstancesInBatch" parameterClass="java.util.Map">
+		UPDATE CALENDAR.CA_EVENTINSTANCE
+		<isEqual property="DBTYPE" compareValue="DB2">
+		SET STARTDATE = STARTDATE + #startDateOffset# SECONDS, ENDDATE = ENDDATE + #endDateOffset# SECONDS, MODIFIEDON = NULL, MODIFIEDBY = NULL
+		</isEqual>
+		<!-- Change by Connections for IBM i team. -->
+		<isEqual property="DBTYPE" compareValue="AS400">
+		SET STARTDATE = STARTDATE + #startDateOffset# SECONDS, ENDDATE = ENDDATE + #endDateOffset# SECONDS, MODIFIEDON = NULL, MODIFIEDBY = NULL
+		</isEqual>
+		<isEqual property="DBTYPE" compareValue="MSSQL">
+		SET STARTDATE = DATEADD(SECOND, #startDateOffset#, STARTDATE), ENDDATE = DATEADD(SECOND, #endDateOffset#, ENDDATE), MODIFIEDON = NULL, MODIFIEDBY = NULL
+		</isEqual>
+		<isEqual property="DBTYPE" compareValue="ORACLE">
+		SET STARTDATE = STARTDATE + NUMTODSINTERVAL(#startDateOffset#, 'SECOND'), ENDDATE = ENDDATE + NUMTODSINTERVAL(#endDateOffset#, 'SECOND'), MODIFIEDON = NULL, MODIFIEDBY = NULL
+		</isEqual>
+		WHERE EVENT_UUID = #event_UUID# AND ORG_ID = #ORG_ID#
+			AND EVENTINST_UUID NOT IN (
+			       SELECT SUBSTITUTION_UUID 
+			       FROM CALENDAR.CA_SUBSTITUTION 
+			       WHERE EVENT_UUID = #event_UUID# AND (NEWSTARTDATE IS NOT NULL OR NEWENDDATE IS NOT NULL) AND ORG_ID = #ORG_ID#
+			    )
+	</update>
+	
+	<delete id="onShrinkRecurrenceEvent" parameterClass="DBRecurrence">
+		DELETE FROM CALENDAR.CA_EVENTINSTANCE
+		WHERE EVENT_UUID = #event_UUID# AND ORG_ID = #ORG_ID# AND
+			(
+			 (
+				STARTDATE > #untilRule# 
+					AND EVENTINST_UUID NOT IN 
+							(
+							 SELECT SUBSTITUTION_UUID 
+					         FROM CALENDAR.CA_SUBSTITUTION 
+					         WHERE EVENT_UUID = #event_UUID# AND NEWSTARTDATE > #untilRule# AND STARTDATE &lt;= #untilRule# AND ORG_ID = #ORG_ID#
+					        )
+			  ) 
+			  OR
+			  ( 
+				  EVENTINST_UUID IN 
+					(
+					 SELECT SUBSTITUTION_UUID 
+			         FROM CALENDAR.CA_SUBSTITUTION 
+			         WHERE EVENT_UUID = #event_UUID# AND STARTDATE > #untilRule# AND ORG_ID = #ORG_ID#
+			        )
+			   )
+			  )
+	</delete>
+</sqlMap>

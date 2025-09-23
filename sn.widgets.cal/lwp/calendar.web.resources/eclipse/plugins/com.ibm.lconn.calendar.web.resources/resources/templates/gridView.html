@@ -1,0 +1,63 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2012, 2013                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<div style="overflow:hidden; width:100%">
+	<div dojoAttachPoint="view_header" class="lotusActionBar lotusBtnContainer" style="padding-bottom:4px">
+		<span dojoAttachPoint="actionBar" role="toolbar" aria-label="${_lang.EVENTS_VIEW_TOOLBAR_LABEL}">
+			<span dojoAttachPoint="btnAddEvent" class="lotusBtn lotusLeft">
+				<a href="javascript:;" dojoAttachPoint="btnAddEventLink" role="button" title="${_lang.CREATE_BUTTON_TOOLTIP}">${_lang.CREATE_BUTTON}</a>
+			</span>
+			<span dojoAttachPoint="btnEditEvent" class="lotusBtn lotusLeft lotusBtnDisabled">
+				<a href="javascript:;" dojoAttachPoint="btnEditEventLink" role="button" title="${_lang.EDIT_BUTTON_TOOLTIP}">${_lang.EDIT_BUTTON}</a>
+			</span>
+			<span dojoAttachPoint="btnDeleteEvent" class="lotusBtn lotusLeft lotusBtnDisabled">
+				<a href="javascript:;" dojoAttachPoint="btnDeleteEventLink" role="button" title="${_lang.DELETE_BUTTON_TOOLTIP}">${_lang.DELETE_BUTTON}</a>
+			</span>
+		</span>
+		<table class="lotusRight" role="presentation" cellpadding="0">
+			<tr>
+				<td class="lotusFirst">
+					${_lang.STR_VIEW}&nbsp;
+					<a class="lotusAction" role="button" aria-haspopup="true" dojoAttachPoint="viewPickerLink" href="javascript:;">${_lang.MONTH_VIEW}</a>
+					<img dojoAttachPoint="viewPickerImg" aria-label="pick time slot" aria-haspopup="true" alt="" role="presentation" src="${blankImageUrl}" class="lotusArrow lotusDropDownSprite">
+					<span class="lotusAltText" role="presentation">&#x25bc;</span>
+				</td>
+				<td style="display:none"><span aria-hidden="true" role="img" class="lotusDivider">|</span></td>
+				<td style="display:none">
+					<table class="lotusViewControl" role="presentation" cellpadding="0" style="display:inline">
+						<tbody>
+							<tr>
+								<td>${_lang.DISPLAY}:&nbsp;</td>
+								<td>
+									<div dojoAttachPoint="viewPicker">
+										<a class="lotusSprite lotusView lotusTileOn lotusSelected" href="javascript:;" dojoAttachPoint="viewGrid" dojoAttachEvent="onclick:_viewGrid" role="button" aria-pressed="true" aaria-label="${_lang.DISP_CALENDAR}" title="${_lang.DISP_CALENDAR}">
+											<span class="lotusAltText">${_lang.DISP_CALENDAR}</span>
+										</a>
+										<a class="lotusSprite lotusView lotusSummaryOff" href="javascript:;" dojoAttachPoint="viewSummary" dojoAttachEvent="onclick:_viewSummary" role="button" aria-label="${_lang.DISP_LIST}" title="${_lang.DISP_LIST}">
+											<span class="lotusAltText">${_lang.DISP_LIST}</span>
+										</a>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>						
+	<div dojoAttachPoint="view_body" class="calendar_gridview_body" style="clear:both;position:relative;font-size:medium;height:520px"></div>
+	<div dojoAttachPoint="view_footer" class="lotusFeeds">
+		<a id="gridView_addToPersonalCal" role="button" class="lotusFeed lotusAction" dojoAttachPoint="feedLink" href="javascript:;">${_lang.ICAL_FEED}</a>
+	</div>
+</div>

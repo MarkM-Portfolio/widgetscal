@@ -1,0 +1,1152 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Yoshiroh Kamiyama
+X-WR-TIMEZONE:Asia/Tokyo
+BEGIN:VTIMEZONE
+TZID:Asia/Tokyo
+X-LIC-LOCATION:Asia/Tokyo
+BEGIN:STANDARD
+TZOFFSETFROM:+0900
+TZOFFSETTO:+0900
+TZNAME:JST
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Tokyo:20090227T233000
+DTEND;TZID=Asia/Tokyo:20090228T003000
+RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20090306T143000Z;BYDAY=FR
+DTSTAMP:20090419T144704Z
+UID:2qugjatmgq7938vhlosikt9q9o@google.com
+CLASS:PRIVATE
+CREATED:20090419T144648Z
+DESCRIPTION:
+LAST-MODIFIED:20090419T144648Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:weekly midnight
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20090222T233000Z
+DTEND:20090223T003000Z
+DTSTAMP:20090419T144704Z
+UID:f1iqcmhvotp186bpn2p8s4n4dk@google.com
+CLASS:PRIVATE
+CREATED:20090419T144154Z
+DESCRIPTION:
+LAST-MODIFIED:20090419T144154Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:utc midnight
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20090222T143000Z
+DTEND:20090222T153000Z
+DTSTAMP:20090419T144704Z
+UID:oa9tko3l240fp3k23ovlch6qn0@google.com
+CLASS:PRIVATE
+CREATED:20090419T143907Z
+DESCRIPTION:
+LAST-MODIFIED:20090419T143907Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:midnight
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20090213T013000Z
+DTEND:20090213T023000Z
+DTSTAMP:20090419T144704Z
+UID:0pik43o567e68kc6te914jt7q0@google.com
+CLASS:PRIVATE
+CREATED:20090419T124232Z
+DESCRIPTION:
+LAST-MODIFIED:20090419T124232Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:followup meeting
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Tokyo:20090211T100000
+DTEND;TZID=Asia/Tokyo:20090211T113000
+RRULE:FREQ=WEEKLY;BYDAY=WE;WKST=SU
+DTSTAMP:20090419T144704Z
+UID:a6v8au8i4m394bblg0b84la2tk@google.com
+CLASS:PRIVATE
+CREATED:20090419T123815Z
+DESCRIPTION:
+LAST-MODIFIED:20090419T123815Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:weekly proj meeting
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090212
+DTEND;VALUE=DATE:20090213
+RRULE:FREQ=WEEKLY;BYDAY=TU,TH;WKST=SU
+DTSTAMP:20090419T144704Z
+UID:157uk81r9d4bv4qhb3lcinio4o@google.com
+CLASS:PRIVATE
+CREATED:20090419T121549Z
+DESCRIPTION:
+LAST-MODIFIED:20090419T121549Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:my weekly event
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090218
+DTEND;VALUE=DATE:20090219
+RRULE:FREQ=MONTHLY;WKST=SU;UNTIL=20090318;BYMONTHDAY=18
+DTSTAMP:20090419T144704Z
+UID:b32h0pv6eag51hduaj3g76usfk@google.com
+CLASS:PRIVATE
+CREATED:20090419T101908Z
+DESCRIPTION:
+LAST-MODIFIED:20090419T101908Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:monthly until march
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090220
+DTEND;VALUE=DATE:20090221
+RRULE:FREQ=MONTHLY;WKST=SU;BYMONTHDAY=20
+DTSTAMP:20090419T144704Z
+UID:h5a05u9ad9eje3ig1unoja66ac@google.com
+CLASS:PRIVATE
+CREATED:20090419T091926Z
+DESCRIPTION:
+LAST-MODIFIED:20090419T091926Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:my monthly event
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090210
+DTEND;VALUE=DATE:20090211
+RRULE:FREQ=YEARLY;WKST=SU
+DTSTAMP:20090419T144704Z
+UID:bl9ej2ho9h5ku84rkkpn0q0f5k@google.com
+CLASS:PRIVATE
+CREATED:20090419T081023Z
+DESCRIPTION:
+LAST-MODIFIED:20090419T081023Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:my yearly event
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090427
+DTEND;VALUE=DATE:20090428
+RRULE:FREQ=WEEKLY;BYDAY=MO;WKST=SU
+DTSTAMP:20090419T144704Z
+UID:ia7eaakcrmkhmbmkv8h8i11la4@google.com
+CLASS:PRIVATE
+CREATED:20090415T100827Z
+DESCRIPTION:
+LAST-MODIFIED:20090415T100827Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:endless
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090422
+DTEND;VALUE=DATE:20090423
+RRULE:FREQ=DAILY;UNTIL=20090424;WKST=SU
+DTSTAMP:20090419T144704Z
+UID:00h1j6dohgp6abhida01367sb4@google.com
+CLASS:PRIVATE
+CREATED:20090415T071746Z
+DESCRIPTION:going to be hard
+LAST-MODIFIED:20090415T071746Z
+LOCATION:somewhere
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:3-day-class
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090704
+DTEND;VALUE=DATE:20090705
+DTSTAMP:20090419T144704Z
+UID:Ical9c62d0cdd82c83229a8e6654d7ede71a
+X-GOOGLE-CALENDAR-CONTENT-ICON:http://www.google.com/calendar/images/google
+ -holiday.gif
+X-GOOGLE-CALENDAR-CONTENT-URL:http://www.google.com/logos/july4th06.gif
+X-GOOGLE-CALENDAR-CONTENT-WIDTH:276
+X-GOOGLE-CALENDAR-CONTENT-HEIGHT:120
+X-GOOGLE-CALENDAR-CONTENT-TYPE:image/gif
+X-GOOGLE-CALENDAR-CONTENT-TITLE:Independence Day
+CLASS:PRIVATE
+CREATED:19000101T120000Z
+DESCRIPTION:
+LAST-MODIFIED:20090415T040932Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Independence Day
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20060704
+DTEND;VALUE=DATE:20060705
+DTSTAMP:20090419T144704Z
+UID:Ical6f3c97af02660de89803f39f58d08672
+X-GOOGLE-CALENDAR-CONTENT-ICON:http://www.google.com/calendar/images/google
+ -holiday.gif
+X-GOOGLE-CALENDAR-CONTENT-URL:http://www.google.com/logos/july4th06.gif
+X-GOOGLE-CALENDAR-CONTENT-WIDTH:276
+X-GOOGLE-CALENDAR-CONTENT-HEIGHT:120
+X-GOOGLE-CALENDAR-CONTENT-TYPE:image/gif
+X-GOOGLE-CALENDAR-CONTENT-TITLE:Independence Day
+CLASS:PRIVATE
+CREATED:19000101T120000Z
+DESCRIPTION:
+LAST-MODIFIED:20090415T040722Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Independence Day
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090607
+DTEND;VALUE=DATE:20090608
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD244903800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 6: Istanbul\, Turkey. \n\nLap distance: 5.338km/3.317 mil
+ es Race: 58 laps - 309.356km/192.233 miles\n\n\n\nLocal Weather at: http://
+ weather.cnn.com/weather/forecast.jsp?locCode=LTBA\n\nView the track: http:/
+ /earth.google.com/maps?q=http:%2F%2Fwww.addadate.com%2Ff1%2Ff1.kmz&ie=UTF8&
+ t=h&z=2&om=1\n\nDownload Google Earth location of track: http://www.addadat
+ e.com/f1/f1.kmz\n\n\nRunning anti-clockwise\, this is one of the few circui
+ ts that requires many drivers to add a head rest to help them.  Throughout 
+ the winter season the F1 crew are busy training\, but with so many tracks r
+ unning clockwise\, the few track exceptions such as this one cause difficul
+ ty -particularly in the last quarter of the race.  Istanbul is one of Felip
+ e Massa's favourites having won it in 2006\, 2007 and 2008\n\n\n\nFastest L
+ ap: 1:24.770 Juan Pablo Montoya
+LAST-MODIFIED:20090415T035627Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Turkish Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090510
+DTEND;VALUE=DATE:20090511
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD204903800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 4: Spanish Grand Prix. Lap distance: 4.627km/2.875 milesR
+ ace: 66 laps - 305.256km/189.777 miles\n\nView the track: http://earth.goog
+ le.com/maps?q=http:%2F%2Fwww.addadate.com%2Ff1%2Ff1.kmz&ie=UTF8&t=h&z=2&om=
+ 1\n\nDownload Google Earth location of track: http://www.addadate.com/f1/f1
+ .kmz\n\nBarcelona\, with its fantastic nightlife and amazing buildings is j
+ ust south of Circuit de Catalunya.  This is one of the favourite test track
+ s due to its long straights and nice selection of corners.  Consequently th
+ e drivers know this circuit pretty well\n\, so expect some 'wide' cars at j
+ ust the right places when overtaking is being attempted.\n\nLocal weather a
+ t: http://www.barcelona.com/weather_in_barcelona\n\nFastest Lap: Kimi Räikk
+ önen Ferrari 1:21.670 (This was the first of many Fastest Laps that Kimi en
+ joyed in 2008
+LAST-MODIFIED:20090415T035627Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Spanish Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090524
+DTEND;VALUE=DATE:20090525
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD224903800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 5: Monaco. Lap distance: 3.34 kilometres\, 2.075 miles: \
+ n\nView the track: http://earth.google.com/maps?q=http:%2F%2Fwww.addadate.c
+ om%2Ff1%2Ff1.kmz&ie=UTF8&t=h&z=2&om=1\n\nDownload Google Earth location of 
+ track: http://www.addadate.com/f1/f1.kmz\n\n\nMonaco is one of the most hig
+ hly prized podiums in the F1 schedule.  Since 1929 the Monaco streets have 
+ been shared with race cars haring around the many elevations that this trac
+ k enjoys.  This track has traditionally levelled the field in many respects
+  allowing F1 cards with great handling to make up for lack of top speed.  T
+ he setting up and taking down of the circuit takes 9 weeks in total.\n\nLoc
+ al weather at: http://www.accuweather.com/world-index-forecast.asp?partner=
+ accuweather&traveler=0&loccode=EUR%7CMC%7CMN000%7CMONACO%7C\n\nFastest Lap:
+  1'13.532 -Kimi Räikkönen
+LAST-MODIFIED:20090415T035627Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Monaco Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090405
+DTEND;VALUE=DATE:20090406
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD2C48F3800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 2: Sepang\, Kuala Lumpur\, Malaysia.\n\nLap distance: 5.5
+ 43km/3.444 miles Race: 56 laps - 310.408km/192.887 miles\n\nView the track:
+  http://earth.google.com/maps?q=http:%2F%2Fwww.addadate.com%2Ff1%2Ff1.kmz&i
+ e=UTF8&t=h&z=2&om=1\n\nDownload Google Earth location of track: http://www.
+ addadate.com/f1/f1.kmz\n\nLocal weather at: http://www.sino.net/Weather/sep
+ ang-WMKK.html\n\n\nSepang is a highly regarded 'State of the Art' track\, h
+ aving only been opened in 1999.  Consequently it is beautifully constructed
+  from its three storey pit area to its double fronted grandstand.  Sepang h
+ as been looking in to making this a night race\, and its been an 'on-off' a
+ ffair.  Plans as at end of 2008 are to keep it a 'late afternoon' race\, bu
+ t be prepared for this to change\, given the spectacle in Singapore in 2008
+ \n\n\nLap Record:  Nick Heidfeld BMW Sauber 1:35.366 
+LAST-MODIFIED:20090415T035627Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Malaysian Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090419
+DTEND;VALUE=DATE:20090420
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD2E48F3800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 3: International Circuit\, Bahrain \n\nLap distance: 5.41
+ 2km/3.363 miles Race: 57 laps - 308.238km/191.539 miles\n\nView the track: 
+ http://earth.google.com/maps?q=http:%2F%2Fwww.addadate.com%2Ff1%2Ff1.kmz&ie
+ =UTF8&t=h&z=2&om=1\n\nDownload Google Earth location of track: http://www.a
+ ddadate.com/f1/f1.kmz\n\nLocal Weather at:http://www.worldweatherserver.com
+ /weather_in_BHZZ0001.aspx\n\nSituated in the middle of the desert presented
+  a number of challenges for the designers and drivers for this circuit\, no
+ t least of all the heat.  Taking on fluids and watching engine temperatures
+  is critical for this race -long periods standing in the pits or on the sta
+ rt grid can lead to later engine failures.  Whilst the heat affects the eng
+ ines\, the huge run off areas make this one of the safest circuits around\,
+  and means that you are unlikely to see a safety car procession.  At the en
+ d of the race\, watch out for the rose water being sprayed rather than the 
+ traditional champagne.\n\nFastest Lap: Heikki Kovalainen McLaren-Mercedes 1
+ :33.193
+LAST-MODIFIED:20090415T035627Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Bahrain Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090329
+DTEND;VALUE=DATE:20090330
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD2A48F3800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 1: Albert Park\, Melbourne\, Australia.\n\nLap Distance: 
+ 5.303km/3.295 miles Race: 58 laps - 307.574km/191.110 miles\n\nLap Record: 
+ Heikki Kovalainen McLaren-Mercedes 1:27.418\n\nStart Time: 4.30am GMT\n\nVi
+ ew the track: http://earth.google.com/maps?q=http:%2F%2Fwww.addadate.com%2F
+ f1%2Ff1.kmz&ie=UTF8&t=h&z=2&om=1\n\nDownload Google Earth location of track
+ : http://www.addadate.com/f1/f1.kmz\n\nLocal Weather at: http://www.abc.net
+ .au/melbourne/weather/\n\n\n\nAlbert Park is traditionally filled with Cafe
+ 's and joggers enjoying life central to South Melbourne (the 'old' part of 
+ Melbourne) with its wonderful architecture and Port Phillip Bay.  However\,
+  now that March is here the Formula One teams are arriving to take over the
+  Park for this years inaugural race.  The track at Albert Park is very smoo
+ th compared to other tracks resulting in the Melbourne Grand Prix being con
+ sidered a 'fast' circuit.  The number of ticket holders continues to rise i
+ n Australia with around 400\,000 enjoying the spectable track-side in 2007.
+  In 2008 there were an amazing 3 safety cars before Lewis made it to victor
+ y\, so hang on for another exciting start to the season.
+LAST-MODIFIED:20090415T035627Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Australian Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090927
+DTEND;VALUE=DATE:20090928
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD244913800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 14: Marina Bay\, Singapore!!\n\nAfter last years sell out
+  race\, I would expect to see changes to the pit lane entrance and exit.  W
+ atch out for sparks flying on the bumpy track\, and perhaps the safety car 
+ coming out a few times.  The concrete barriers and street circuit make it d
+ ifficult to remove damaged cars quickly\, and with safety paramount its lik
+ ely they will deploy the safety at the risk of making the race dull.\n\nFas
+ test Lap: Kimi Raikkonen Ferrari 1:45.599\nEnjoy :-)
+LAST-MODIFIED:20090415T035626Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Singapore Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20091011
+DTEND;VALUE=DATE:20091012
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD264913800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 15: Fuji Speedway\, Japan\n\nLap distance: 4.563 kilometr
+ es (2.835 miles)\n\n\n\nLocal Weather at: http://www.weathercity.com/jp/fuj
+ i/\n\n\nRunning out of money meant that this track could never be the banke
+ d superspeedway that is was planned for\, which luckily for F1 led to the f
+ irst race in the late 70's in its new found format.  In 2003 the track unde
+ rwent so fairly major reshaping to become the track that we know today.\n\n
+ \nFastest Lap 1'14.30 min. 211.203 km/h Jody Scheckter (In 1977!!)
+LAST-MODIFIED:20090415T035626Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Japanese Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090913
+DTEND;VALUE=DATE:20090914
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD224913800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 13: Monza\, Italy. Lap distance: 5.793km/3.600 miles Race
+ : 53 laps - 306.720km/190.596 miles \n\nLocal Weather at: http://au.weather
+ .yahoo.com/ITXX/ITXX0049/index_c.html \n\nMonza is such an amazing track in
+  the heart of the Tifosi. There's a camp site yards away from the track whe
+ re you can smell the petrol let alone hear the roar of the V8s race by. Wit
+ h the long straights this track favours the cars with the higher top speeds
+  and higher revs\, but it also has some great chicanes and bends to make it
+  an exciting track. Enjoy the racing and atmosphere at this historic track 
+ \n\nFastest Lap: 1:19.525 Juan-Pablo Montoya\,\n\n
+LAST-MODIFIED:20090415T035626Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Italian Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090726
+DTEND;VALUE=DATE:20090727
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD2C4903800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 10: Hungaroring\, Budapest\, Hungary. \n\nLap distance: 4
+ .381km/2.722 miles Race: 70 laps - 306.663km/190.560 miles\n\n\n\nLocal Wea
+ ther at http://www.wunderground.com/global/stations/12843.html\n\n\n\nThe H
+ ungaroring makes for interesting reading given that it is the first race be
+ hind the Iron Curtain.  Built in the mid 80's it has often been slated as b
+ eing as &quot\;pedestrian Grand Prix&quot\; due to the slowness of the circ
+ uit.  Even with the removal of the esses in 89 it is still a slow old track
+ \, second only to Monaco. Consequently you shouldn't expect too much action
+  in terms of overtaking (exceptions have been Ralph Schumacher who stormed 
+ from last to fourth in 2003) And there is a fair likelihood that the pole s
+ itter after qualifying will be running on vapours to make sure they are out
+  at the front.  The track is rarely used\, so its always pretty dusty to st
+ art off with.   This makes for an interesting start to the race\, and quali
+ fying and leads to tumbling lap times as the rubber goes down.\n\n\nvisit h
+ ttp://www.addadate.com for next years F1 Calendar.   \n\n\n\nFastest Lap: 1
+ '18.436 Rubens Barichello
+LAST-MODIFIED:20090415T035626Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Hungarian Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090712
+DTEND;VALUE=DATE:20090713
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD2A4903800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 9: Nuerburgring Germany. \n\nLap distance: 4.57km 67 Laps
+   \n\nLocal Weather at: http://www.qwikcast.com/cgi-bin/forecast.cgi?zip=Ho
+ ckenheim\,DE\n\n\nThe Nuerburgring is one of the most interesting circuits 
+ due to the construction.  Originally designed to be 27miles long with a spl
+ it circuit it had over 100 corners\, each designed carefully to test the sk
+ ill of the driver.  Modern races now use a small part of the original circu
+ it\, with the remaining track being considered a true challenge to contesta
+ nts.  \n\nVisit http://www.addadate.com for next years calendar\n\nFastest 
+ Lap: Nick Heidfeld BMW Sauber 1:15.987
+LAST-MODIFIED:20090415T035626Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:German Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090628
+DTEND;VALUE=DATE:20090629
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD284903800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 8: French Grand Prix\, Magny Cours.Many people will be pl
+ eased to see that the French Grand Prix was kept again in 2009 having been 
+ part of the original line up of races when the F1 began in 1950.  \n\nTrack
+ : Magny Cours\n\nFastest Lap: Kimi Räikkönen Ferrari 1:16.630
+LAST-MODIFIED:20090415T035626Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:French Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090823
+DTEND;VALUE=DATE:20090824
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD2E4903800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 11: Valencia.\n\nCheck out the fastest lap time owner....
+  Sebasitan Vettel in the Toro Rosso.  This was a great lap\, and shows that
+  this race could well lead to an upset again in 2009.  Watch out for driver
+ s who have their 'eye' in on the tight circuit where overtaking is difficul
+ t\nFastest Lap: Sebastian Vettel\, Toro Rosso-Ferrari\, 2008)\n\nView the t
+ rack: http://earth.google.com/maps?q=http:%2F%2Fwww.addadate.com%2Ff1%2Ff1.
+ kmz&ie=UTF8&t=h&z=2&om=1\n\nDownload Google Earth location of track: http:/
+ /www.addadate.com/f1/f1.kmz
+LAST-MODIFIED:20090415T035626Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:European Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20091018
+DTEND;VALUE=DATE:20091019
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD284913800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 16: Shanghai International Circuit\, China. \n\nLap dista
+ nce: 5.451km/3.387 miles Race: 56 laps - 305.066km/189.568 miles\n\n\n\nLoc
+ al Weather at: http://www.wunderground.com/global/stations/58362.html\n\n\n
+ \nDesigned like so many other tracks by Hermann Tilke this track with its s
+ tunning architecture has been designed as the gateway to the China as far a
+ s FormulaOne is concerned.  One of the most outstanding design features is 
+ the ability for spectators to view almost 80 per cent of the circuit\, and 
+ being a modern track\, the teams love the room and facilities this circuit 
+ offers.\n\n\n\nFastest Lap: 1'32.238 Michael Schumacher
+LAST-MODIFIED:20090415T035626Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Chinese Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090621
+DTEND;VALUE=DATE:20090622
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD264903800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 7: Silverstone\, Great Britain.\n\nLap distance: 5.141km/
+ 3.194 miles Race: 60 laps - 308.355km/191.604 miles\n\n\n\nLocal Weather at
+ : http://weather.yahoo.com/forecast/UKXX1916_c.html?force_units=1\n\nView t
+ he track: http://earth.google.com/maps?q=http:%2F%2Fwww.addadate.com%2Ff1%2
+ Ff1.kmz&ie=UTF8&t=h&z=2&om=1\n\nDownload Google Earth location of track: ht
+ tp://www.addadate.com/f1/f1.kmz\n\nSteeped in history\, from its days as a 
+ World War bomber runway\, Silverstone is the home to the first World Champi
+ onship Grand Prix Race (won by an Alfa Romeo driven by Farina incidentally.
+   Lap record then was a long 1m 50sec)  Since then it has been reshaped a f
+ ew times and now lays claim as the home of the British Grand Prix and seen 
+ by many as a classic race.  The pressure continued on Silverstone to mainta
+ in the GP venue there\, with calls for track and facility improvements cont
+ inued in 2008 leading to the eventual announcement in July that it will not
+  continue to be the home of F1 in Britain. From 2010 Donnington Park will n
+ ow host the British GP until 2020.\n\n\n\nFastest Lap: 1'18.233 Kimi Räikkö
+ nen
+LAST-MODIFIED:20090415T035626Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:British Grand Prix 
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20091101
+DTEND;VALUE=DATE:20091102
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD2A4913800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 17: Lap distance: 4.309km/2.677 miles Race: 71 laps - 305
+ .909km/190.067 miles\n\n\n\nLocal Weather at: http://www.wunderground.com/g
+ lobal/stations/83780.html\n\nView the track: http://earth.google.com/maps?q
+ =http:%2F%2Fwww.addadate.com%2Ff1%2Ff1.kmz&ie=UTF8&t=h&z=2&om=1\n\nDownload
+  Google Earth location of track: http://www.addadate.com/f1/f1.kmz\n\n\nNor
+ mally this is the final race at Interlagos at the end of the championship a
+ dding a final twist requiring muscle strength and different suspension setu
+ ps to cope with the change in the camber of the track. (its a  is an anti-c
+ lockwise race) However\, with Abu Dhabi now taking the final slot\, this wi
+ ll be a great warm up and final chance to position themselves in the points
+ .  Watch out for the extra padding next to helmets and drivers resting thei
+ r heads.  Who can forget the final in 2007 with Ice Man Kimi taking the che
+ quered flag and the championship\, whilst Lewis was battling his way from t
+ he back half of the grid.  \n\n\n\nvisit http://www.addadate.com for next y
+ ears F1 Calendar \n\n\n\nFastest Lap: 1'09.822 Rubens Barrichello
+LAST-MODIFIED:20090415T035626Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Brazilian Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090830
+DTEND;VALUE=DATE:20090831
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD204913800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 12: Circuit de Spa-Francorchamps \n\nLap distance: 6.968 
+ kilometres (4.333 miles)\n\n\n\nLocal Weather at: http://www.wunderground.c
+ om/global/stations/06490.html\n\n\n\nSpa is a classic track:- twisting and 
+ turning\,its fast and dangerous and favours the bold.  Expect to see the tr
+ ue great racers show their metal on this circuit whilst others will be more
+  cautious.  Add in some rain and you have an awesome race\, where truly you
+  will see who are the F1 heroes in each team.  Many rate this as 'the' F1 t
+ rack.  2008 was memorable for the downpour that led to Lewis catching up Ki
+ mi before cutting the chicane.  Although Lewis popped the champagne cork\, 
+ the win was ultimately awarded to Massa following a stewards enquiry.  Ther
+ e will be no love lost here in 2009 if we see rain again this year.\n\n\n\n
+ Fastest Lap: 1'45.108 and atmosphere at this historic track Fastest Lap: 1:
+ 19.525 Juan-Pablo Montoya
+LAST-MODIFIED:20090415T035626Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Belgium Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20091115
+DTEND;VALUE=DATE:20091116
+DTSTAMP:20090419T144704Z
+UID:000000004784043814190A4AA3529AB1C7EFEDD2C4913800
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Round 18: Abu Dhabi.\n\nLap distance:5.52km\n\nStart time: unkn
+ ownT \nLocal weather at: http://weather.uk.msn.com/local.aspx?wealocations=
+ wc:AEXX0001 but lets face it\, you can probably guess what it will be like!
+ !\n\nThis is the first year that Abu Dhabi are on the F1 circuit.  To be ri
+ ght at the end is going to make this a fantastic race.  With its harbour fr
+ ont section and use of public roads\, expect to see some of the slower team
+ s/drivers showing what they are made of and getting themselves unexpectedly
+  up the grid.  There's also a possible chance this will be made a night rac
+ e\, so watch out for the start timings...\n\nView the track: http://earth.g
+ oogle.com/maps?q=http:%2F%2Fwww.addadate.com%2Ff1%2Ff1.kmz&ie=UTF8&t=h&z=2&
+ om=1\n\nDownload Google Earth location of track: http://www.addadate.com/f1
+ /f1.kmz\n\n\nFastest Lap: TBA!!
+LAST-MODIFIED:20090415T035626Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Abu Dhabi Grand Prix
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090216
+DTEND;VALUE=DATE:20090217
+DTSTAMP:20090419T144704Z
+UID:Ical674fcacab4523c64d11dcbb85c2c9098
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Washington’s Birthday
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20080216T050000Z
+DTEND:20080217T050000Z
+DTSTAMP:20090419T144704Z
+UID:Ical99285f3729cef02eda5fdf186e54aa32
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Washington's Birthday
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20021111
+DTEND;VALUE=DATE:20021112
+RRULE:FREQ=YEARLY;BYMONTH=11;BYMONTHDAY=11
+DTSTAMP:20090419T144704Z
+UID:Ical498a1b782cfdd36fd0927931ee0c7c7a
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Veteran's Day
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20020214
+DTEND;VALUE=DATE:20020215
+RRULE:FREQ=YEARLY;BYMONTH=2;BYMONTHDAY=14
+DTSTAMP:20090419T144704Z
+UID:Ical86a11fdb49c46f58cbf1b2324d2909f0
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Valentine's Day
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20021128
+DTEND;VALUE=DATE:20021129
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=TH;BYSETPOS=4
+DTSTAMP:20090419T144704Z
+UID:Icalbdba61093d86814873504abfdb37b7df
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Thanksgiving
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20060101
+DTEND;VALUE=DATE:20060102
+RRULE:FREQ=YEARLY;BYMONTH=1;BYMONTHDAY=1
+DTSTAMP:20090419T144704Z
+UID:Ical60b101e6a5d19e73a898b5366ee6cdb0
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:New Year's Day
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20020101
+DTEND;VALUE=DATE:20020102
+RRULE:FREQ=YEARLY;COUNT=4;BYMONTH=1;BYMONTHDAY=1
+DTSTAMP:20090419T144704Z
+UID:Icalfdcd4538d1c198b2a14bb56037d786c2
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:2
+STATUS:CONFIRMED
+SUMMARY:New Year's
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20020527
+DTEND;VALUE=DATE:20020528
+RRULE:FREQ=YEARLY;BYMONTH=5;BYDAY=MO;BYSETPOS=-1
+DTSTAMP:20090419T144704Z
+UID:Ical8ec48b6e2eaae59071c5bed78865eec0
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Memorial Day
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20060116
+DTEND;VALUE=DATE:20060117
+RRULE:FREQ=YEARLY;BYMONTH=1;BYDAY=MO;BYSETPOS=3
+DTSTAMP:20090419T144704Z
+UID:Ical6c161ccce83dbcbb97706535d360c2ca
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Martin Luther King\, Jr. Day
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20030120
+DTEND;VALUE=DATE:20030121
+RRULE:FREQ=YEARLY;COUNT=3;BYMONTH=1;BYDAY=MO;BYSETPOS=3
+DTSTAMP:20090419T144704Z
+UID:Icald239d97321e599e25b370c925573ab32
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Martin Luther King\, Jr's Day
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20020121
+DTEND;VALUE=DATE:20020122
+RRULE:FREQ=YEARLY;COUNT=1;BYMONTH=1;BYDAY=MO;BYSETPOS=3
+DTSTAMP:20090419T144704Z
+UID:Ical377e3b0da0e15a2b0191f8b88be5fac4
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:2
+STATUS:CONFIRMED
+SUMMARY:Martin Luther King\, Jr's Davy
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20020902
+DTEND;VALUE=DATE:20020903
+RRULE:FREQ=YEARLY;BYMONTH=9;BYDAY=MO;BYSETPOS=1
+DTSTAMP:20090419T144704Z
+UID:Icale4ede82d9482c186762f1962b23d07c7
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Labor Day
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20020704
+DTEND;VALUE=DATE:20020705
+RRULE:FREQ=YEARLY;BYMONTH=7;BYMONTHDAY=4
+EXDATE;VALUE=DATE:20060704
+EXDATE;VALUE=DATE:20090704
+DTSTAMP:20090419T144704Z
+UID:Ical40e915f4cf5930f3b3e06470dc532e21
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Independence Day
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20061031
+DTEND;VALUE=DATE:20061101
+RRULE:FREQ=YEARLY;BYMONTH=10;BYMONTHDAY=31
+DTSTAMP:20090419T144704Z
+UID:Ical7fe3f422eb2550cf45431343aec51e1b
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Halloween
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20080323
+DTEND;VALUE=DATE:20080324
+DTSTAMP:20090419T144704Z
+UID:Icalefad867642f5366b292e114bf70930d6
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Easter
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20040411
+DTEND;VALUE=DATE:20040412
+DTSTAMP:20090419T144704Z
+UID:Icalbd967535095ded66b6720ef86c06a358
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Easter
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20070408
+DTEND;VALUE=DATE:20070409
+DTSTAMP:20090419T144704Z
+UID:Icalb0c172dcb1aebd1c8afac7f688db88f7
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Easter
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20060416
+DTEND;VALUE=DATE:20060417
+DTSTAMP:20090419T144704Z
+UID:Ical9fd95c71d9c5128ec3d3050ddcbef0ad
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:2
+STATUS:CONFIRMED
+SUMMARY:Easter
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20030420
+DTEND;VALUE=DATE:20030421
+DTSTAMP:20090419T144704Z
+UID:Ical8dedeb504d39d7d7e003ede1550b65ec
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Easter
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090412
+DTEND;VALUE=DATE:20090413
+DTSTAMP:20090419T144704Z
+UID:Ical7e65e64f827a3feb2b4ad173b0212616
+CLASS:PUBLIC
+CREATED:20060203T023620Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Easter
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20020331
+DTEND;VALUE=DATE:20020401
+DTSTAMP:20090419T144704Z
+UID:Ical32d4b80d3d6a9cff856311bd8d94d5d5
+CLASS:PUBLIC
+CREATED:20041015T171054Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Easter
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20100404
+DTEND;VALUE=DATE:20100405
+DTSTAMP:20090419T144704Z
+UID:Ical2267c34863bffe66d958b8539995763e
+CLASS:PUBLIC
+CREATED:20060203T023643Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Easter
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20050327
+DTEND;VALUE=DATE:20050328
+DTSTAMP:20090419T144704Z
+UID:Ical038cf16ac21310603b60272562b3cfed
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Easter
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20021014
+DTEND;VALUE=DATE:20021015
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=MO;BYSETPOS=2
+DTSTAMP:20090419T144704Z
+UID:Icald9e4b47d77ade390970aa983011b7191
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Columbus Day
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20021225
+DTEND;VALUE=DATE:20021226
+RRULE:FREQ=YEARLY;BYMONTH=12;BYMONTHDAY=25
+DTSTAMP:20090419T144704Z
+UID:Ical91608166dd0d593a5a6b04a76d77175f
+CLASS:PUBLIC
+CREATED:19000101T120000Z
+DESCRIPTION:Visit http://www.calendarlabs.com for any type of calendar need
+ s.
+LAST-MODIFIED:20090415T035318Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Christmas
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20090421
+DTEND;VALUE=DATE:20090422
+DTSTAMP:20090419T144704Z
+UID:cqrnov0bttd31pfvgvmd6gl11k@google.com
+CLASS:PRIVATE
+CREATED:20090410T025449Z
+DESCRIPTION:
+LAST-MODIFIED:20090410T025449Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:vacation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20090416T100000Z
+DTEND:20090416T110000Z
+DTSTAMP:20090419T144704Z
+UID:qi36vbp0qianqdjlhhbqnmskvk@google.com
+CLASS:PRIVATE
+CREATED:20090406T045111Z
+DESCRIPTION:
+LAST-MODIFIED:20090409T210528Z
+LOCATION:
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:に水族館で待ち合わせ
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20090416T080000Z
+DTEND:20090416T093000Z
+DTSTAMP:20090419T144704Z
+UID:ophht0amjp4otrcf070sn3rntc@google.com
+CLASS:PRIVATE
+CREATED:20090406T045022Z
+DESCRIPTION:
+LAST-MODIFIED:20090409T210519Z
+LOCATION:somewhere
+SEQUENCE:3
+STATUS:CONFIRMED
+SUMMARY:gmeeting
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR

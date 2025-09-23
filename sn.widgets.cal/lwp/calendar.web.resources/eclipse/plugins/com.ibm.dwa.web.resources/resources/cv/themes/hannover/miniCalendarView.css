@@ -1,0 +1,115 @@
+/* ***************************************************************** */
+/*                                                                   */
+/* IBM Confidential                                                  */
+/*                                                                   */
+/* OCO Source Materials                                              */
+/*                                                                   */
+/* Copyright IBM Corp. 2012, 2013                                    */
+/*                                                                   */
+/* The source code for this program is not published or otherwise    */
+/* divested of its trade secrets, irrespective of what has been      */
+/* deposited with the U.S. Copyright Office.                         */
+/*                                                                   */
+/* ***************************************************************** */
+
+.s-label-light {
+    font-family: lucida grande,helvetica,arial,sans-serif;
+	font-size: 75%;
+	font-weight: normal;
+	color: rgb(90,90,115);
+}
+
+.s-sidecalendar-entry, .s-sidecalendar-navigator, .s-sidecalendar-entry-background{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.s-sidecalendar-entry, .s-sidecalendar-navigator{
+	border-style: solid;
+	border-color: #b5c3d6;
+	border-width: 0px 0px 1px;
+	padding: 1px 2px;
+}
+.s-sidecalendar-entry{
+	max-height: 9em;
+	overflow: hidden;
+}
+.s-sidecalendar-navigator{
+	padding: 0px;
+	background-color: rgb(233,236,241);
+	height: 1em;
+}
+.s-sidecalendar-body{
+	padding-top: 1em;
+}
+.s-sidecalendar-entry-highlighted {
+	background-color: rgb(98,149,215) !important;
+	color: white !important;
+}
+.s-sidecalendar-entry-background{
+	display:none;
+}
+.s-sidecalendar-entry-time, .s-sidecalendar-entry-subject, .s-sidecalendar-entry-info{
+	word-wrap: break-word;
+}
+.s-sidecalendar-entry-time, .s-sidecalendar-entry-subject{
+	font-weight: bold;
+}
+.s-sidecalendar-entry-subject, .s-sidecalendar-entry-info{
+	padding: 0 0 0 3ex;
+}
+.dijitRtl .s-sidecalendar-entry-subject, .dijitRtl .s-sidecalendar-entry-info{
+	padding: 0 3ex 0 0;
+}
+.s-sidecalendar-dateindicator, .s-sidecalendar-dateindicator-highlighted {
+	font-family: lucida grande,helvetica,arial,sans-serif;
+	font-size: 75%;
+	font-weight: bold;
+	color: rgb(90,90,115);
+ 	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+	overflow: hidden;
+	padding: 1px 4px;
+	border: none;
+	cursor: pointer;
+}
+.s-sidecalendar-dateindicator-highlighted{
+	color: black;
+	padding: 0px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: white rgb(176, 112, 48) rgb(176, 112, 48) white;
+	background-color: rgb(248, 184, 80);
+}
+.s-sidecalendar-dateindicator-whole{
+	width:100%;
+	height:100%;
+}
+.s-sidecalendar-dateindicator-button{
+	width:25%;
+}
+.s-sidecalendar-dateindicator-date{
+	width:50%;
+}
+.s-sidecalendar-icons-prev{
+	background-image: url("../../../common/images/basicicons.gif");
+	background-position: -120px -20px;
+}
+.dijitRtl .s-sidecalendar-icons-prev{
+	background-position: -140px -20px;
+}
+.s-sidecalendar-icons-next{
+	background-image: url("../../../common/images/basicicons.gif");
+	background-position: -140px -20px;
+}
+.dijitRtl .s-sidecalendar-icons-next{
+	background-position: -120px -20px;
+}
+
+.xs-handcursor {
+	cursor: D_HANDCURSOR_NQ;
+}
+
+.s-panel-border {
+	border: solid #d8e9fc 1px;
+}

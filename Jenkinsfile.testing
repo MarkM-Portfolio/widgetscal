@@ -1,0 +1,24 @@
+@Library('quickstart') _
+def param = [
+    "deploymentScript":"deploy_calendar_build.sh",
+    "dbFileName":"db.properties",
+    "SERVER_POOL":"maintain",
+    "global_ENABLE_CODE_COVERAGE":false,
+    "UT":["Stage":["UTStages":[
+                     "Calendar":[
+		       "utParam":"calendar",
+		       "JUnitResultLoc":"src/sn.widgets.cal/lwp/build/calendar.test/unittest/report/xml/TESTS-TestSuites.xml",
+		       "JaCoCoExePath":"src/sn.widgets.cal/lwp/build/calendar.test/unittest/jacoco.exec",
+		       "utArchiveArtifactsInclude":"create_db.log,jacoco_report*"]]]
+         ],
+    "DB":["Stage":["DBStages":["Calendar":["dbParam":"calendar"]]]],
+    "BVT":["GUI_Test":["bvtGUIStages":[
+                         "Calendar":[
+			   "CI_PREBVT_TEST_NAME":"Calendar",
+			   "CI_PREBVT_TEST_CLASS":"com.ibm.conn.auto.tests.calendar.BVT_Level_2_Calendar"]]
+		      ],
+    	"Collect_Coverage":["bvtCoverageStages":["Calendar":["bvtCoverageParam":"Calendar"]]]],
+    // "PTI":["Promote_Build":["PTIStages":["Calendar":["NodeLable":"write_BVTBuildLabel"]]]]
+]
+
+JenkinsBlue(param)

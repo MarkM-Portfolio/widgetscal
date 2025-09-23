@@ -1,0 +1,29 @@
+<!-- ***************************************************************** -->
+<!--                                                                   -->
+<!-- IBM Confidential                                                  -->
+<!--                                                                   -->
+<!-- OCO Source Materials                                              -->
+<!--                                                                   -->
+<!-- Copyright IBM Corp. 2011, 2015                                    -->
+<!--                                                                   -->
+<!-- The source code for this program is not published or otherwise    -->
+<!-- divested of its trade secrets, irrespective of what has been      -->
+<!-- deposited with the U.S. Copyright Office.                         -->
+<!--                                                                   -->
+<!-- ***************************************************************** -->
+
+<project name="calendar.web.resources" default="development" basedir=".">
+   <!-- Import helpers for property builds, do not change -->
+   <locateComponent component="prereqs.web.resources" property="eclipseBuildDir" locateBuildDir="false"/>
+   <import file="${eclipseBuildDir}/build_utils.xml" />
+   <import file="${env.WPLC_IMPORT}/pde_build.xml" />  
+   
+   <!--target name="custom_init">
+		<reuseExistingProperties unique="_x1" 
+			component="profiles.web/app" 
+			toBundle="com.ibm.lconn.profiles.web.resources"
+			fromJar="lib/lc.profiles.web.app-3.0.jar">
+			<includes><include name="com/ibm/lconn/profiles/strings/*.properties" /></includes>
+		</reuseExistingProperties>
+   </target-->
+</project>
